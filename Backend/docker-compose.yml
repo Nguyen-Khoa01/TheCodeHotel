@@ -9,34 +9,22 @@ services:
     ports:
       - "$PORT:$PORT"
     links:
-      - postgres
-  postgres:
-    image: postgres
-    container_name: postgres
+      - db
+  db:
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE
     restart: always
     environment:
-      POSTGRES_PASSWORD: postgres
-      TZ: 'GMT'
-      PGTZ: 'GMT'
+      - MYSQL_DATABASE=$DB_DATABASE
+      - MYSQL_ROOT_PASSWORD=$DB_PASSWORD
     ports:
-      - "5432:5432"
+      - '3306:3306'
     volumes:
-      - postgres:/data/postgres
-      - ./init-data.sh:/docker-entrypoint-initdb.d/init-data.sh
+      - db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
       - .env
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4
-    ports:
-      - "8080:80"
-    volumes:
-      - /data/pgadmin:/root/.pgadmin
-    env_file:
-      - .env
-    links:
-      - postgres
-
 volumes:
-  postgres:
+  db:
     driver: local

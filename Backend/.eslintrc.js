@@ -8,7 +8,8 @@ module.exports = {
   ignorePatterns: ['.eslintrc.js'],
   parserOptions: {
     ecmaVersion: 2020,
-    project: './tsconfig.eslint.json',
+    project: 'tsconfig.json',
+    tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
   extends: [
@@ -31,6 +32,7 @@ module.exports = {
     'sonarjs',
   ],
   rules: {
+    "@typescript-eslint/no-require-imports": "warn",
     "unicorn/filename-case": [
       "error",
       {
@@ -335,4 +337,5 @@ module.exports = {
     'valid-typeof': 'off',
     'space-before-function-paren': 'off',
   },
+
 };

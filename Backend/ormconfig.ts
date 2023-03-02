@@ -9,7 +9,7 @@ import { SnakeNamingStrategy } from './src/snake-naming.strategy';
 dotenv.config();
 
 export const dataSource = new DataSource({
-  type: 'postgres',
+  type: 'mysql', // <-- Just write mysql here
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
   username: process.env.DB_USERNAME,

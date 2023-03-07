@@ -9,7 +9,18 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      lineHeight: {
+        'extra-loose': '2.5',
+        'leading-13': '3rem',
+      },
+      height:{
+        'height-slider':'906px'
+      },
+      margin: {
+        '50px': '-50px',
+      }
+    },
   },
   plugins: [],
 }

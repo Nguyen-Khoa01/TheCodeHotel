@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
-import { StarIcon } from "@heroicons/react/24/solid";
+import { StarIcon, HeartIcon } from "@heroicons/react/24/solid";
 
 
 function SampleNextArrow(props: { className: any; style: any; onClick: any; }) {
@@ -105,8 +105,10 @@ export default class Resizable extends Component {
                     <span className="text-teal-600 text-[30px] mr-2 font-medium">{item.price}</span>
                     <span className="text-[#6d6d6d]">| Day</span>
                   </div>
+                  <div>
+                    <HeartIcon className="h-7 w-7 text-white absolute right-6 -top-[260px] hover:bg-[#f4f4f441] rounded-[50%] p-1" />
+                  </div>
                   <div className="h-1 bg-teal-600 absolute bottom-0 w-0 group-hover:w-full transition-all duration-500">
-
                   </div>
                 </div>
               </div>

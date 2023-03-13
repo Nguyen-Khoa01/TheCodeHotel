@@ -1,12 +1,13 @@
 import { use, useEffect, useState, useRef } from "react";
 import Header from "../component/Header"
-import { ChevronRightIcon, ChevronLeftIcon, MapPinIcon, PlusCircleIcon, MinusCircleIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { ChevronRightIcon, ChevronLeftIcon, PlusCircleIcon, MinusCircleIcon, MagnifyingGlassIcon, HandThumbUpIcon } from "@heroicons/react/24/outline";
+import { StarIcon, PhoneIcon } from "@heroicons/react/24/solid";
 import next from "next/types";
 import SelectComponent from '../component/Select'
-import { DatePicker, Space, Button } from 'antd';
-import { Col, Row } from 'antd';
-
+import { DatePicker, Space, Input } from 'antd';
 import Resizable from '../component/Slider'
+import SliderGuests from "@/component/SliderGuests";
+import Footer from "@/component/Footer";
 
 const Home: React.FC = () => {
 
@@ -112,48 +113,97 @@ const Home: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <div className="mt-20 mb-40  flex flex-col items-center">
-                <h1 className="text-[30px] text-[#fdc703]">Top Destinations</h1>
-                <p className="text-[40px] font-medium mb-2">Explore <span className="text-teal-600">Top Destination</span></p>
-                <p className="w-[900px] text-center text-[#6d6d6d] mb-12">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga laboriosam dolores consequuntur unde rerum eligendi, aspernatur tempora nesciunt ea beatae quaerat.</p>
-                <div className="flex w-[1300px] justify-between ">
-                    <div className="flex flex-col " >
-                        <div className="relative group">
-
-                            <h1 className="absolute text-[30px] text-white left-1/2 -top-5 -translate-y-1/2 -translate-x-1/2 group-hover:top-1/2 z-10 transition-all duration-300">Hà Nội</h1>
-                            <img src='https://reviewvilla.vn/wp-content/uploads/2022/05/kinh-nghiem-du-lich-ha-noi-5-1024x577.jpg' className="w-[734px] rounded-[20px] hover:scale-105 transition-all duration-300"></img>
-
-                        </div>
-
-                        <div className="flex justify-between mt-[46px] ">
+            <div className="h-max my-36">
+                <div className="mt-32 flex flex-col items-center">
+                    <h1 className="text-[30px] text-[#fdc703]">Top Destinations</h1>
+                    <p className="text-[40px] font-medium mb-2">Explore <span className="text-teal-600">Top Destination</span></p>
+                    <p className="w-[900px] text-center text-[#6d6d6d] mb-12">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga laboriosam dolores consequuntur unde rerum eligendi, aspernatur tempora nesciunt ea beatae quaerat.</p>
+                    <div className="flex w-[1300px] justify-between ">
+                        <div className="flex flex-col " >
                             <div className="relative group">
-                                <h1 className="absolute text-[30px] text-white left-1/2 -top-5 -translate-y-1/2 -translate-x-1/2 group-hover:top-1/2 z-10 transition-all duration-300">Sài gòn</h1>
-                                <img src='https://i.doanhnhansaigon.vn/2020/04/29/thumbnailsaigon-1588134021_750x0.jpg' className="w-[352px] h-full rounded-[20px] hover:scale-105 transition-all duration-300"></img>
+
+                                <h1 className="absolute text-[30px] text-white left-1/2 -top-5 -translate-y-1/2 -translate-x-1/2 group-hover:top-1/2 z-10 transition-all duration-300">Hà Nội</h1>
+                                <img src='https://reviewvilla.vn/wp-content/uploads/2022/05/kinh-nghiem-du-lich-ha-noi-5-1024x577.jpg' className="w-[734px] rounded-[20px] hover:scale-105 transition-all duration-300"></img>
+
                             </div>
 
-                            <div className="relative group">
-                                <h1 className="absolute text-[30px] text-white left-1/2 -top-5 -translate-y-1/2 -translate-x-1/2 group-hover:top-1/2 z-10 transition-all duration-300">Đà Lạt</h1>
-                                <img src='https://vnn-imgs-f.vgcloud.vn/2021/09/19/17/c36d4bf878038e5dd712.jpg' className="w-[352px] rounded-[20px] hover:scale-105 transition-all duration-300" ></img>
+                            <div className="flex justify-between mt-[46px] ">
+                                <div className="relative group">
+                                    <h1 className="absolute text-[30px] text-white left-1/2 -top-5 -translate-y-1/2 -translate-x-1/2 group-hover:top-1/2 z-10 transition-all duration-300">Sài gòn</h1>
+                                    <img src='https://i.doanhnhansaigon.vn/2020/04/29/thumbnailsaigon-1588134021_750x0.jpg' className="w-[352px] h-full rounded-[20px] hover:scale-105 transition-all duration-300"></img>
+                                </div>
+
+                                <div className="relative group">
+                                    <h1 className="absolute text-[30px] text-white left-1/2 -top-5 -translate-y-1/2 -translate-x-1/2 group-hover:top-1/2 z-10 transition-all duration-300">Đà Lạt</h1>
+                                    <img src='https://vnn-imgs-f.vgcloud.vn/2021/09/19/17/c36d4bf878038e5dd712.jpg' className="w-[352px] rounded-[20px] hover:scale-105 transition-all duration-300" ></img>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="w-[520px] relative group z-10">
+                            <h1 className="absolute text-[30px] text-white left-1/2 -top-5 -translate-y-1/2 -translate-x-1/2 group-hover:top-1/2 z-10 transition-all duration-300 ">Đà Nẵng</h1>
+                            <img src='https://static.vinwonders.com/2022/05/OpAU9ZpU-du-lich-da-nang-thang-9-2.jpeg' className="h-full  rounded-[20px]  hover:scale-105 transition-all duration-300"></img>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div className=" pb-8  flex flex-col items-center bg-[#f1f1f1]" >
+                    <div className="w-full h-[250px]" style={{ backgroundImage: `url(https://htmldesigntemplates.com/html/travelin/images/shape8.png) ` }}></div>
+                    <div className="w-[1300px]">
+                        <h1 className="text-[30px] text-[#fdc703]">Top Pick</h1>
+                        <p className="text-[40px] font-medium mb-2">Best <span className="text-teal-600">Tour Packages</span></p>
+                        <p className="w-[600px] text-[#6d6d6d] mb-12">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga laboriosam dolores consequuntur unde rerum eligendi</p>
+                        <Resizable></Resizable>
+                    </div>
+                </div>
+                <div className=" py-32 flex justify-center ">
+                    <div className="w-[1300px] flex justify-evenly z-10 ">
+                        <h1 className="text-[28px]  w-[290px] ml-[10px] italic uppercase font-medium underline underline-offset-4 decoration-4 decoration-teal-600">What makes our hotels best than others?</h1>
+                        <div className="flex w-1/4 p-5 border-[1px] rounded-lg mx-3 group hover:before:w-full hover:before:h-full hover:before:opacity-100 
+                            relative overflow-hidden before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:-translate-y-1/2 hover:before:visible
+                            before:-translate-x-1/2 before:bg-[#4096ff] before:w-0 before:h-0  before:transition-all before:duration-300 
+                            before:-z-10 before:opacity-0 before:invisible
+                        
+                        ">
+                            <div><HandThumbUpIcon className="h-10 w-10 text-[#4096ff] bg-[#4096ff3d] p-2 rounded-[50%] inline-flex group-hover:bg-white " /></div>
+                            <div className="ml-3 ">
+                                <h1 className="font-medium text-[20px] mb-1 group-hover:text-white duration-1000">Hassle free Booking</h1>
+                                <p className="text-[#6d6d6d] group-hover:text-white">Book hotels from our website without ant hassle</p>
+                            </div>
+                        </div>
+                        <div className="flex w-1/4 p-5 border-[1px] rounded-lg mx-3 group hover:before:w-full hover:before:h-full hover:before:opacity-100 
+                            relative overflow-hidden before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:-translate-y-1/2 hover:before:visible
+                            before:-translate-x-1/2 before:bg-[#FF8C32] before:w-0 before:h-0  before:duration-300 
+                            before:-z-10 before:opacity-0 before:invisible">
+                            <div><StarIcon className="h-10 w-10 text-[#FF8C32] bg-[#ff8b323d] p-2 rounded-[50%] inline-flex group-hover:bg-white " /></div>
+                            <div className="ml-3">
+                                <h1 className="font-medium text-[20px] mb-1 group-hover:text-white duration-1000">28,000 Reviews</h1>
+                                <p className="text-[#6d6d6d] group-hover:text-white">Book hotels from our website withiyt any hassle</p>
+                            </div>
+                        </div>
+                        <div className="flex w-1/4 p-5 border-[1px] rounded-lg mx-3 group hover:before:w-full hover:before:h-full hover:before:opacity-100 
+                            relative overflow-hidden before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:-translate-y-1/2 hover:before:visible
+                            before:-translate-x-1/2 before:bg-[#019267] before:w-0 before:h-0  before:transition-all before:duration-300 
+                            before:-z-10 before:opacity-0 before:invisible">
+                            <div><PhoneIcon className="h-10 w-10 text-[#019267] bg-[#0192673d] p-2 rounded-[50%] inline-flex group-hover:bg-white " /></div>
+                            <div className="ml-3">
+                                <h1 className="font-medium text-[20px] mb-1 group-hover:text-white duration-1000">24/7 Support</h1>
+                                <p className="text-[#6d6d6d] group-hover:text-white">Book hotels from our website without any hassle</p>
                             </div>
                         </div>
                     </div>
-
-                    <div className="w-[520px] relative group z-10">
-                        <h1 className="absolute text-[30px] text-white left-1/2 -top-5 -translate-y-1/2 -translate-x-1/2 group-hover:top-1/2 z-10 transition-all duration-300 ">Đà Nẵng</h1>
-                        <img src='https://static.vinwonders.com/2022/05/OpAU9ZpU-du-lich-da-nang-thang-9-2.jpeg' className="h-full  rounded-[20px]  hover:scale-105 transition-all duration-300"></img>
+                </div>
+                <div className="mt-20 flex justify-center">
+                    <div className="w-[1300px] flex flex-col">
+                        <h1 className="text-[28px] ml-[10px] text-center italic uppercase font-medium underline underline-offset-4 decoration-4 decoration-teal-600">Thoughts from our guests</h1>
+                        <div className="mt-10">
+                            <SliderGuests />
+                        </div>
                     </div>
-
-
                 </div>
             </div>
-            <div className="mt-20 mb-40  flex flex-col items-center bg-[#f1f1f1]">
-                <div className="w-[1300px]">
-                    <h1 className="text-[30px] text-[#fdc703]">Top Pick</h1>
-                    <p className="text-[40px] font-medium mb-2">Best <span className="text-teal-600">Tour Packages</span></p>
-                    <p className="w-[600px] text-[#6d6d6d] mb-12">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga laboriosam dolores consequuntur unde rerum eligendi</p>
-                    <Resizable></Resizable>
-                </div>
-            </div>
+            <Footer />
         </div>
 
 

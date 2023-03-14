@@ -38,7 +38,7 @@ export default class Resizable extends Component {
       autoplay: false,
       autoplaySpeed: 3000,
       cssEase: "linear",
-      slidesToShow: 3,
+      slidesToShow: 1,
       slidesToScroll: 1,
       nextArrow: <SampleNextArrow className={undefined} style={undefined} onClick={undefined} />,
       prevArrow: <SamplePrevArrow className={undefined} style={undefined} onClick={undefined} />
@@ -83,30 +83,30 @@ export default class Resizable extends Component {
     ]
 
     return (
-      <div className="w-[1300px]">
+      <div className="w-[1300px] 2xl:w-[1000px] lg:w-[800px] xl:px-[25px]">
         <Slider {...settings} >
           {
             slider.map((item, index) => (
               <div key={index} className="relative group overflow-hidden rounded-[20px]">
                 <div className="overflow-hidden ">
-                  <img className="h-[275px] group-hover:scale-110 transition-all duration-500" src={item.url}></img>
+                  <img className="h-[250px]  group-hover:scale-110 transition-all duration-500" src={item.url}></img>
                 </div>
                 <div className="bg-white rounded-b-[20px] pl-4 relative">
-                  <h1 className="text-[22px] pt-8 text-teal-600 font-medium">{item.city}</h1>
-                  <h1 className="text-[26px] font-medium py-3">{item.hotel} </h1>
+                  <h1 className="text-[22px] lg:text-[20px] pt-8 lg:pt-4 text-teal-600 font-medium">{item.city}</h1>
+                  <h1 className="text-[26px] lg:text-[22px] font-medium py-3 lg:py-1">{item.hotel} </h1>
                   <div className="flex">
-                    <StarIcon className="h-6 w-6 text-yellow-400" />
-                    <StarIcon className="h-6 w-6 text-yellow-400" />
-                    <StarIcon className="h-6 w-6 text-yellow-400" />
-                    <StarIcon className="h-6 w-6 text-yellow-400" />
+                    <StarIcon className="h-6 w-6 lg:h-4 lg:w-4 text-yellow-400" />
+                    <StarIcon className="h-6 w-6 lg:h-4 lg:w-4 text-yellow-400" />
+                    <StarIcon className="h-6 w-6 lg:h-4 lg:w-4 text-yellow-400" />
+                    <StarIcon className="h-6 w-6 lg:h-4 lg:w-4 text-yellow-400" />
                   </div>
-                  <p className="w-[300px] py-3 text-[#6d6d6d]">{item.des}</p>
-                  <div className="pb-4">
+                  <p className="w-[300px] lg:w-[250px] py-3 lg:text-[15px] lg:py-1 text-[#6d6d6d]">{item.des}</p>
+                  <div className="pb-4 lg:pb-2">
                     <span className="text-teal-600 text-[30px] mr-2 font-medium">{item.price}</span>
                     <span className="text-[#6d6d6d]">| Day</span>
                   </div>
                   <div>
-                    <HeartIcon className="h-7 w-7 text-white absolute right-6 -top-[260px] hover:bg-[#f4f4f441] rounded-[50%] p-1" />
+                    <HeartIcon className="h-7 w-7 text-white absolute right-6 -top-[240px] hover:bg-[#f4f4f441] rounded-[50%] p-1" />
                   </div>
                   <div className="h-1 bg-teal-600 absolute bottom-0 w-0 group-hover:w-full transition-all duration-500">
                   </div>

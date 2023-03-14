@@ -40,7 +40,7 @@ export default class SliderGuests extends Component {
             autoplay: false,
             autoplaySpeed: 3000,
             cssEase: "linear",
-            slidesToShow: 3,
+            slidesToShow: 2,
             slidesToScroll: 1,
             nextArrow: <SampleNextArrow className={undefined} style={undefined} onClick={undefined} />,
             prevArrow: <SamplePrevArrow className={undefined} style={undefined} onClick={undefined} />
@@ -85,19 +85,19 @@ export default class SliderGuests extends Component {
         ]
 
         return (
-            <div className="w-[1300px]">
+            <div className="w-[1300px] xl:w-[750px] ">
                 <Slider {...settings} >
                     {
                         Guests.map((item, index) => (
-                            <div key={index} className="border-2 rounded-lg p-5 hover:border-teal-600 duration-300 border-[#f7f7f7] ">
+                            <div key={index} className="border-2 rounded-lg p-5 lg:p-1 lg:mx-1 2xl:p-2 2xl:mx-2 hover:border-teal-600 duration-300 border-[#f7f7f7] ">
 
                                 <div className="flex justify-between items-center">
-                                    <img src={item.avatar} width='60' height='60' className="" />
+                                    <img src={item.avatar} width='60' height='60' className="lg:w-[40px] lg:h-[40px] 2xl:w-[50px] 2xl:h-[50px]" />
                                     <div>
-                                        <h1 className="font-medium text-[18px]">{item.name}</h1>
+                                        <h1 className="font-medium text-[18px] lg:text-[14px]">{item.name}</h1>
                                         <p className="text-[#6d6d6d] ">{item.city}</p>
                                     </div>
-                                    <div className="flex w-[160px] text-gray-500-400">
+                                    <div className="flex w-[160px] lg:w-[100px] text-gray-500-400">
                                         <BuildingLibraryIcon className="h-9 w-9 text-[#02a2ff]" />
                                         <p className="ml-2">{item.hotel}</p>
                                     </div>

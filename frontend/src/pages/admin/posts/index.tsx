@@ -1,6 +1,6 @@
-export default function AdminPostsPage(){
-    return(
-            <h1>Admin - AdminPostsPage</h1>
-            
+
+export default function AdminPostsPage() {
+    return (
+        <h1>ád</h1>
     )
 }

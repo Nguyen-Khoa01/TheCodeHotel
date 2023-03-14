@@ -7,7 +7,7 @@ const mainNav = [
   },
   {
     display: 'About us',
-    path: "/aboutus"
+    path: "/AboutUs"
   },
   {
     display: 'News',
@@ -21,7 +21,7 @@ const mainNav = [
 
 export default function Header() {
   return (
-    <div className="flex w-[1300px] justify-between items-center mx-auto font-sans font-light text-gray-700 h-24 " >
+    <div className="flex w-[1300px] justify-between items-center mx-auto font-sans font-light text-gray-700 h-24 xl:w-full  " >
       <div>
         <Link href="/">
           <img src={`https://htmldesigntemplates.com/html/travelin/images/logo.png`} alt="" />
@@ -42,7 +42,7 @@ export default function Header() {
       </div>
       <div className="flex items-center uppercase text-sm">
 
-        <UserIcon className="h-5 w-5 mr-1 text-gray-500" />
+        <UserIcon className="h-5 w-5 mr-1 text-gray-500 lg:h-4 lg:w-4" />
         <Link href="/login">
           <span>Login</span>
         </Link>
@@ -50,9 +50,9 @@ export default function Header() {
           <span>/Register</span>
         </Link>
 
-        <div className=" bg-teal-600 h-12 w-32 text-center rounded-md ml-4 text-white">
+        <div className=" bg-teal-600 h-12 w-32 text-center rounded-md ml-4 text-white lg:w-20 lg:h-8">
           <Link href="/booking">
-            <span className="leading-[3rem]">BOOK NOW</span>
+            <span className="leading-8 text-[13px]">BOOK NOW</span>
           </Link>
         </div>
       </div>

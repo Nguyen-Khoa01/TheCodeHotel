@@ -51,7 +51,7 @@ const Home: React.FC = () => {
 
 
     return (
-        <div>
+        <div className="overflow-hidden">
             <div className="border-left select-none mb-28 ">
                 <Header />
                 <div className="h-[906px] relative" >
@@ -73,26 +73,27 @@ const Home: React.FC = () => {
                 </div>
                 <div className="relative font-serif ">
                     <img className="absolute -top-16 " src="https://htmldesigntemplates.com/html/travelin/images/shape-pat.png" alt="" />
-                    <div className="absolute -top-16 flex h-[143px] rounded bg-white left-1/2 -translate-x-1/2 w-[1300px] justify-around text-lg text-zinc-700 items-center drop-shadow-xl">
+                    <div className="absolute -top-16 flex h-[143px] rounded bg-white left-1/2 -translate-x-1/2 w-[1300px] justify-around text-lg
+                             text-zinc-700 items-center drop-shadow-xl xl:w-full">
                         <div className="flex flex-col ml-2">
                             <label className="mb-3 text-center ">Location</label>
                             <SelectComponent />
                         </div>
                         <div className="flex flex-col ml-2">
                             <p className="mb-3 text-center">Check In</p>
-                            <Space direction="vertical" size={12}>
+                            <Space direction="vertical" size={12} className="lg:w-[110px] w-[150px]">
                                 <DatePicker size="large" />
                             </Space>
                         </div>
                         <div className="flex flex-col ml-2">
                             <p className="mb-3 text-center ">Check Out</p>
-                            <Space direction="vertical">
+                            <Space direction="vertical" className="lg:w-[110px] w-[150px]">
                                 <DatePicker size="large" />
                             </Space>
                         </div>
                         <div className="flex flex-col ml-2 ">
                             <span className="text-center">Aduts</span>
-                            <div className="hover:border-[#4096ff] flex w-36 h-10 justify-around mt-3 items-center border-[1px] rounded-lg border-[#d9d9d9] ">
+                            <div className="hover:border-[#4096ff] flex w-[150px] h-10 justify-around mt-3 items-center border-[1px] rounded-lg border-[#d9d9d9]  lg:w-[110px]">
                                 <MinusCircleIcon onClick={() => setNumberAduts(prev => (numberAduts === 0 ? prev : prev - 1))} className="h-6 w-6 text-gray-500" />
                                 <p>{numberAduts}</p>
                                 <PlusCircleIcon onClick={() => setNumberAduts(prev => prev + 1)} className="h-6 w-6 text-gray-500" />
@@ -100,7 +101,7 @@ const Home: React.FC = () => {
                         </div>
                         <div className="flex flex-col ml-2">
                             <span className="text-center">Chilren</span>
-                            <div className="flex w-36 h-10 justify-around mt-3 items-center border-[1px] rounded-lg border-[#d9d9d9] hover:border-[#4096ff]">
+                            <div className="flex w-[150px] h-10 justify-around mt-3 items-center border-[1px] rounded-lg border-[#d9d9d9] hover:border-[#4096ff] lg:w-[110px]">
                                 <MinusCircleIcon onClick={() => setNumberChilren(prev => (numberChilren === 0 ? prev : prev - 1))} className="h-6 w-6 text-gray-500" />
                                 <p>{numberChilren}</p>
                                 <PlusCircleIcon onClick={() => setNumberChilren(prev => prev + 1)} className="h-6 w-6 text-gray-500" />
@@ -117,30 +118,30 @@ const Home: React.FC = () => {
                 <div className="mt-32 flex flex-col items-center">
                     <h1 className="text-[30px] text-[#fdc703]">Top Destinations</h1>
                     <p className="text-[40px] font-medium mb-2">Explore <span className="text-teal-600">Top Destination</span></p>
-                    <p className="w-[900px] text-center text-[#6d6d6d] mb-12">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga laboriosam dolores consequuntur unde rerum eligendi, aspernatur tempora nesciunt ea beatae quaerat.</p>
-                    <div className="flex w-[1300px] justify-between ">
+                    <p className="w-[900px] lg:w-[500px] text-center text-[#6d6d6d] mb-12">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga laboriosam dolores consequuntur unde rerum eligendi, aspernatur tempora nesciunt ea beatae quaerat.</p>
+                    <div className="flex w-[1300px] justify-between xl:w-full xl:justify-evenly">
                         <div className="flex flex-col " >
                             <div className="relative group">
 
                                 <h1 className="absolute text-[30px] text-white left-1/2 -top-5 -translate-y-1/2 -translate-x-1/2 group-hover:top-1/2 z-10 transition-all duration-300">Hà Nội</h1>
-                                <img src='https://reviewvilla.vn/wp-content/uploads/2022/05/kinh-nghiem-du-lich-ha-noi-5-1024x577.jpg' className="w-[734px] rounded-[20px] hover:scale-105 transition-all duration-300"></img>
+                                <img src='https://reviewvilla.vn/wp-content/uploads/2022/05/kinh-nghiem-du-lich-ha-noi-5-1024x577.jpg' className="w-[734px] lg:w-[390px] 2xl:w-[570px] rounded-[20px] hover:scale-105 transition-all duration-300"></img>
 
                             </div>
 
-                            <div className="flex justify-between mt-[46px] ">
+                            <div className="flex justify-between mt-[30px] lg:mt-[10px] lg:w-[390px] 2xl:w-[570px]  2xl:mt-[20px]">
                                 <div className="relative group">
-                                    <h1 className="absolute text-[30px] text-white left-1/2 -top-5 -translate-y-1/2 -translate-x-1/2 group-hover:top-1/2 z-10 transition-all duration-300">Sài gòn</h1>
-                                    <img src='https://i.doanhnhansaigon.vn/2020/04/29/thumbnailsaigon-1588134021_750x0.jpg' className="w-[352px] h-full rounded-[20px] hover:scale-105 transition-all duration-300"></img>
+                                    <h1 className="absolute text-[30px]  lg:text-[20px] -z-10  text-white left-1/2 -top-5 -translate-y-1/2 -translate-x-1/2 group-hover:top-1/2 group-hover:z-10 transition-all duration-300">Sài gòn</h1>
+                                    <img src='https://i.doanhnhansaigon.vn/2020/04/29/thumbnailsaigon-1588134021_750x0.jpg' className="w-[352px] lg:w-[190px] 2xl:w-[270px] h-full rounded-[20px] hover:scale-105 transition-all duration-300"></img>
                                 </div>
 
                                 <div className="relative group">
-                                    <h1 className="absolute text-[30px] text-white left-1/2 -top-5 -translate-y-1/2 -translate-x-1/2 group-hover:top-1/2 z-10 transition-all duration-300">Đà Lạt</h1>
-                                    <img src='https://vnn-imgs-f.vgcloud.vn/2021/09/19/17/c36d4bf878038e5dd712.jpg' className="w-[352px] rounded-[20px] hover:scale-105 transition-all duration-300" ></img>
+                                    <h1 className="absolute text-[30px] lg:text-[20px] -z-10 text-white left-1/2 -top-5 -translate-y-1/2 -translate-x-1/2 group-hover:top-1/2 group-hover:z-10 transition-all duration-300">Đà Lạt</h1>
+                                    <img src='https://vnn-imgs-f.vgcloud.vn/2021/09/19/17/c36d4bf878038e5dd712.jpg' className="w-[352px] lg:w-[190px] 2xl:w-[270px] rounded-[20px] hover:scale-105 transition-all duration-300" ></img>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="w-[520px] relative group z-10">
+                        <div className="w-[520px] relative group z-10 lg:w-[300px] 2xl:w-[430px]">
                             <h1 className="absolute text-[30px] text-white left-1/2 -top-5 -translate-y-1/2 -translate-x-1/2 group-hover:top-1/2 z-10 transition-all duration-300 ">Đà Nẵng</h1>
                             <img src='https://static.vinwonders.com/2022/05/OpAU9ZpU-du-lich-da-nang-thang-9-2.jpeg' className="h-full  rounded-[20px]  hover:scale-105 transition-all duration-300"></img>
                         </div>
@@ -149,53 +150,55 @@ const Home: React.FC = () => {
                     </div>
                 </div>
                 <div className=" pb-8  flex flex-col items-center bg-[#f1f1f1]" >
-                    <div className="w-full h-[250px]" style={{ backgroundImage: `url(https://htmldesigntemplates.com/html/travelin/images/shape8.png) ` }}></div>
-                    <div className="w-[1300px]">
+                    <div className="w-full h-[250px] xl:h-[150px] " style={{ backgroundImage: `url(https://htmldesigntemplates.com/html/travelin/images/shape8.png) ` }}></div>
+                    <div className="w-[1300px] xl:w-[800px]  pl-[10px] xl:text-center mb-8">
                         <h1 className="text-[30px] text-[#fdc703]">Top Pick</h1>
                         <p className="text-[40px] font-medium mb-2">Best <span className="text-teal-600">Tour Packages</span></p>
-                        <p className="w-[600px] text-[#6d6d6d] mb-12">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga laboriosam dolores consequuntur unde rerum eligendi</p>
-                        <Resizable></Resizable>
+                        <p className="w-[600px] xl:w-[400px] text-[#6d6d6d] xl:inline-block">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga laboriosam dolores consequuntur unde rerum eligendi</p>
+                    </div>
+                    <Resizable></Resizable>
+                </div>
+                <div className=" py-32 xl:py-20 flex justify-center ">
+                    <div className="w-[1300px] flex z-10 justify-between  2xl:w-[1000px] lg:w-[800px] xl:flex-col xl:items-center ">
+                        <h1 className="text-[28px] xl:mb-5  w-[350px] ml-[10px] italic uppercase font-medium underline underline-offset-4 decoration-4 decoration-teal-600">What makes our hotels best than others?</h1>
+                        <div className="flex ">
+                            <div className="flex w-1/3 p-5 border-[1px] rounded-lg mx-3 group hover:before:w-full hover:before:h-full hover:before:opacity-100 
+                                relative overflow-hidden before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:-translate-y-1/2 hover:before:visible
+                                before:-translate-x-1/2 before:bg-[#4096ff] before:w-0 before:h-0  before:transition-all before:duration-300 
+                                before:-z-10 before:opacity-0 before:invisible
+                                lg:bg-[#4096ff] 
+                            ">
+                                <div><HandThumbUpIcon className="h-10 w-10 text-[#4096ff] bg-[#4096ff3d] p-2 rounded-[50%] inline-flex group-hover:bg-white lg:bg-white " /></div>
+                                <div className="ml-3 ">
+                                    <h1 className="font-medium text-[20px] mb-1 group-hover:text-white duration-1000 lg:text-white">Hassle free Booking</h1>
+                                    <p className="text-[#6d6d6d] group-hover:text-white lg:text-white">Book hotels from our website without ant hassle</p>
+                                </div>
+                            </div>
+                            <div className="flex w-1/3 p-5 border-[1px] rounded-lg mx-3 group hover:before:w-full hover:before:h-full hover:before:opacity-100 
+                                relative overflow-hidden before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:-translate-y-1/2 hover:before:visible
+                                before:-translate-x-1/2 before:bg-[#FF8C32] before:w-0 before:h-0  before:duration-300 
+                                before:-z-10 before:opacity-0 before:invisible lg:bg-[#FF8C32]">
+                                <div><StarIcon className="h-10 w-10 text-[#FF8C32] bg-[#ff8b323d] p-2 rounded-[50%] inline-flex group-hover:bg-white lg:bg-white" /></div>
+                                <div className="ml-3">
+                                    <h1 className="font-medium text-[20px] mb-1 group-hover:text-white duration-1000 lg:text-white">28,000 Reviews</h1>
+                                    <p className="text-[#6d6d6d] group-hover:text-white lg:text-white">Book hotels from our website withiyt any hassle</p>
+                                </div>
+                            </div>
+                            <div className="flex w-1/3  p-5 border-[1px] rounded-lg mx-3 group hover:before:w-full hover:before:h-full hover:before:opacity-100 
+                                relative overflow-hidden before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:-translate-y-1/2 hover:before:visible
+                                before:-translate-x-1/2 before:bg-[#019267] before:w-0 before:h-0  before:transition-all before:duration-300 
+                                before:-z-10 before:opacity-0 before:invisible lg:bg-[#019267]">
+                                <div><PhoneIcon className="h-10 w-10 text-[#019267] bg-[#0192673d] p-2 rounded-[50%] inline-flex group-hover:bg-white lg:bg-white" /></div>
+                                <div className="ml-3">
+                                    <h1 className="font-medium text-[20px] mb-1 group-hover:text-white duration-1000 lg:text-white ">24/7 Support</h1>
+                                    <p className="text-[#6d6d6d] group-hover:text-white lg:text-white">Book hotels from our website without any hassle</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className=" py-32 flex justify-center ">
-                    <div className="w-[1300px] flex justify-evenly z-10 ">
-                        <h1 className="text-[28px]  w-[290px] ml-[10px] italic uppercase font-medium underline underline-offset-4 decoration-4 decoration-teal-600">What makes our hotels best than others?</h1>
-                        <div className="flex w-1/4 p-5 border-[1px] rounded-lg mx-3 group hover:before:w-full hover:before:h-full hover:before:opacity-100 
-                            relative overflow-hidden before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:-translate-y-1/2 hover:before:visible
-                            before:-translate-x-1/2 before:bg-[#4096ff] before:w-0 before:h-0  before:transition-all before:duration-300 
-                            before:-z-10 before:opacity-0 before:invisible
-                        
-                        ">
-                            <div><HandThumbUpIcon className="h-10 w-10 text-[#4096ff] bg-[#4096ff3d] p-2 rounded-[50%] inline-flex group-hover:bg-white " /></div>
-                            <div className="ml-3 ">
-                                <h1 className="font-medium text-[20px] mb-1 group-hover:text-white duration-1000">Hassle free Booking</h1>
-                                <p className="text-[#6d6d6d] group-hover:text-white">Book hotels from our website without ant hassle</p>
-                            </div>
-                        </div>
-                        <div className="flex w-1/4 p-5 border-[1px] rounded-lg mx-3 group hover:before:w-full hover:before:h-full hover:before:opacity-100 
-                            relative overflow-hidden before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:-translate-y-1/2 hover:before:visible
-                            before:-translate-x-1/2 before:bg-[#FF8C32] before:w-0 before:h-0  before:duration-300 
-                            before:-z-10 before:opacity-0 before:invisible">
-                            <div><StarIcon className="h-10 w-10 text-[#FF8C32] bg-[#ff8b323d] p-2 rounded-[50%] inline-flex group-hover:bg-white " /></div>
-                            <div className="ml-3">
-                                <h1 className="font-medium text-[20px] mb-1 group-hover:text-white duration-1000">28,000 Reviews</h1>
-                                <p className="text-[#6d6d6d] group-hover:text-white">Book hotels from our website withiyt any hassle</p>
-                            </div>
-                        </div>
-                        <div className="flex w-1/4 p-5 border-[1px] rounded-lg mx-3 group hover:before:w-full hover:before:h-full hover:before:opacity-100 
-                            relative overflow-hidden before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:-translate-y-1/2 hover:before:visible
-                            before:-translate-x-1/2 before:bg-[#019267] before:w-0 before:h-0  before:transition-all before:duration-300 
-                            before:-z-10 before:opacity-0 before:invisible">
-                            <div><PhoneIcon className="h-10 w-10 text-[#019267] bg-[#0192673d] p-2 rounded-[50%] inline-flex group-hover:bg-white " /></div>
-                            <div className="ml-3">
-                                <h1 className="font-medium text-[20px] mb-1 group-hover:text-white duration-1000">24/7 Support</h1>
-                                <p className="text-[#6d6d6d] group-hover:text-white">Book hotels from our website without any hassle</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="mt-20 flex justify-center">
-                    <div className="w-[1300px] flex flex-col">
+                <div className="mt-20 flex justify-center bg-[#dbdbdb47] xl:bg-white py-10 xl:mt-0">
+                    <div className="w-[1300px] flex flex-col xl:w-[800px]">
                         <h1 className="text-[28px] ml-[10px] text-center italic uppercase font-medium underline underline-offset-4 decoration-4 decoration-teal-600">Thoughts from our guests</h1>
                         <div className="mt-10">
                             <SliderGuests />

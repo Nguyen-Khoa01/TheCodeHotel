@@ -38,7 +38,7 @@ export default class Resizable extends Component {
       autoplay: false,
       autoplaySpeed: 3000,
       cssEase: "linear",
-      slidesToShow: 1,
+      slidesToShow: 3,
       slidesToScroll: 1,
       nextArrow: <SampleNextArrow className={undefined} style={undefined} onClick={undefined} />,
       prevArrow: <SamplePrevArrow className={undefined} style={undefined} onClick={undefined} />

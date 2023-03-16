@@ -36,15 +36,17 @@ module.exports = {
       '8': '8px',
     },
     screens: {
-      'md': { 'max': '739px' },
+      'md': { 'max': '767px' },
       // => @media (min-width: 768px and max-width: 1023px) { ... }
+      '2md': { 'max': '991px' },
 
-      'lg': { 'min': '740px', 'max': '1023px' },
+      'lg': { 'min': '768px', 'max': '991px' },
       // => @media (min-width: 1024px and max-width: 1279px) { ... }
+      '2lg': { 'min': '768px', 'max': '1300px' },
 
-      'xl': { 'max': '1300px' },
+      'xl': { 'max': '1400px' },
 
-      '2xl': { 'min': '1024px', 'max': '1300px' },
+      '2xl': { 'min': '992px', 'max': '1300px' },
       // => @media (min-width: 1280px and max-width: 1535px) { ... }
 
 

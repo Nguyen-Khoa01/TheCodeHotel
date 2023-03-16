@@ -6,7 +6,7 @@ const SelectComponent: React.FC = () => (
   <Select
     showSearch
     size='large'
-    className="lg:w-[110px] w-[150px]"
+    className="w-[150px]"
     placeholder="Choose"
     optionFilterProp="children"
     filterOption={(input, option) => (option?.label ?? '').includes(input)}

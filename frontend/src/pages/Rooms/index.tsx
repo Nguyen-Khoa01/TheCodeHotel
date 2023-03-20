@@ -256,8 +256,6 @@ export default function Rooms() {
                                     </div>
 
                                 </div>
-
-
                             </div>
 
                             {/* 1 phòng trên 1 hàng */}

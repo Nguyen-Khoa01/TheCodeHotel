@@ -4,17 +4,12 @@ import Footer from "@/component/Footer"
 import { CreditCardIcon } from "@heroicons/react/24/outline";
 import { BsPaypal } from "react-icons/bs";
 import {
-    AutoComplete,
     Button,
-    Cascader,
     Checkbox,
-    Col,
     Radio,
     DatePicker,
     Form,
     Input,
-    InputNumber,
-    Row,
     Select,
 } from 'antd';
 
@@ -37,9 +32,8 @@ export default function Checkout() {
             <Header />
             <Title />
             <div className="bg-[#F2F4F7]">
-                <div className="max-w-[1300px] mx-auto grid grid-cols-3 gap-x-6">
-
-                    <Form size='large' layout="vertical" className="w-full col-span-2 ">
+                <div className="max-w-[1300px] mx-auto grid grid-cols-12 gap-x-6 2xl:mx-[30px] 2xl:gap-x-3 lg:max-w-[720px] md:max-w-[540px] ">
+                    <Form size='large' layout="vertical" className="w-full col-span-8 2xl:col-span-7 2md:col-span-12">
                         <div className="bg-white shadow-xl px-[20px] pt-[20px] rounded-xl my-8">
                             <h1 className="text-[20px] font-semibold mb-2">Booking Information</h1>
                             <div className="grid grid-cols-2 gap-x-2">
@@ -65,7 +59,7 @@ export default function Checkout() {
                                     name="phone"
                                     label="Phone Number"
                                     rules={[{ required: true, message: 'Please input your phone number!' }]}
-                                    className="basis-1/2"
+                                    className=""
                                 >
                                     <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
                                 </Form.Item>
@@ -101,7 +95,7 @@ export default function Checkout() {
                                     name="City"
                                     label="City"
                                     rules={[{ required: true, message: 'Please choose your City!', whitespace: true }]}
-                                    className="basis-1/2"
+                                    className=""
                                 >
                                     <Select style={{ width: '100%' }}
                                         placeholder="Search to Select"
@@ -199,7 +193,7 @@ export default function Checkout() {
 
 
                     </Form>
-                    <div className="col-span-1">
+                    <div className="col-span-4 2xl:col-span-5 2md:col-span-12">
                         <div className="bg-white shadow-xl px-[20px] pt-[20px] pb-[10px] my-8 rounded-xl">
                             <h1 className="font-semibold text-[20px] mb-2">Booking Details</h1>
                             <div>
@@ -217,7 +211,7 @@ export default function Checkout() {
                                 </div>
                                 <div className="flex justify-between py-2 mb-1 ">
                                     <p className="text-[#667085]">Total Stay</p>
-                                    <p className="font-medium">3Nights</p>
+                                    <p className="font-medium">3 Nights</p>
                                 </div>
                                 <div className="flex justify-between py-2 mb-1 ">
                                     <p className="text-[#667085]">Number of Person</p>
@@ -227,6 +221,27 @@ export default function Checkout() {
                                     <p className="text-[#667085]">Number of Children</p>
                                     <p className="font-medium">2 Children</p>
                                 </div>
+                            </div>
+                        </div>
+                        <div className="bg-white shadow-xl px-[20px] pt-[20px] pb-[10px] my-8 rounded-xl">
+                            <h1 className="font-semibold text-[20px] mb-2">Invoice</h1>
+                            <div>
+                                <div className="flex justify-between">
+                                    <p className="text-[#667085] py-2 mb-1">Charge</p>
+                                    <p className="font-medium">$230.00</p>
+                                </div>
+                                <div className="flex justify-between">
+                                    <p className="text-[#667085] py-2 mb-1">Discount</p>
+                                    <p className="font-medium">-$8</p>
+                                </div>
+                                <div className="flex justify-between">
+                                    <p className="text-[#667085] py-2 mb-1">Vat</p>
+                                    <p className="font-medium">(+13%)$20.08</p>
+                                </div>
+                            </div>
+                            <div className="flex border-t-[1px] py-2 mb-1 justify-between text-[20px]">
+                                <p className="text-[#667085]  ">Total</p>
+                                <p className="text-teal-600 font-medium  ">$250.08</p>
                             </div>
                         </div>
                     </div>

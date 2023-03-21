@@ -24,7 +24,7 @@ export default function Detail() {
             <Header />
             <Title />
             <div className="bg-[#F2F4F7]">
-                <div className="max-w-[1300px] mx-auto grid grid-cols-3 gap-x-6 2xl:mx-[30px] 2lg:grid-cols-1 2xl:mb-[50px] lg:max-w-[720px] ">
+                <div className="max-w-[1300px] mx-auto grid grid-cols-3 gap-x-6 2xl:mx-[30px] 2lg:grid-cols-1 2xl:mb-[50px] lg:max-w-[720px]  ">
                     <div className="col-span-2 bg-white shadow-xl px-[20px] pt-[20px] rounded-xl my-8">
                         <div className="grid grid-cols-2 gap-6">
                             <img className="col-span-2 w-full rounded-xl" src="https://bytesed.com/tf/beyond-hotel/beyond_hotel/assets/img/single-page/details_main.jpg"></img>

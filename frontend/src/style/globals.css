@@ -5,3 +5,15 @@
 .slick-slide {
     padding: 0 10px;
 }
+
+.ant-form-item {
+    margin-bottom: 12px;
+}
+
+.ant-form-item-required {
+    font-size: 16px !important;
+}
+
+.ant-checkbox {
+    font-size: 16px;
+}

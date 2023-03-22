@@ -14,16 +14,20 @@ import { RiParkingBoxLine } from "react-icons/ri"
 import { MdSmokeFree } from 'react-icons/md'
 import { BiSwim } from 'react-icons/bi'
 
+
+const { RangePicker } = DatePicker;
+
 export default function Detail() {
 
     const [numberAduts, setNumberAduts] = useState(0)
     const [numberChilren, setNumberChilren] = useState(0)
+    const [numberRooms, setNumberRooms] = useState(0)
 
     return (
         <div>
             <Header />
             <Title />
-            <div className="bg-[#F2F4F7]">
+            <div className="bg-[#F2F4F7] select-none">
                 <div className="max-w-[1300px] mx-auto grid grid-cols-3 gap-x-6 2xl:mx-[30px] 2lg:grid-cols-1 2xl:mb-[50px] lg:max-w-[720px]  ">
                     <div className="col-span-2 bg-white shadow-xl px-[20px] pt-[20px] rounded-xl my-8">
                         <div className="grid grid-cols-2 gap-6">
@@ -106,17 +110,12 @@ export default function Detail() {
                     <div className="">
                         <div className="bg-white shadow-xl px-[20px] py-[20px] rounded-xl my-8 ">
 
-                            <div className="flex  ml-2 items-baseline justify-between">
-                                <p className="mb-3 text-center">Check In</p>
-                                <Space direction="vertical" className=" w-[150px]">
-                                    <DatePicker size="large" />
-                                </Space>
-                            </div>
-                            <div className="flex ml-2 items-baseline  justify-between">
-                                <p className="mb-3 text-center ">Check Out</p>
-                                <Space direction="vertical" className="w-[150px]">
-                                    <DatePicker size="large" />
-                                </Space>
+                            <div className="flex flex-col ml-2 mb-2">
+                                <div className="flex justify-around mb-3">
+                                    <p>Checkin</p>
+                                    <p>Checkout</p>
+                                </div>
+                                <RangePicker size="large" />
                             </div>
                             <div className="flex ml-2 items-center justify-between">
                                 <span className="text-center">Aduts</span>
@@ -137,9 +136,9 @@ export default function Detail() {
                             <div className="flex  ml-2 items-center justify-between">
                                 <span className="text-center">Room</span>
                                 <div className="flex w-[150px] h-10 justify-around mt-3 items-center border-[1px] rounded-lg border-[#d9d9d9] hover:border-[#4096ff]">
-                                    <MinusCircleIcon onClick={() => setNumberChilren(prev => (numberChilren === 0 ? prev : prev - 1))} className="h-6 w-6 text-gray-500" />
-                                    <p>{numberChilren}</p>
-                                    <PlusCircleIcon onClick={() => setNumberChilren(prev => prev + 1)} className="h-6 w-6 text-gray-500" />
+                                    <MinusCircleIcon onClick={() => setNumberRooms(prev => (numberRooms === 0 ? prev : prev - 1))} className="h-6 w-6 text-gray-500" />
+                                    <p>{numberRooms}</p>
+                                    <PlusCircleIcon onClick={() => setNumberRooms(prev => prev + 1)} className="h-6 w-6 text-gray-500" />
                                 </div>
                             </div>
                             <div className="w-[200px] py-2 mt-4 mx-auto cursor-pointer bg-teal-600 group flex justify-center rounded-md hover:bg-white hover:border-[2px]
@@ -151,27 +150,28 @@ export default function Detail() {
                         <div className="my-4 2lg:flex justify-between 2lg:items-center">
                             <div className="w-full h-full 2lg:mr-4">
                                 <div className="col-span-2 bg-white shadow-xl px-[20px] pt-[20px] pb-[10px] rounded-xl 2lg:w-full border-b-[1px] border-[#f1f1f1] ">
-                                    <div className="flex justify-between items-center">
+                                    <div className="flex  justify-between items-center">
                                         <div>
                                             <p className="w-[120px] mb-1">Phòng tiêu chuẩn 2 gường</p>
-                                            <div className="flex">
-                                                <UserIcon className="h-4 w-4 text-gray-500" />
-                                                <UserIcon className="h-4 w-4 text-gray-500" />
+                                            <div className="text-[#444444] text-[13px] 2xl:text-[15px] ">
+                                                <div className="flex items-center" >
+                                                    <TbAirConditioning />
+                                                    <p>Điều hòa không khí</p>
+                                                </div >
+                                                <div className="flex items-center ">
+                                                    <BsDisplay />
+                                                    <p>Televison</p>
+                                                </div >
+                                                <div className="flex items-center">
+                                                    <BsWifi />
+                                                    <p>Free Wifi</p>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="text-[#444444] text-[13px] 2xl:text-[15px] ">
-                                            <div className="flex items-center" >
-                                                <TbAirConditioning />
-                                                <p>Điều hòa không khí</p>
-                                            </div >
-                                            <div className="flex items-center ">
-                                                <BsDisplay />
-                                                <p>Televison</p>
-                                            </div >
-                                            <div className="flex items-center">
-                                                <BsWifi />
-                                                <p>Free Wifi</p>
-                                            </div>
+
+                                        <div className="flex flex-wrap w-[32px]">
+                                            <UserIcon className="h-4 w-4 text-gray-500" />
+                                            <UserIcon className="h-4 w-4 text-gray-500" />
                                         </div>
                                         <p className="text-teal-600 text-[20px]">$230<span className="text-teal-400 text-[16px]">
                                             /Night

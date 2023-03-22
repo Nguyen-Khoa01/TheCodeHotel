@@ -8,6 +8,14 @@ import { DatePicker, Space, Input } from 'antd';
 import Resizable from '../component/Slider'
 import SliderGuests from "@/component/SliderGuests";
 import Footer from "@/component/Footer";
+import type { RangePickerProps } from 'antd/es/date-picker';
+import dayjs from 'dayjs';
+
+
+
+const { RangePicker } = DatePicker;
+
+
 
 const Home: React.FC = () => {
 
@@ -50,6 +58,15 @@ const Home: React.FC = () => {
     const [numberChilren, setNumberChilren] = useState(0)
 
 
+    const disabledDate: RangePickerProps['disabledDate'] = (current) => {
+        return current && current < dayjs().endOf('day');
+    };
+
+
+    // const handleSearch = (){
+
+    // }
+
     return (
         <div className="overflow-hidden">
             <div className="border-left select-none mb-28 ">
@@ -80,16 +97,11 @@ const Home: React.FC = () => {
                             <SelectComponent />
                         </div>
                         <div className="flex flex-col ml-2">
-                            <p className="mb-3 text-center">Check In</p>
-                            <Space direction="vertical" size={12} className="lg:w-[110px] w-[150px]">
-                                <DatePicker size="large" />
-                            </Space>
-                        </div>
-                        <div className="flex flex-col ml-2">
-                            <p className="mb-3 text-center ">Check Out</p>
-                            <Space direction="vertical" className="lg:w-[110px] w-[150px]">
-                                <DatePicker size="large" />
-                            </Space>
+                            <div className="flex justify-around mb-3">
+                                <p>Checkin</p>
+                                <p>Checkout</p>
+                            </div>
+                            <RangePicker disabledDate={disabledDate} size="large" />
                         </div>
                         <div className="flex flex-col ml-2 ">
                             <span className="text-center">Aduts</span>
@@ -107,7 +119,7 @@ const Home: React.FC = () => {
                                 <PlusCircleIcon onClick={() => setNumberChilren(prev => prev + 1)} className="h-6 w-6 text-gray-500" />
                             </div>
                         </div>
-                        <div className="w-14 h-14 bg-teal-600 rounded-xl flex justify-center items-center hover:bg-[#4096ff] transition-all duration-150">
+                        <div className="w-14 h-14 bg-teal-600 rounded-xl flex justify-center items-center hover:bg-[#4096ff] transition-all duration-150" >
                             <MagnifyingGlassIcon className="h-6 w-6 text-white" />
                         </div>
 
@@ -217,4 +229,8 @@ export default Home
 
 
 
+
+function moment(startDate: boolean, arg1: string) {
+    throw new Error("Function not implemented.");
+}
 // 1px solid #d9d9d9

@@ -4,14 +4,16 @@
 
 .slick-slide {
     padding: 0 10px;
+
+}
+
+.ant-col.ant-form-item-label label {
+    font-size: 16px;
+    height: 36px !important;
 }
 
 .ant-form-item {
-    margin-bottom: 12px;
-}
-
-.ant-form-item-required {
-    font-size: 16px !important;
+    margin-bottom: 6px;
 }
 
 .ant-checkbox {

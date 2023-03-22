@@ -1,13 +1,22 @@
 import React from "react";
 import { Select } from "antd";
 
+const onChange = (value: string) => {
+  const Selectvalue = value
+}
+
+
 
 const SelectComponent: React.FC = () => (
+
+
+
   <Select
     showSearch
     size='large'
     className="w-[150px]"
     placeholder="Choose"
+    onChange={onChange}
     optionFilterProp="children"
     filterOption={(input, option) => (option?.label ?? '').includes(input)}
     filterSort={(optionA, optionB) =>

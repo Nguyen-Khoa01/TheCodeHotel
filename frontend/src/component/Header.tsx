@@ -50,15 +50,15 @@ export default function Header() {
         <div className="flex items-center uppercase text-sm justify-end 2md:hidden">
 
           <UserIcon className="h-5 w-5 mr-1 text-gray-500 lg:h-4 lg:w-4" />
-          <Link href="/login">
+          <Link href="/Login">
             <span>Login</span>
           </Link>
-          <Link href="/register">
+          <Link href="/Register">
             <span>/Register</span>
           </Link>
 
           <div className=" bg-teal-600 h-12 w-32 text-center rounded-md ml-4 text-white lg:w-20 lg:h-8">
-            <Link href="/booking">
+            <Link href="/Checkout">
               <span className="leading-8 text-[13px]">BOOK NOW</span>
             </Link>
           </div>

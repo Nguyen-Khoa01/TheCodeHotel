@@ -2,9 +2,16 @@ import Header from "@/component/Header"
 import Footer from "@/component/Footer"
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import Title from "@/component/Title";
+import teamMask from '../../assets/images/teamMask.png'
+
 
 export default function AboutUs() {
+
+
+
     return (
+
+
         <div>
             <Header />
             <Title />
@@ -50,10 +57,12 @@ export default function AboutUs() {
                 <div className="w-[1300px]  mx-auto ">
                     <h1>Hard Working Team</h1>
                     <div>
-                        <div className="relative">
+                        <div className=" w-1/4">
 
-                            <img alt="img" className="w-40 h-56" src="https://bytesed.com/tf/beyond-hotel/beyond_hotel/assets/img/single-page/team1.jpg" style={{ WebkitMaskImage: `url(https://bytesed.com/tf/beyond-hotel/beyond_hotel/assets/img/single-page/team-mask.png)`, WebkitMaskSize: 'contain', WebkitMaskPosition: 'center top', WebkitMaskRepeat: 'no-repeat' }}></img>
-
+                            <div className="" style={{ background: `url(https://bytesed.com/tf/beyond-hotel/beyond_hotel/assets/img/single-page/team1.jpg) `, backgroundRepeat: 'no-repeat' }}>
+                                <img alt="img" className="w-[288px]  h-[269px]" src="https://bytesed.com/tf/beyond-hotel/beyond_hotel/assets/img/single-page/team-mask.png"
+                                ></img>
+                            </div>
                             <div>
 
                             </div>

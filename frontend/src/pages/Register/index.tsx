@@ -10,6 +10,7 @@ import {
     Input,
     Select,
 } from 'antd';
+import Link from "next/link";
 
 
 const { Option } = Select;
@@ -25,11 +26,13 @@ export default function Register() {
         </Form.Item>
     );
     return (
-        <div className="bg-white shadow-2xl max-w-[1300px] mx-auto rounded-xl overflow-hidden grid grid-cols-11 gap-x-14 mt-[90px]">
+        <div className="bg-white shadow-2xl max-w-[1300px] mx-auto rounded-xl overflow-hidden 
+                grid grid-cols-11 gap-x-14 mt-[90px] 2xl:mx-[30px] xl:gap-x-5 2md:grid-cols-1
+                lg:max-w-[720px] md:max-w-[540px]">
             <div className="col-span-6 ">
                 <img className="h-full" src="https://cf.bstatic.com/static/img/twitter-image-else/566c7081f1deeaca39957e96365c3908f83b95af.jpg"></img>
             </div>
-            <div className="p-[30px] col-span-5">
+            <div className="p-[30px] col-span-5 ">
                 <Form size='large' layout="vertical" className="w-full col-span-8 2xl:col-span-7 2md:col-span-12 "
                     initialValues={{ prefix: '84' }} style={{ maxWidth: 600 }}
 
@@ -37,73 +40,81 @@ export default function Register() {
 
                     <h1 className="text-[24px] font-semibold mb-2">Welcome</h1>
                     <div className="grid grid-cols-2 gap-x-2">
-                        <Form.Item
-                            name="FirstName"
-                            label="FirstName"
-                            rules={[{ required: true, message: 'Please input your FirstName!', whitespace: true }]}
-                            className="text-[16px]"
-                        >
-                            <Input />
+                        <Form.Item label="FirstName">
+                            <Form.Item
+                                name="FirstName"
+
+                                rules={[{ required: true, message: 'Please input your FirstName!', whitespace: true }]}
+                                className="text-[16px]"
+                            >
+                                <Input />
+                            </Form.Item>
                         </Form.Item>
 
-                        <Form.Item
-                            name="LastName"
-                            label="LastName"
-                            rules={[{ required: true, message: 'Please input your LastName!', whitespace: true }]}
-                            className=""
-                        >
-                            <Input />
+                        <Form.Item label="LastName">
+                            <Form.Item
+                                name="LastName"
+                                rules={[{ required: true, message: 'Please input your LastName!', whitespace: true }]}
+                                className=""
+                            >
+                                <Input />
+                            </Form.Item>
                         </Form.Item>
 
-                        <Form.Item
-                            name="UserName"
-                            label="UserName"
-                            rules={[{ required: true, message: 'Please input your Username!', whitespace: true }]}
-                            className="col-span-2"
-                        >
-                            <Input />
+                        <Form.Item label="UserName " className="col-span-2">
+
+                            <Form.Item
+                                name="UserName"
+                                rules={[{ required: true, message: 'Please input your Username!', whitespace: true }]}
+                            >
+                                <Input />
+                            </Form.Item>
                         </Form.Item>
 
-                        <Form.Item
-                            name="email"
-                            label="E-mail"
-                            rules={[
-                                {
-                                    type: 'email',
-                                    message: 'The input is not valid E-mail!',
-                                },
-                                {
-                                    required: true,
-                                    message: 'Please input your E-mail!',
-                                },
-                            ]}
-                            className="col-span-2"
-                        >
-                            <Input />
+                        <Form.Item label="E-mail" className="col-span-2">
+                            <Form.Item
+                                name="email"
+                                rules={[
+                                    {
+                                        type: 'email',
+                                        message: 'The input is not valid E-mail!',
+                                    },
+                                    {
+                                        required: true,
+                                        message: 'Please input your E-mail!',
+                                    },
+                                ]}
+                            >
+                                <Input />
+                            </Form.Item>
                         </Form.Item>
 
-                        <Form.Item
-                            name="phone"
-                            label="Phone Number"
-                            rules={[{ required: true, message: 'Please input your phone number!' }]}
-                            className="col-span-2"
-                        >
-                            <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+                        <Form.Item label="Phone Number" className="col-span-2">
+                            <Form.Item
+                                name="phone"
+                                rules={[{ required: true, message: 'Please input your phone number!' }]}
+                            >
+                                <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+                            </Form.Item>
                         </Form.Item>
 
-                        <Form.Item
-                            label="Password"
-                            name="password"
-                            rules={[{ required: true, message: 'Please input your password!' }]}
-                        >
-                            <Input.Password />
+                        <Form.Item label="Password">
+                            <Form.Item
+                                name="password"
+                                rules={[{ required: true, message: 'Please input your password!' }]}
+                            >
+                                <Input.Password />
+                            </Form.Item>
                         </Form.Item>
-                        <Form.Item
-                            label="ComfirPassword"
-                            name="ComfirPassword"
-                            rules={[{ required: true, message: 'Please input your ComfirPassword!' }]}
-                        >
-                            <Input.Password />
+
+                        <Form.Item label="ComfirPassword">
+                            <Form.Item
+
+                                name="ComfirPassword"
+                                rules={[{ required: true, message: 'Please input your ComfirPassword!' }]}
+                            >
+                                <Input.Password />
+                            </Form.Item>
                         </Form.Item>
                         <Form.Item
                             className="col-span-2 "
@@ -121,7 +132,7 @@ export default function Register() {
                         </Form.Item>
                     </div>
                 </Form>
-                <h1>Already have an account? <a href="">Login</a></h1>
+                <h1 className="mt-2">Already have an account? <Link href="/Login">Login</Link></h1>
             </div>
         </div>
     )

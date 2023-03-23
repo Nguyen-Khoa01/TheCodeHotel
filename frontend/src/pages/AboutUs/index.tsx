@@ -5,6 +5,32 @@ import Title from "@/component/Title";
 import teamMask from '../../assets/images/teamMask.png'
 
 
+const myteam = [
+    {
+        Name: 'Riyad Hossain',
+        Position: 'Founder & Ceo',
+        image: 'https://bytesed.com/tf/beyond-hotel/beyond_hotel/assets/img/single-page/team1.jpg'
+    },
+    {
+        Name: 'Riyad Hossain',
+        Position: 'Founder & Ceo',
+        image: 'https://bytesed.com/tf/beyond-hotel/beyond_hotel/assets/img/single-page/team2.jpg'
+    },
+    {
+        Name: 'Riyad Hossain',
+        Position: 'Founder & Ceo',
+        image: 'https://bytesed.com/tf/beyond-hotel/beyond_hotel/assets/img/single-page/team3.jpg'
+    },
+    {
+        Name: 'Riyad Hossain',
+        Position: 'Founder & Ceo',
+        image: 'https://bytesed.com/tf/beyond-hotel/beyond_hotel/assets/img/single-page/team4.jpg'
+    },
+
+]
+
+
+
 export default function AboutUs() {
 
 
@@ -55,18 +81,24 @@ export default function AboutUs() {
                     </div>
                 </div>
                 <div className="w-[1300px]  mx-auto ">
-                    <h1>Hard Working Team</h1>
-                    <div>
-                        <div className=" w-1/4">
+                    <div className="relative">
+                        <h1 className="text-center text-[36px] my-20">Hard Working Team</h1>
+                        <div className="h-[19px] w-[322px] absolute top-14 left-1/2 -translate-x-1/2" style={{ backgroundImage: 'url(https://bytesed.com/tf/beyond-hotel/beyond_hotel/assets/img/section-shapes2.svg)', backgroundRepeat: 'no-repeat' }}></div>
+                    </div>
+                    <div className="grid grid-cols-12 gap-x-6">
+                        {
+                            myteam.map((item, key) => (
+                                <div key={key} className="col-span-3">
+                                    <img alt="img" className="rounded-full" src={item.image}
+                                    />
+                                    <div className="flex flex-col items-center">
+                                        <h1 className="font-medium text-[24px] mt-6 mb-1">{item.Name}</h1>
+                                        <p className="text-[#999]">{item.Position}</p>
+                                    </div>
+                                </div>
+                            ))
+                        }
 
-                            <div className="" style={{ background: `url(https://bytesed.com/tf/beyond-hotel/beyond_hotel/assets/img/single-page/team1.jpg) `, backgroundRepeat: 'no-repeat' }}>
-                                <img alt="img" className="w-[288px]  h-[269px]" src="https://bytesed.com/tf/beyond-hotel/beyond_hotel/assets/img/single-page/team-mask.png"
-                                ></img>
-                            </div>
-                            <div>
-
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

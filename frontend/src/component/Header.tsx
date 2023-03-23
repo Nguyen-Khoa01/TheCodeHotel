@@ -15,7 +15,7 @@ const mainNav = [
   },
   {
     display: 'Contact',
-    path: "/contact"
+    path: "/Contact"
   },
 ]
 

@@ -3,11 +3,12 @@ import { Select } from "antd";
 
 const onChange = (value: string) => {
   const Selectvalue = value
+  console.log(Selectvalue)
 }
 
 
 
-const SelectComponent: React.FC = () => (
+const SelectComponent = () => (
 
 
 

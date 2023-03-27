@@ -8,9 +8,10 @@ import { DatePicker, Space, Input } from 'antd';
 import Resizable from '../component/Slider'
 import SliderGuests from "@/component/SliderGuests";
 import Footer from "@/component/Footer";
-import type { RangePickerProps } from 'antd/es/date-picker';
+import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker';
 import dayjs from 'dayjs';
-
+import { Select } from "antd";
+import Link from "next/link";
 
 
 const { RangePicker } = DatePicker;
@@ -54,18 +55,46 @@ const Home: React.FC = () => {
 
     //search
 
+    const selectRef = useRef()
+
     const [numberAduts, setNumberAduts] = useState(0)
     const [numberChilren, setNumberChilren] = useState(0)
 
+    const [checkIn, setCheckIn] = useState('')
+    const [checkOut, setCheckOut] = useState('')
+
+    const [selectCity, setSelectCity] = useState('')
 
     const disabledDate: RangePickerProps['disabledDate'] = (current) => {
         return current && current < dayjs().endOf('day');
     };
 
 
-    // const handleSearch = (){
+    const handleSearch = () => {
+        const Search: object = {
+            City: selectCity,
+            Adutls: numberAduts,
+            Children: numberChilren,
+            checkIn: checkIn,
+            checkOut: checkOut,
+        }
 
-    // }
+        localStorage.setItem('Search', JSON.stringify(Search))
+    }
+
+    const onChange = (
+        dateString: DatePickerProps["value"] | RangePickerProps["value"],
+        value: [string, string]
+    ) => {
+        setCheckIn(value[0])
+        setCheckOut(value[1])
+        console.log("Formatted Selected Time: ", value);
+    };
+
+    const handleSelectCity = (value: string) => {
+        setSelectCity(value)
+    }
+
 
     return (
         <div className="overflow-hidden">
@@ -87,6 +116,7 @@ const Home: React.FC = () => {
                         <ChevronRightIcon className="h-12 w-12 text-white" />
                     </div>
 
+
                 </div>
                 <div className="relative font-serif ">
                     <img className="absolute -top-16 " src="https://htmldesigntemplates.com/html/travelin/images/shape-pat.png" alt="" />
@@ -94,14 +124,54 @@ const Home: React.FC = () => {
                              text-zinc-700 items-center drop-shadow-xl xl:w-full">
                         <div className="flex flex-col ml-2">
                             <label className="mb-3 text-center ">Location</label>
-                            <SelectComponent />
+                            <Select
+                                showSearch
+                                size='large'
+                                className="w-[150px]"
+                                placeholder="Choose"
+                                onChange={handleSelectCity}
+                                optionFilterProp="children"
+                                filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                                filterSort={(optionA, optionB) =>
+                                    (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                                }
+                                options={[
+                                    {
+                                        value: '1',
+                                        label: 'Vũng Tàu',
+                                    },
+                                    {
+                                        value: '2',
+                                        label: 'Hà Nội',
+                                    },
+                                    {
+                                        value: '3',
+                                        label: 'Hồ Chí Minh',
+                                    },
+                                    {
+                                        value: '4',
+                                        label: 'Đà Nẵng',
+                                    },
+                                    {
+                                        value: '5',
+                                        label: 'Hải Phòng',
+                                    },
+                                    {
+                                        value: '6',
+                                        label: 'Đà lạt',
+                                    },
+                                ]}
+                            />
                         </div>
                         <div className="flex flex-col ml-2">
                             <div className="flex justify-around mb-3">
                                 <p>Checkin</p>
                                 <p>Checkout</p>
                             </div>
-                            <RangePicker disabledDate={disabledDate} size="large" />
+                            <RangePicker disabledDate={disabledDate} size="large"
+                                onChange={onChange}
+
+                            />
                         </div>
                         <div className="flex flex-col ml-2 ">
                             <span className="text-center">Aduts</span>
@@ -119,8 +189,11 @@ const Home: React.FC = () => {
                                 <PlusCircleIcon onClick={() => setNumberChilren(prev => prev + 1)} className="h-6 w-6 text-gray-500" />
                             </div>
                         </div>
-                        <div className="w-14 h-14 bg-teal-600 rounded-xl flex justify-center items-center hover:bg-[#4096ff] transition-all duration-150" >
-                            <MagnifyingGlassIcon className="h-6 w-6 text-white" />
+                        <div className="w-14 h-14 bg-teal-600 rounded-xl flex justify-center items-center hover:bg-[#4096ff] transition-all duration-150" onClick={handleSearch} >
+                            <Link href='/ListHotel'  >
+
+                                <MagnifyingGlassIcon className="h-6 w-6 text-white" />
+                            </Link>
                         </div>
 
                     </div>
@@ -230,7 +303,4 @@ export default Home
 
 
 
-function moment(startDate: boolean, arg1: string) {
-    throw new Error("Function not implemented.");
-}
-// 1px solid #d9d9d9
+

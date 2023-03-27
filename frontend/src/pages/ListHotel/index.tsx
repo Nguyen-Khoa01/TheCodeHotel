@@ -13,16 +13,26 @@ import { BsBorderAll, BsList, BsWifi, BsCup, BsFlower1 } from "react-icons/bs";
 import { RiParkingBoxLine } from "react-icons/ri"
 import { MdSmokeFree } from 'react-icons/md'
 import { BiSwim } from 'react-icons/bi'
+import { Select } from "antd";
+import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker';
 
 import type { PaginationProps } from 'antd';
 import { Pagination } from 'antd';
+import dayjs from 'dayjs';
+
+import HotelData from "@/assets/images/fakeData";
+
+const { RangePicker } = DatePicker;
 
 export default function Rooms() {
 
     const { Search } = Input;
 
-    const [numberAduts, setNumberAduts] = useState(0)
-    const [numberChilren, setNumberChilren] = useState(0)
+    const getSreach = JSON.parse((localStorage.getItem("Search") || ""))
+
+
+    const [numberAduts, setNumberAduts] = useState(getSreach.Adutls)
+    const [numberChilren, setNumberChilren] = useState(getSreach.Children)
 
     const [minPrice, setMinPrice] = useState(2)
     const [maxPrice, setMaxPrice] = useState(5)
@@ -33,7 +43,7 @@ export default function Rooms() {
     }
 
     const onChangeCheckBox = (checkedValues: CheckboxValueType[]) => {
-        console.log('checked = ', checkedValues);
+        filterSelect('AMENITIES', 'checked', checkedValues)
     };
 
     const [current, setCurrent] = useState(3);
@@ -43,45 +53,135 @@ export default function Rooms() {
         setCurrent(page);
     };
 
+    const disabledDate: RangePickerProps['disabledDate'] = (current) => {
+        return current && current < dayjs().endOf('day');
+    };
+
+    const initFiler = {
+        price: [],
+        amenities: [],
+        star: [],
+    }
+
+
+    const HotelList = HotelData.getAllHotels()
+
+    const [Hotels, setHotels] = useState(HotelList)
+
+    const [filter, setFilter] = useState(initFiler)
+
+    const filterSelect = (type: any, checked: any, item: any) => {
+        if (checked) {
+            switch (type) {
+                case 'PRICE':
+                    setFilter({ ...filter, price: [...filter.price] })
+                    break
+                case 'AMENITIES':
+                    setFilter({ ...filter, amenities: [...filter.amenities,] })
+                    break
+                case 'STAR':
+                    setFilter({ ...filter, star: [...filter.star] })
+                    break
+                default:
+            }
+        }
+        else {
+            switch (type) {
+                case 'PRICE':
+                    const newPrice = filter.price.filter(e => e !== item.priceValue)
+                    setFilter({ ...filter, price: newPrice })
+                    break
+                case 'AMENITIES':
+                    const newAmenities = filter.amenities.filter(e => e !== item)
+                    setFilter({ ...filter, amenities: newAmenities })
+                    break
+                case 'STAR':
+                    const newStar = filter.star.filter(e => e !== item.starValue)
+                    setFilter({ ...filter, star: newStar })
+                    break
+                default:
+            }
+        }
+    }
+    console.log(filter)
+
     return (
+
         <div className="">
             <Header />
             <Title />
             <div className="bg-[#F2F4F7] grid grid-cols-6 xl:grid-cols-1 ">
+
                 <div className="col-start-2 col-span-4 xl:col-span-1 2xl:mx-[35px] 2md:mx-auto 2md:w-full lg:max-w-[720px] md:max-w-[540px]">
                     <div className="flex py-[30px] mx-auto rounded bg-white  justify-around text-lg mt-7
                         text-zinc-700 items-center drop-shadow-xl 2md:grid lg:grid-cols-3 lg:gap-4 2md:text-[15px]
                              md:grid-cols-1">
                         <div className="flex flex-col ml-2 2md:items-baseline md:flex-row md:justify-around">
                             <label className="mb-3 text-center ">Location</label>
-                            <SelectComponent />
+                            <Select
+                                showSearch
+                                size='large'
+                                value={getSreach.City}
+                                className="w-[150px]"
+                                placeholder="Choose"
+                                optionFilterProp="children"
+                                filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                                filterSort={(optionA, optionB) =>
+                                    (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                                }
+                                options={[
+                                    {
+                                        value: '1',
+                                        label: 'Vũng Tàu',
+                                    },
+                                    {
+                                        value: '2',
+                                        label: 'Hà Nội',
+                                    },
+                                    {
+                                        value: '3',
+                                        label: 'Hồ Chí Minh',
+                                    },
+                                    {
+                                        value: '4',
+                                        label: 'Đà Nẵng',
+                                    },
+                                    {
+                                        value: '5',
+                                        label: 'Hải Phòng',
+                                    },
+                                    {
+                                        value: '6',
+                                        label: 'Đà lạt',
+                                    },
+                                ]}
+                            />
                         </div>
+
                         <div className="flex flex-col ml-2 2md:items-baseline md:flex-row md:justify-around">
-                            <p className="mb-3 text-center">Check In</p>
-                            <Space direction="vertical" className=" w-[150px]">
-                                <DatePicker size="large" />
-                            </Space>
-                        </div>
-                        <div className="flex flex-col ml-2 2md:items-baseline md:flex-row md:justify-around">
-                            <p className="mb-3 text-center ">Check Out</p>
-                            <Space direction="vertical" className="w-[150px]">
-                                <DatePicker size="large" />
-                            </Space>
+                            <div className="flex justify-around mb-3">
+                                <p>Checkin</p>
+                                <p>Checkout</p>
+                            </div>
+                            <RangePicker disabledDate={disabledDate} size="large"
+                                value={[dayjs(getSreach.checkIn), dayjs(getSreach.checkOut)]}
+
+                            />
                         </div>
                         <div className="flex flex-col ml-2 2md:items-baseline md:flex-row md:justify-around">
                             <span className="text-center">Aduts</span>
                             <div className="hover:border-[#4096ff] flex w-[150px] h-10 justify-around mt-3 items-center border-[1px] rounded-lg border-[#d9d9d9]">
-                                <MinusCircleIcon onClick={() => setNumberAduts(prev => (numberAduts === 0 ? prev : prev - 1))} className="h-6 w-6 text-gray-500" />
+                                <MinusCircleIcon onClick={() => setNumberAduts((prev: number) => (numberAduts === 0 ? prev : prev - 1))} className="h-6 w-6 text-gray-500" />
                                 <p>{numberAduts}</p>
-                                <PlusCircleIcon onClick={() => setNumberAduts(prev => prev + 1)} className="h-6 w-6 text-gray-500" />
+                                <PlusCircleIcon onClick={() => setNumberAduts((prev: number) => prev + 1)} className="h-6 w-6 text-gray-500" />
                             </div>
                         </div>
                         <div className="flex flex-col ml-2 2md:items-baseline md:flex-row md:justify-around">
                             <span className="text-center">Chilren</span>
                             <div className="flex w-[150px] h-10 justify-around mt-3 items-center border-[1px] rounded-lg border-[#d9d9d9] hover:border-[#4096ff]">
-                                <MinusCircleIcon onClick={() => setNumberChilren(prev => (numberChilren === 0 ? prev : prev - 1))} className="h-6 w-6 text-gray-500" />
+                                <MinusCircleIcon onClick={() => setNumberChilren((prev: number) => (numberChilren === 0 ? prev : prev - 1))} className="h-6 w-6 text-gray-500" />
                                 <p>{numberChilren}</p>
-                                <PlusCircleIcon onClick={() => setNumberChilren(prev => prev + 1)} className="h-6 w-6 text-gray-500" />
+                                <PlusCircleIcon onClick={() => setNumberChilren((prev: number) => prev + 1)} className="h-6 w-6 text-gray-500" />
                             </div>
                         </div>
                         <div className="w-14 h-14 bg-teal-600 rounded-xl flex justify-center items-center hover:bg-[#4096ff] transition-all duration-150">
@@ -97,7 +197,7 @@ export default function Rooms() {
                                     <ChevronUpIcon className="h-6 w-6 text-gray-500" />
                                 </div>
                                 <div>
-                                    <Slider range={{ draggableTrack: true }} defaultValue={[20, 100]} className="my-5 mr-3" onChange={onChange} step={0.01} />
+                                    <Slider tooltip={{ open: false }} range={{ draggableTrack: true }} defaultValue={[20, 100]} className="my-5 mr-3" onChange={onChange} step={0.01} />
                                     <div className="flex text-[18px] pl-2">
                                         <p className="text-[#a1a1a1] mr-5">Price:</p>
                                         <p className="text-teal-600">${Math.floor(minPrice * 100)}</p>
@@ -118,7 +218,7 @@ export default function Rooms() {
                                     className="my-5"
                                     style={{ width: '100%' }}
                                 />
-                                <Checkbox.Group style={{ width: '100%' }} className="flex flex-col" onChange={onChangeCheckBox}>
+                                <Checkbox.Group style={{ width: '100%' }} className="flex flex-col" onChange={onChangeCheckBox} >
 
                                     <Checkbox value="Parking" className="ml-2 pb-4 text-lg" >Parking</Checkbox>
 
@@ -210,52 +310,55 @@ export default function Rooms() {
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 gap-6 md:grid-cols-1">
-                                <div className="rounded-[26px] overflow-hidden shadow-lg">
 
-                                    <div className="">
-                                        <img className="w-full" src="https://bytesed.com/tf/beyond-hotel/beyond_hotel/assets/img/single-page/hotel-grid1.jpg" />
-                                    </div>
-                                    <div className="">
-                                        <div className="border-b-[1px] border-gray-300 pt-[25px] px-[20px] pb-[20px]">
-                                            <div className="flex items-center rounded-md bg-[#0d948847] w-[100px] text-[18px] py-1 justify-center text-teal-600">
-                                                <StarIcon className="h-4 w-4" />
-                                                <p className="mx-1">4</p>
-                                                <p>(380)</p>
-                                            </div>
-                                            <h1 className="text-[22px] my-2">King Suite Room</h1>
-                                            <div className="flex  items-center">
-                                                <MapPinIcon className="h-6 w-6 text-gray-500" />
-                                                <p className="text-[18px] text-[#333] lg:text-[15px]">4140 Parker Rd. Allentown, New Mexico 31134</p>
-                                            </div>
-                                        </div>
-                                        <div className="flex px-[20px] text-[#444] items-center text-[18px] py-[10px] border-b-[1px] 
-                                            border-gray-300 justify-between">
-                                            <RiParkingBoxLine />
-                                            <BsWifi />
-                                            <BsCup />
-                                            <MdSmokeFree />
-                                            <BiSwim />
-                                            <BsFlower1 />
-                                            <p className="underline text-teal-600 text-[13px]">+8 More</p>
-                                        </div>
-                                        <div className="flex px-[20px] pt-[15px] pb-[25px] justify-between 2lg:flex-col md:flex-row">
-                                            <div>
-                                                <h1 className="text-[22px] font-medium text-teal-600">$230 <span className="text-[16px] font-normal text-teal-600">/Night</span></h1>
+                                {
+                                    Hotels.map((item, key) => (
+                                        <div key={key} className="rounded-[26px] overflow-hidden shadow-lg">
 
-                                                <div className="flex text-[#333] ">
-                                                    <p>2 Bed,</p>
-                                                    <p className="mx-2">2 Adult,</p>
-                                                    <p>2 Children</p>
+                                            <div className="">
+                                                <img className="w-full" src={item.img} />
+                                            </div>
+                                            <div className="">
+                                                <div className="border-b-[1px] border-gray-300 pt-[25px] px-[20px] pb-[20px]">
+                                                    <div className="flex items-center rounded-md bg-[#0d948847] w-[100px] text-[18px] py-1 justify-center text-teal-600">
+                                                        <StarIcon className="h-4 w-4" />
+                                                        <p className="mx-1">{item.star}</p>
+                                                        <p>(380)</p>
+                                                    </div>
+                                                    <h1 className="text-[22px] my-2">{item.title}</h1>
+                                                    <div className="flex  items-center">
+                                                        <MapPinIcon className="h-6 w-6 text-gray-500" />
+                                                        <p className="text-[18px] text-[#333] lg:text-[15px]">{item.address}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex px-[20px] text-[#444] items-center text-[18px] py-[10px] border-b-[1px] 
+                                                          border-gray-300 flex-wrap">
+                                                    {item.Amenities.map((item, key) => (
+                                                        <p className="text-[14px] mr-2">{item}</p>
+                                                    ))}
+                                                </div>
+
+                                                <div className="flex px-[20px] pt-[15px] pb-[25px] justify-between 2lg:flex-col md:flex-row">
+                                                    <div>
+                                                        <h1 className="text-[22px] font-medium text-teal-600">${item.price} <span className="text-[16px] font-normal text-teal-600">/Night</span></h1>
+
+                                                        <div className="flex text-[#333] ">
+                                                            <p>2 Bed,</p>
+                                                            <p className="mx-2">2 Adult,</p>
+                                                            <p>2 Children</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="bg-teal-600 group  rounded-md hover:bg-white hover:border-[2px]
+                                                 hover:border-teal-600 duration-700 border-[2px] xl:w-[150px] xl:mt-2">
+                                                        <p className="p-4 text-white group-hover:text-teal-600 lg:p-3">Reserve Now</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="bg-teal-600 group  rounded-md hover:bg-white hover:border-[2px]
-                                             hover:border-teal-600 duration-700 border-[2px] xl:w-[150px] xl:mt-2">
-                                                <p className="p-4 text-white group-hover:text-teal-600 lg:p-3">Reserve Now</p>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                </div>
+                                        </div>
+                                    ))
+                                }
                             </div>
 
                             {/* 1 phòng trên 1 hàng */}
@@ -459,9 +562,12 @@ export default function Rooms() {
                         </div>
                     </div>
                 </div>
+
             </div>
             <Footer />
 
         </div>
     )
 }
+
+

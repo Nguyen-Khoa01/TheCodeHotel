@@ -1,30 +1,32 @@
-import { useState } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import Header from "@/component/Header"
 import Footer from "@/component/Footer"
 import Title from "@/component/Title"
-import SelectComponent from "@/component/Select";
+import HotelData from "@/assets/images/fakeData/Hotel";
+import Amenities from "@/assets/images/fakeData/Amenities";
+import RatingHotel from "@/assets/images/fakeData/RatingHotel";
+
 import { Slider } from 'antd';
 import { PlusCircleIcon, MinusCircleIcon, MagnifyingGlassIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import { ChevronUpIcon, StarIcon } from "@heroicons/react/24/solid";
 import { DatePicker, Space, Input, Checkbox } from 'antd';
+import { BsBorderAll, BsList } from "react-icons/bs";
 
-import type { CheckboxValueType } from 'antd/es/checkbox/Group';
-import { BsBorderAll, BsList, BsWifi, BsCup, BsFlower1 } from "react-icons/bs";
-import { RiParkingBoxLine } from "react-icons/ri"
-import { MdSmokeFree } from 'react-icons/md'
-import { BiSwim } from 'react-icons/bi'
 import { Select } from "antd";
-import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker';
+import type { RangePickerProps } from 'antd/es/date-picker';
 
 import type { PaginationProps } from 'antd';
 import { Pagination } from 'antd';
 import dayjs from 'dayjs';
+import type { MenuProps } from 'antd';
+import { Menu } from 'antd';
 
-import HotelData from "@/assets/images/fakeData";
 
 const { RangePicker } = DatePicker;
 
-export default function Rooms() {
+
+
+const Rooms: React.FC = () => {
 
     const { Search } = Input;
 
@@ -35,18 +37,14 @@ export default function Rooms() {
     const [numberChilren, setNumberChilren] = useState(getSreach.Children)
 
     const [minPrice, setMinPrice] = useState(2)
-    const [maxPrice, setMaxPrice] = useState(5)
+    const [maxPrice, setMaxPrice] = useState(50)
+
+    const [current, setCurrent] = useState(3);
 
     const onChange = (newValue: Array<number>) => {
         setMinPrice(newValue[0])
         setMaxPrice(newValue[1])
     }
-
-    const onChangeCheckBox = (checkedValues: CheckboxValueType[]) => {
-        filterSelect('AMENITIES', 'checked', checkedValues)
-    };
-
-    const [current, setCurrent] = useState(3);
 
     const onChangePagination: PaginationProps['onChange'] = (page) => {
         console.log(page);
@@ -57,8 +55,12 @@ export default function Rooms() {
         return current && current < dayjs().endOf('day');
     };
 
-    const initFiler = {
-        price: [],
+    type Myfiler = {
+        amenities: string[],
+        star: number[]
+    }
+
+    const initFiler: Myfiler = {
         amenities: [],
         star: [],
     }
@@ -73,41 +75,77 @@ export default function Rooms() {
     const filterSelect = (type: any, checked: any, item: any) => {
         if (checked) {
             switch (type) {
-                case 'PRICE':
-                    setFilter({ ...filter, price: [...filter.price] })
-                    break
+
                 case 'AMENITIES':
-                    setFilter({ ...filter, amenities: [...filter.amenities,] })
+                    setFilter({ ...filter, amenities: [...filter.amenities, item.lable] })
                     break
                 case 'STAR':
-                    setFilter({ ...filter, star: [...filter.star] })
+                    setFilter({ ...filter, star: [...filter.star, item.value] })
                     break
                 default:
             }
         }
         else {
             switch (type) {
-                case 'PRICE':
-                    const newPrice = filter.price.filter(e => e !== item.priceValue)
-                    setFilter({ ...filter, price: newPrice })
-                    break
                 case 'AMENITIES':
-                    const newAmenities = filter.amenities.filter(e => e !== item)
+                    const newAmenities = filter.amenities.filter(e => e !== item.lable)
                     setFilter({ ...filter, amenities: newAmenities })
                     break
                 case 'STAR':
-                    const newStar = filter.star.filter(e => e !== item.starValue)
+                    const newStar = filter.star.filter(e => e !== item.value)
                     setFilter({ ...filter, star: newStar })
                     break
                 default:
             }
         }
     }
+
+
     console.log(filter)
+    const updateHotel = useCallback(() => {
+        let temp = HotelList
+        if (filter.amenities.length > 0) {
+            temp = temp.filter(e => {
+                const check = e.Amenities.find((e) => filter.amenities.includes(e))
+                return check !== undefined
+            })
+        }
+        if (minPrice > 0 && maxPrice < 1000) {
+            temp = temp.filter(e => e.price >= minPrice && e.price <= maxPrice)
+        }
+        if (filter.star.length > 0) {
+            temp = temp.filter(e => filter.star.includes(e.star))
+        }
+        setHotels(temp)
+        console.log(1)
+    }, [filter, HotelList, minPrice, maxPrice])
+
+    useEffect(() => {
+        updateHotel()
+    }, [updateHotel])
+
+
+    const MenuPricesRef = useRef<HTMLDivElement>(null)
+
+    const MenuAmenitiesRef = useRef<HTMLDivElement>(null)
+
+    const MenuRatingRef = useRef<HTMLDivElement>(null)
+
+    const handlePricesMenu = () => {
+        MenuPricesRef.current?.classList.toggle("hidden")
+    }
+    const handleAmenitiesMenu = () => {
+        MenuAmenitiesRef.current?.classList.toggle('hidden')
+    }
+    const handleRatingRef = () => {
+        MenuRatingRef.current?.classList.toggle('hidden')
+    }
+
 
     return (
 
         <div className="">
+
             <Header />
             <Title />
             <div className="bg-[#F2F4F7] grid grid-cols-6 xl:grid-cols-1 ">
@@ -194,100 +232,78 @@ export default function Rooms() {
                             <div className="p-[25px] bg-white rounded-2xl">
                                 <div className="flex justify-between">
                                     <p className="text-[20px]">Prices</p>
-                                    <ChevronUpIcon className="h-6 w-6 text-gray-500" />
+                                    <div onClick={handlePricesMenu}>
+                                        <ChevronUpIcon className="h-6 w-6 text-gray-500" />
+                                    </div>
                                 </div>
-                                <div>
-                                    <Slider tooltip={{ open: false }} range={{ draggableTrack: true }} defaultValue={[20, 100]} className="my-5 mr-3" onChange={onChange} step={0.01} />
+                                <div className="" ref={MenuPricesRef}>
+                                    <Slider tooltip={{ open: false }} range={{ draggableTrack: true }} defaultValue={[minPrice, maxPrice]} className="my-5 mr-3" onChange={onChange} step={0.01} />
                                     <div className="flex text-[18px] pl-2">
                                         <p className="text-[#a1a1a1] mr-5">Price:</p>
-                                        <p className="text-teal-600">${Math.floor(minPrice * 100)}</p>
+                                        <p className="text-teal-600">${Math.floor(minPrice * 10)}</p>
                                         <p>-</p>
-                                        <p className="text-teal-600">${Math.floor(maxPrice * 100)}</p>
+                                        <p className="text-teal-600">${Math.floor(maxPrice * 10)}</p>
                                     </div>
                                 </div>
                             </div>
                             <div className="p-[25px] bg-white rounded-2xl my-8">
                                 <div className="flex justify-between">
                                     <p className="text-[20px]">Amenities</p>
-                                    <ChevronUpIcon className="h-6 w-6 text-gray-500" />
+                                    <div onClick={handleAmenitiesMenu}>
+
+                                        <ChevronUpIcon className="h-6 w-6 text-gray-500" />
+                                    </div>
                                 </div>
-                                <Search
-                                    placeholder="input search text"
-                                    size="large"
-                                    onSearch={value => console.log(value)}
-                                    className="my-5"
-                                    style={{ width: '100%' }}
-                                />
-                                <Checkbox.Group style={{ width: '100%' }} className="flex flex-col" onChange={onChangeCheckBox} >
+                                <div ref={MenuAmenitiesRef}>
+                                    <Search
+                                        placeholder="input search text"
+                                        size="large"
+                                        onSearch={value => console.log(value)}
+                                        className="my-5"
+                                        style={{ width: '100%' }}
+                                    />
+                                    <div style={{ width: '100%' }} className="flex flex-col"  >
 
-                                    <Checkbox value="Parking" className="ml-2 pb-4 text-lg" >Parking</Checkbox>
+                                        {
+                                            Amenities.map((item, key) => (
+                                                <Checkbox
+                                                    className="text-[18px]"
+                                                    key={key}
+                                                    value={item.value}
+                                                    onChange={(e) => filterSelect('AMENITIES', e.target.checked, item)}
+                                                >{item.lable}</Checkbox>
+                                            ))
 
-                                    <Checkbox value="Room Service" className=" pb-4 text-lg">Room Service</Checkbox>
-
-                                    <Checkbox value="Free wifiC" className=" pb-4 text-lg">Free wifi</Checkbox>
-
-                                    <Checkbox value="Healthy Breakfast" className=" pb-4 text-lg">Healthy Breakfast</Checkbox>
-
-                                    <Checkbox value="Swimming Pool" className=" pb-4 text-lg">Swimming Pool</Checkbox>
-
-                                    <Checkbox value="Mini Fridge" className=" pb-4 text-lg">Mini Fridge</Checkbox>
-
-                                    <Checkbox value="Garder View" className=" pb-4 text-lg">Garder View</Checkbox>
+                                        }
 
 
-                                </Checkbox.Group>
+                                    </div>
+                                </div>
 
-                                <p className="text-teal-600 underline text-[18px] text-center mt-2 cursor-pointer">6 More Amenities</p>
+
                             </div>
                             <div className="p-[25px] bg-white rounded-2xl">
                                 <div className="flex justify-between">
                                     <p className="text-[20px]">Filter By Rating</p>
-                                    <ChevronUpIcon className="h-6 w-6 text-gray-500" />
+                                    <div onClick={handleRatingRef}>
+                                        <ChevronUpIcon className="h-6 w-6 text-gray-500" />
+
+                                    </div>
                                 </div>
 
-                                <div className="flex flex-col mt-4">
+                                <div className="flex flex-col mt-4 " ref={MenuRatingRef}>
 
-                                    <Checkbox value="5" className="ml-2 pb-2 text-lg items-center" >
-                                        <div className="flex">
-                                            <StarIcon className="h-6 w-6 text-yellow-400" />
-                                            <StarIcon className="h-6 w-6 text-yellow-400" />
-                                            <StarIcon className="h-6 w-6 text-yellow-400" />
-                                            <StarIcon className="h-6 w-6 text-yellow-400" />
-                                            <StarIcon className="h-6 w-6 text-yellow-400" />
-                                        </div>
-                                    </Checkbox>
-
-                                    <Checkbox value="4" className=" pb-2 text-lg items-center">
-                                        <div className="flex">
-                                            <StarIcon className="h-5 w-5 text-yellow-400" />
-                                            <StarIcon className="h-5 w-5 text-yellow-400" />
-                                            <StarIcon className="h-5 w-5 text-yellow-400" />
-                                            <StarIcon className="h-5 w-5 text-yellow-400" />
-                                        </div>
-                                    </Checkbox>
-
-                                    <Checkbox value="3" className=" pb-2 text-lg items-center">
-                                        <div className="flex">
-                                            <StarIcon className="h-5 w-5 text-yellow-400" />
-                                            <StarIcon className="h-5 w-5 text-yellow-400" />
-                                            <StarIcon className="h-5 w-5 text-yellow-400" />
-                                        </div>
-                                    </Checkbox>
-
-                                    <Checkbox value="2" className=" pb-2 text-lg items-center">
-                                        <div className="flex">
-                                            <StarIcon className="h-5 w-5 text-yellow-400" />
-                                            <StarIcon className="h-5 w-5 text-yellow-400" />
-                                        </div>
-                                    </Checkbox>
-
-                                    <Checkbox value="4" className=" pb-2 text-lg items-center">
-                                        <div className="flex">
-                                            <StarIcon className="h-5 w-5 text-yellow-400" />
-                                        </div>
-                                    </Checkbox>
-
-
+                                    {
+                                        RatingHotel.map((item, key) => (
+                                            <Checkbox value={item.value}
+                                                key={key}
+                                                onChange={(e) => filterSelect('STAR', e.target.checked, item)}
+                                                className="text-[18px]"
+                                            >
+                                                {item.lable}
+                                            </Checkbox>
+                                        ))
+                                    }
 
 
                                 </div>
@@ -316,7 +332,7 @@ export default function Rooms() {
                                         <div key={key} className="rounded-[26px] overflow-hidden shadow-lg">
 
                                             <div className="">
-                                                <img className="w-full" src={item.img} />
+                                                <img className="w-full h-[192px]" src={item.img} />
                                             </div>
                                             <div className="">
                                                 <div className="border-b-[1px] border-gray-300 pt-[25px] px-[20px] pb-[20px]">
@@ -341,7 +357,7 @@ export default function Rooms() {
 
                                                 <div className="flex px-[20px] pt-[15px] pb-[25px] justify-between 2lg:flex-col md:flex-row">
                                                     <div>
-                                                        <h1 className="text-[22px] font-medium text-teal-600">${item.price} <span className="text-[16px] font-normal text-teal-600">/Night</span></h1>
+                                                        <h1 className="text-[22px] font-medium text-teal-600">${Math.floor(item.price * 10)} <span className="text-[16px] font-normal text-teal-600">/Night</span></h1>
 
                                                         <div className="flex text-[#333] ">
                                                             <p>2 Bed,</p>
@@ -570,4 +586,5 @@ export default function Rooms() {
     )
 }
 
+export default Rooms
 

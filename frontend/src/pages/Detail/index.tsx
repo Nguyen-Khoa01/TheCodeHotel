@@ -3,25 +3,43 @@ import { useState } from "react";
 import Header from "@/component/Header"
 import Footer from "@/component/Footer"
 import Title from "@/component/Title"
-
+import Rooms from "@/assets/images/fakeData/Rooms";
 
 import { MapPinIcon, MinusCircleIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
-import { ChevronUpIcon, StarIcon, UserIcon } from "@heroicons/react/24/solid";
-import { DatePicker, Space, Input, Checkbox, Select } from 'antd';
-import { TbAirConditioning, TbBeach } from 'react-icons/tb';
+import { StarIcon, UserIcon } from "@heroicons/react/24/solid";
+import { DatePicker, Select } from 'antd';
+import { TbAirConditioning } from 'react-icons/tb';
 import { BsWifi, BsCup, BsFlower1, BsDisplay } from "react-icons/bs";
 import { RiParkingBoxLine } from "react-icons/ri"
 import { MdSmokeFree } from 'react-icons/md'
 import { BiSwim } from 'react-icons/bi'
-
+import dayjs from 'dayjs';
 
 const { RangePicker } = DatePicker;
 
 export default function Detail() {
 
-    const [numberAduts, setNumberAduts] = useState(0)
-    const [numberChilren, setNumberChilren] = useState(0)
+    const getSreach = JSON.parse((localStorage.getItem("Search") || ""))
+
+    const [numberAduts, setNumberAduts] = useState(getSreach.Adutls)
+    const [numberChilren, setNumberChilren] = useState(getSreach.Children)
     const [numberRooms, setNumberRooms] = useState(0)
+
+    const [Total, setTotal] = useState(0)
+    const myArr: number[] = []
+    const handleChange = (price: string, value: string) => {
+
+        // setTotal(prev => prev + (Number(price) * Number(value)))
+        const newprice = Number(price) * Number(value)
+        if (myArr.length > 1) {
+            myArr.length = 0
+        }
+        else {
+            myArr.push(newprice)
+            setTotal(myArr.reduce((a, b) => a + b))
+        }
+
+    }
 
     return (
         <div>
@@ -115,22 +133,22 @@ export default function Detail() {
                                     <p>Checkin</p>
                                     <p>Checkout</p>
                                 </div>
-                                <RangePicker size="large" />
+                                <RangePicker size="large" value={[dayjs(getSreach.checkIn), dayjs(getSreach.checkOut)]} />
                             </div>
                             <div className="flex ml-2 items-center justify-between">
                                 <span className="text-center">Aduts</span>
                                 <div className="hover:border-[#4096ff] flex w-[150px] h-10 justify-around mt-3 items-center border-[1px] rounded-lg border-[#d9d9d9]">
-                                    <MinusCircleIcon onClick={() => setNumberAduts(prev => (numberAduts === 0 ? prev : prev - 1))} className="h-6 w-6 text-gray-500" />
+                                    <MinusCircleIcon onClick={() => setNumberAduts((prev: number) => (numberAduts === 0 ? prev : prev - 1))} className="h-6 w-6 text-gray-500" />
                                     <p>{numberAduts}</p>
-                                    <PlusCircleIcon onClick={() => setNumberAduts(prev => prev + 1)} className="h-6 w-6 text-gray-500" />
+                                    <PlusCircleIcon onClick={() => setNumberAduts((prev: number) => prev + 1)} className="h-6 w-6 text-gray-500" />
                                 </div>
                             </div>
                             <div className="flex  ml-2 items-center justify-between">
                                 <span className="text-center">Chilren</span>
                                 <div className="flex w-[150px] h-10 justify-around mt-3 items-center border-[1px] rounded-lg border-[#d9d9d9] hover:border-[#4096ff]">
-                                    <MinusCircleIcon onClick={() => setNumberChilren(prev => (numberChilren === 0 ? prev : prev - 1))} className="h-6 w-6 text-gray-500" />
+                                    <MinusCircleIcon onClick={() => setNumberChilren((prev: number) => (numberChilren === 0 ? prev : prev - 1))} className="h-6 w-6 text-gray-500" />
                                     <p>{numberChilren}</p>
-                                    <PlusCircleIcon onClick={() => setNumberChilren(prev => prev + 1)} className="h-6 w-6 text-gray-500" />
+                                    <PlusCircleIcon onClick={() => setNumberChilren((prev: number) => prev + 1)} className="h-6 w-6 text-gray-500" />
                                 </div>
                             </div>
                             <div className="flex  ml-2 items-center justify-between">
@@ -149,56 +167,55 @@ export default function Detail() {
                         </div>
                         <div className="my-4 2lg:flex justify-between 2lg:items-center">
                             <div className="w-full h-full 2lg:mr-4">
-                                <div className="col-span-2 bg-white shadow-xl px-[20px] pt-[20px] pb-[10px] rounded-xl 2lg:w-full border-b-[1px] border-[#f1f1f1] ">
-                                    <div className="flex  justify-between items-center">
-                                        <div>
-                                            <p className="w-[120px] mb-1">Phòng tiêu chuẩn 2 gường</p>
-                                            <div className="text-[#444444] text-[13px] 2xl:text-[15px] ">
-                                                <div className="flex items-center" >
-                                                    <TbAirConditioning />
-                                                    <p>Điều hòa không khí</p>
-                                                </div >
-                                                <div className="flex items-center ">
-                                                    <BsDisplay />
-                                                    <p>Televison</p>
-                                                </div >
-                                                <div className="flex items-center">
-                                                    <BsWifi />
-                                                    <p>Free Wifi</p>
+                                {
+                                    Rooms.map((item, key) => (
+                                        <div key={key} className="col-span-2 bg-white shadow-xl px-[20px] pt-[20px] pb-[10px] rounded-xl 2lg:w-full border-b-[1px] border-[#f1f1f1] ">
+                                            <div className="flex  justify-between items-center">
+                                                <div>
+                                                    <p className="w-[120px] mb-1">{item.Name}</p>
+                                                    <div className="text-[#444444] text-[13px] 2xl:text-[15px] ">
+                                                        {
+                                                            item.Des.map((item, key) => (
+                                                                <div key={key} className="flex items-center" >
+                                                                    <TbAirConditioning />
+                                                                    <p>{item}</p>
+                                                                </div >
+
+                                                            ))
+                                                        }
+
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex flex-wrap w-[32px]">
+                                                    <UserIcon className="h-4 w-4 text-gray-500" />
+                                                    <UserIcon className="h-4 w-4 text-gray-500" />
+                                                </div>
+                                                <p className="text-teal-600 text-[20px]">{item.Price}<span className="text-teal-400 text-[16px]">
+                                                    /Night
+                                                </span></p>
+                                                <div>
+                                                    <h1 className="text-[#333] text-[14px]">Phòng</h1>
+                                                    <Select
+                                                        defaultValue="0"
+                                                        style={{ width: 60 }}
+                                                        onChange={(value) => handleChange(item.Price, value)}
+                                                        options={
+                                                            item.EqualRoom.map((item, key) => (
+                                                                {
+                                                                    value: item,
+                                                                    label: item,
+                                                                }
+                                                            ))
+
+                                                        }
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
+                                    ))
+                                }
 
-                                        <div className="flex flex-wrap w-[32px]">
-                                            <UserIcon className="h-4 w-4 text-gray-500" />
-                                            <UserIcon className="h-4 w-4 text-gray-500" />
-                                        </div>
-                                        <p className="text-teal-600 text-[20px]">$230<span className="text-teal-400 text-[16px]">
-                                            /Night
-                                        </span></p>
-                                        <div>
-                                            <h1 className="text-[#333] text-[14px]">Phòng</h1>
-                                            <Select
-                                                labelInValue
-                                                defaultValue={{
-                                                    value: '0',
-                                                    label: '0',
-                                                }}
-                                                style={{ width: 50 }}
-                                                options={[
-                                                    {
-                                                        value: '1',
-                                                        label: '1',
-                                                    },
-                                                    {
-                                                        value: '2',
-                                                        label: '2',
-                                                    },
-                                                ]}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
 
                             </div>
 
@@ -206,7 +223,7 @@ export default function Detail() {
                             <div className="bg-white shadow-xl px-[16px] pt-[20px] pb-[10px] rounded-xl 2lg:block  hidden">
                                 <div className="flex justify-between px-16 text-[20px] lg:px-6">
                                     <h1 className="2lg:mr-2">Total:</h1>
-                                    <p>$230</p>
+                                    <p>${Total}</p>
                                 </div>
                                 <div className="w-[150px] py-2 mt-4 m-auto cursor-pointer bg-teal-600 group flex justify-center rounded-md hover:bg-white hover:border-[2px]
                      hover:border-teal-600 duration-700 border-[2px] lg:w-[100px]">
@@ -218,7 +235,7 @@ export default function Detail() {
                         <div className="bg-white shadow-xl px-[26px] py-[20px] rounded-xl 2lg:hidden block">
                             <div className="flex justify-between px-16 text-[20px]">
                                 <h1>Total:</h1>
-                                <p>$230</p>
+                                <p>${Total}</p>
                             </div>
                             <div className="w-[150px] py-2 mt-4 m-auto cursor-pointer bg-teal-600 group flex justify-center rounded-md hover:bg-white hover:border-[2px]
                      hover:border-teal-600 duration-700 border-[2px]">

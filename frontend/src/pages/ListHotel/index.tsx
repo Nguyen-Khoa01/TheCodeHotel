@@ -14,6 +14,7 @@ import { BsBorderAll, BsList } from "react-icons/bs";
 
 import { Select } from "antd";
 import type { RangePickerProps } from 'antd/es/date-picker';
+import Link from "next/link"
 
 import type { PaginationProps } from 'antd';
 import { Pagination } from 'antd';
@@ -75,7 +76,6 @@ const Rooms: React.FC = () => {
     const filterSelect = (type: any, checked: any, item: any) => {
         if (checked) {
             switch (type) {
-
                 case 'AMENITIES':
                     setFilter({ ...filter, amenities: [...filter.amenities, item.lable] })
                     break
@@ -365,10 +365,12 @@ const Rooms: React.FC = () => {
                                                             <p>2 Children</p>
                                                         </div>
                                                     </div>
-                                                    <div className="bg-teal-600 group  rounded-md hover:bg-white hover:border-[2px]
+                                                    <Link href='./Detail'>
+                                                        <div className="bg-teal-600 group  rounded-md hover:bg-white hover:border-[2px]
                                                  hover:border-teal-600 duration-700 border-[2px] xl:w-[150px] xl:mt-2">
-                                                        <p className="p-4 text-white group-hover:text-teal-600 lg:p-3">Reserve Now</p>
-                                                    </div>
+                                                            <p className="p-4 text-white group-hover:text-teal-600 lg:p-3">Reserve Now</p>
+                                                        </div>
+                                                    </Link>
                                                 </div>
                                             </div>
 

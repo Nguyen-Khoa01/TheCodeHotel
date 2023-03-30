@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Header from "@/component/Header"
 import Footer from "@/component/Footer"
@@ -16,6 +16,11 @@ import { BiSwim } from 'react-icons/bi'
 import dayjs from 'dayjs';
 
 const { RangePicker } = DatePicker;
+interface Price {
+    price: number,
+    value: string,
+    key: number
+}
 
 export default function Detail() {
 
@@ -24,22 +29,24 @@ export default function Detail() {
     const [numberAduts, setNumberAduts] = useState(getSreach.Adutls)
     const [numberChilren, setNumberChilren] = useState(getSreach.Children)
     const [numberRooms, setNumberRooms] = useState(0)
+    const [price1, setPrice] = useState<Price>({
+        price: 0,
+        value: '',
+        key: 0
+    })
 
     const [Total, setTotal] = useState(0)
-    const myArr: number[] = []
-    const handleChange = (price: string, value: string) => {
+    const handleChange = (price: string, value: string, key: number) => {
 
-        // setTotal(prev => prev + (Number(price) * Number(value)))
-        const newprice = Number(price) * Number(value)
-        if (myArr.length > 1) {
-            myArr.length = 0
-        }
-        else {
-            myArr.push(newprice)
-            setTotal(myArr.reduce((a, b) => a + b))
-        }
+        setPrice({ price: Number(price) * Number(value), value, key })
+
 
     }
+
+    useEffect(() => (
+        console.log(price1)
+
+    ))
 
     return (
         <div>
@@ -199,7 +206,7 @@ export default function Detail() {
                                                     <Select
                                                         defaultValue="0"
                                                         style={{ width: 60 }}
-                                                        onChange={(value) => handleChange(item.Price, value)}
+                                                        onChange={(value) => handleChange(item.Price, value, key)}
                                                         options={
                                                             item.EqualRoom.map((item, key) => (
                                                                 {

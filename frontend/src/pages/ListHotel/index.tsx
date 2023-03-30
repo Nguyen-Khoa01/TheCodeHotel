@@ -13,7 +13,7 @@ import { DatePicker, Space, Input, Checkbox } from 'antd';
 import { BsBorderAll, BsList } from "react-icons/bs";
 
 import { Select } from "antd";
-import type { RangePickerProps } from 'antd/es/date-picker';
+import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker';
 import Link from "next/link"
 
 import type { PaginationProps } from 'antd';
@@ -25,28 +25,85 @@ import { Menu } from 'antd';
 
 const { RangePicker } = DatePicker;
 
-
-
+interface item {
+    Adutls: string,
+    Children: string,
+    City: string,
+    checkIn: string,
+    checkOut: string
+}
+const Location = [
+    {
+        value: '1',
+        label: 'Vũng Tàu',
+    },
+    {
+        value: '2',
+        label: 'Hà Nội',
+    },
+    {
+        value: '3',
+        label: 'Hồ Chí Minh',
+    },
+    {
+        value: '4',
+        label: 'Đà Nẵng',
+    },
+    {
+        value: '5',
+        label: 'Hải Phòng',
+    },
+    {
+        value: '6',
+        label: 'Đà lạt',
+    },
+]
 const Rooms: React.FC = () => {
 
+
+
+    const [sreach, setSreach] = useState<item>({
+        Adutls: '',
+        Children: '',
+        City: '',
+        checkIn: '',
+        checkOut: ''
+    })
+
     const { Search } = Input;
-
-    const getSreach = JSON.parse((localStorage.getItem("Search") || ""))
-
-
-    const [numberAduts, setNumberAduts] = useState(getSreach.Adutls)
-    const [numberChilren, setNumberChilren] = useState(getSreach.Children)
-
     const [minPrice, setMinPrice] = useState(2)
     const [maxPrice, setMaxPrice] = useState(50)
 
+    const [numberChilren, setNumberChilren] = useState(0)
+    const [numberAduts, setNumberAduts] = useState(0)
+    const [city, setCity] = useState('')
+    const [checkin, setCheckin] = useState('')
+    const [checkout, setCheckout] = useState('')
     const [current, setCurrent] = useState(3);
 
+
+    useEffect(() => {
+        const localStore = JSON.parse((localStorage.getItem("Search") || ""))
+        setSreach(localStore)
+        setNumberChilren(localStore.Children)
+        setNumberAduts(localStore.Adutls)
+        setCity(localStore.City)
+        setCheckin(localStore.checkIn)
+        setCheckout(localStore.checkOut)
+
+    }, [])
     const onChange = (newValue: Array<number>) => {
         setMinPrice(newValue[0])
         setMaxPrice(newValue[1])
     }
-
+    const handleChangeRangePicker = (dateString: DatePickerProps["value"] | RangePickerProps["value"],
+        value: [string, string]) => {
+        setCheckin(value[0])
+        setCheckout(value[1])
+        sreach.checkIn = value[0]
+        sreach.checkOut = value[1]
+        localStorage.setItem("Search", JSON.stringify(sreach));
+    }
     const onChangePagination: PaginationProps['onChange'] = (page) => {
         console.log(page);
         setCurrent(page);
@@ -66,7 +123,11 @@ const Rooms: React.FC = () => {
         star: [],
     }
 
-
+    const handleSelectCity = (value: string) => {
+        setCity(value)
+        sreach.City = value
+        localStorage.setItem("Search", JSON.stringify(sreach));
+    }
     const HotelList = HotelData.getAllHotels()
 
     const [Hotels, setHotels] = useState(HotelList)
@@ -124,7 +185,6 @@ const Rooms: React.FC = () => {
         updateHotel()
     }, [updateHotel])
 
-
     const MenuPricesRef = useRef<HTMLDivElement>(null)
 
     const MenuAmenitiesRef = useRef<HTMLDivElement>(null)
@@ -159,7 +219,8 @@ const Rooms: React.FC = () => {
                             <Select
                                 showSearch
                                 size='large'
-                                value={getSreach.City}
+                                value={city}
+                                onChange={handleSelectCity}
                                 className="w-[150px]"
                                 placeholder="Choose"
                                 optionFilterProp="children"
@@ -167,32 +228,7 @@ const Rooms: React.FC = () => {
                                 filterSort={(optionA, optionB) =>
                                     (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
                                 }
-                                options={[
-                                    {
-                                        value: '1',
-                                        label: 'Vũng Tàu',
-                                    },
-                                    {
-                                        value: '2',
-                                        label: 'Hà Nội',
-                                    },
-                                    {
-                                        value: '3',
-                                        label: 'Hồ Chí Minh',
-                                    },
-                                    {
-                                        value: '4',
-                                        label: 'Đà Nẵng',
-                                    },
-                                    {
-                                        value: '5',
-                                        label: 'Hải Phòng',
-                                    },
-                                    {
-                                        value: '6',
-                                        label: 'Đà lạt',
-                                    },
-                                ]}
+                                options={Location}
                             />
                         </div>
 
@@ -202,8 +238,8 @@ const Rooms: React.FC = () => {
                                 <p>Checkout</p>
                             </div>
                             <RangePicker disabledDate={disabledDate} size="large"
-                                value={[dayjs(getSreach.checkIn), dayjs(getSreach.checkOut)]}
-
+                                value={[dayjs(checkin), dayjs(checkout)]}
+                                onChange={handleChangeRangePicker}
                             />
                         </div>
                         <div className="flex flex-col ml-2 2md:items-baseline md:flex-row md:justify-around">

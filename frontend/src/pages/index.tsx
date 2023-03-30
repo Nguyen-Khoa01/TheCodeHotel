@@ -70,14 +70,16 @@ const Home: React.FC = () => {
     };
 
 
+    const Search: object = {
+        City: selectCity,
+        Adutls: numberAduts,
+        Children: numberChilren,
+        checkIn: checkIn,
+        checkOut: checkOut,
+    }
+
+
     const handleSearch = () => {
-        const Search: object = {
-            City: selectCity,
-            Adutls: numberAduts,
-            Children: numberChilren,
-            checkIn: checkIn,
-            checkOut: checkOut,
-        }
 
         localStorage.setItem('Search', JSON.stringify(Search))
     }

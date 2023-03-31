@@ -18,7 +18,7 @@ import dayjs from 'dayjs';
 const { RangePicker } = DatePicker;
 interface Price {
     price: number,
-    value: string,
+    value: string
     key: number
 }
 
@@ -35,18 +35,32 @@ export default function Detail() {
         key: 0
     })
 
-    const [Total, setTotal] = useState(0)
+    const [Total, setTotal] = useState(0);
     const handleChange = (price: string, value: string, key: number) => {
 
-        setPrice({ price: Number(price) * Number(value), value, key })
+        setPrice({
+            price: Number(price) * Number(value),
+            value: value,
+            key: key,
+        })
+        sumPrice(price1, key, value)
+    }
 
-
+    const sumPrice = (price1: Price, key: number, value: string) => {
+        console.log(price1.value, value)
+        if (price1.key === key && price1.value > value) {
+            setTotal(prev => prev)
+        }
     }
 
     useEffect(() => (
-        console.log(price1)
 
-    ))
+        // setTotal(price1.price),
+
+
+
+        console.log(price1.price, Total,)
+    ), [price1]);
 
     return (
         <div>
@@ -205,13 +219,13 @@ export default function Detail() {
                                                     <h1 className="text-[#333] text-[14px]">Phòng</h1>
                                                     <Select
                                                         defaultValue="0"
-                                                        style={{ width: 60 }}
+                                                        style={{ width: 80 }}
                                                         onChange={(value) => handleChange(item.Price, value, key)}
                                                         options={
-                                                            item.EqualRoom.map((item, key) => (
+                                                            item.EqualRoom.map((item1, key) => (
                                                                 {
-                                                                    value: item,
-                                                                    label: item,
+                                                                    value: item1,
+                                                                    label: `${item1} ${item1 * Number(item.Price)}`,
                                                                 }
                                                             ))
 

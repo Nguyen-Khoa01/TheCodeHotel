@@ -26,11 +26,12 @@ import { Menu } from 'antd';
 const { RangePicker } = DatePicker;
 
 interface item {
-    Adutls: string,
-    Children: string,
+    Adutls: number,
+    Children: number,
     City: string,
     checkIn: string,
-    checkOut: string
+    checkOut: string,
+    rooms: number
 }
 const Location = [
     {
@@ -63,11 +64,12 @@ const Rooms: React.FC = () => {
 
 
     const [sreach, setSreach] = useState<item>({
-        Adutls: '',
-        Children: '',
+        Adutls: 0,
+        Children: 0,
         City: '',
         checkIn: '',
-        checkOut: ''
+        checkOut: '',
+        rooms: 0
     })
 
     const { Search } = Input;
@@ -80,7 +82,7 @@ const Rooms: React.FC = () => {
     const [checkin, setCheckin] = useState('')
     const [checkout, setCheckout] = useState('')
     const [current, setCurrent] = useState(3);
-
+    const [numberRooms, setNumberRooms] = useState(0)
 
     useEffect(() => {
         const localStore = JSON.parse((localStorage.getItem("Search") || ""))
@@ -92,6 +94,16 @@ const Rooms: React.FC = () => {
         setCheckout(localStore.checkOut)
 
     }, [])
+    useEffect(() => {
+        sreach.Children = numberChilren
+        sreach.Adutls = numberAduts
+        sreach.City = city
+        sreach.checkIn = checkin
+        sreach.checkOut = checkout
+        sreach.rooms = numberRooms
+
+        localStorage.setItem("Search", JSON.stringify(sreach));
+    }, [numberChilren, numberAduts, city, checkin, checkout])
     const onChange = (newValue: Array<number>) => {
         setMinPrice(newValue[0])
         setMaxPrice(newValue[1])
@@ -100,9 +112,6 @@ const Rooms: React.FC = () => {
         value: [string, string]) => {
         setCheckin(value[0])
         setCheckout(value[1])
-        sreach.checkIn = value[0]
-        sreach.checkOut = value[1]
-        localStorage.setItem("Search", JSON.stringify(sreach));
     }
     const onChangePagination: PaginationProps['onChange'] = (page) => {
         console.log(page);
@@ -123,11 +132,6 @@ const Rooms: React.FC = () => {
         star: [],
     }
 
-    const handleSelectCity = (value: string) => {
-        setCity(value)
-        sreach.City = value
-        localStorage.setItem("Search", JSON.stringify(sreach));
-    }
     const HotelList = HotelData.getAllHotels()
 
     const [Hotels, setHotels] = useState(HotelList)
@@ -220,7 +224,7 @@ const Rooms: React.FC = () => {
                                 showSearch
                                 size='large'
                                 value={city}
-                                onChange={handleSelectCity}
+                                onChange={(value) => setCity(value)}
                                 className="w-[150px]"
                                 placeholder="Choose"
                                 optionFilterProp="children"

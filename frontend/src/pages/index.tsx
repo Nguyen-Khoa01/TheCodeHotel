@@ -76,11 +76,11 @@ const Home: React.FC = () => {
         Children: numberChilren,
         checkIn: checkIn,
         checkOut: checkOut,
+        rooms: 0
     }
 
 
     const handleSearch = () => {
-
         localStorage.setItem('Search', JSON.stringify(Search))
     }
 

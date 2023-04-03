@@ -14,53 +14,137 @@ import { RiParkingBoxLine } from "react-icons/ri"
 import { MdSmokeFree } from 'react-icons/md'
 import { BiSwim } from 'react-icons/bi'
 import dayjs from 'dayjs';
-
+import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker';
+import Link from "next/link";
 const { RangePicker } = DatePicker;
 interface Price {
     price: number,
-    value: string
+    value: number
     key: number
 }
-
+interface item {
+    Adutls: number,
+    Children: number,
+    City: string,
+    checkIn: string,
+    checkOut: string,
+    rooms: number
+}
 export default function Detail() {
 
-    const getSreach = JSON.parse((localStorage.getItem("Search") || ""))
 
-    const [numberAduts, setNumberAduts] = useState(getSreach.Adutls)
-    const [numberChilren, setNumberChilren] = useState(getSreach.Children)
+
+    const [numberAduts, setNumberAduts] = useState(0)
+    const [numberChilren, setNumberChilren] = useState(0)
+    const [checkin, setCheckin] = useState('')
+    const [city, setCity] = useState('')
+    const [checkout, setCheckout] = useState('')
     const [numberRooms, setNumberRooms] = useState(0)
-    const [price1, setPrice] = useState<Price>({
-        price: 0,
-        value: '',
-        key: 0
-    })
+    const [item, setItem] = useState<Price[]>([])
+    const [totalRoom, setTotalRoom] = useState(0)
 
     const [Total, setTotal] = useState(0);
-    const handleChange = (price: string, value: string, key: number) => {
 
-        setPrice({
-            price: Number(price) * Number(value),
-            value: value,
-            key: key,
+    const [data, setData] = useState({})
+
+    const [sreach, setSreach] = useState<item>({
+        Adutls: 0,
+        Children: 0,
+        City: '',
+        checkIn: '',
+        checkOut: '',
+        rooms: 0
+    })
+    useEffect(() => {
+        setData({
+            numberAduts,
+            numberChilren,
+            numberRooms,
+            Total,
+            totalRoom
         })
-        sumPrice(price1, key, value)
-    }
+        console.log(data)
+    }, [numberAduts])
 
-    const sumPrice = (price1: Price, key: number, value: string) => {
-        console.log(price1.value, value)
-        if (price1.key === key && price1.value > value) {
-            setTotal(prev => prev)
+
+    const disabledDate: RangePickerProps['disabledDate'] = (current) => {
+        return current && current < dayjs().endOf('day');
+    };
+
+
+    const handleChange = (price: string, value: string, key: number) => {
+        const newItem = item.map(item => item.key)
+
+        setItem(prev => [...prev, {
+            price: Number(price) * Number(value),
+            value: Number(value),
+            key: key,
+        }])
+
+
+        if (newItem.includes(key)) {
+            const newitem = item.filter(item => item.key !== key)
+            setItem([...newitem, {
+                price: Number(price) * Number(value),
+                value: Number(value),
+                key: key,
+            }])
         }
+
     }
 
-    useEffect(() => (
 
-        // setTotal(price1.price),
+    const handleChangeRangePicker = (dateString: DatePickerProps["value"] | RangePickerProps["value"],
+        value: [string, string]) => {
+        setCheckin(value[0])
+        setCheckout(value[1])
+
+    }
 
 
 
-        console.log(price1.price, Total,)
-    ), [price1]);
+
+    useEffect(() => {
+        const localStore = JSON.parse((localStorage.getItem("Search") || ""))
+        setNumberChilren(localStore.Children)
+        setNumberAduts(localStore.Adutls)
+        setCheckin(localStore.checkIn)
+        setCity(localStore.City)
+        setCheckout(localStore.checkOut)
+        setNumberRooms(localStore.rooms)
+
+
+    }, [])
+    useEffect(() => {
+        sreach.Children = numberChilren
+        sreach.Adutls = numberAduts
+        sreach.City = city
+        sreach.checkIn = checkin
+        sreach.checkOut = checkout
+        sreach.rooms = numberRooms
+
+        localStorage.setItem("Search", JSON.stringify(sreach));
+    }, [numberChilren, numberAduts, checkin, checkout, numberRooms])
+
+
+
+    useEffect(() => {
+        const newTotal = item.reduce((a, b) => {
+            return a + b.price
+        }, 0)
+        setTotal(newTotal)
+
+    }, [item])
+
+    useEffect(() => {
+        const TotalRoom = item.reduce((a, b) => {
+            return a + b.value
+        }, 0)
+        setTotalRoom(TotalRoom)
+
+    }, [item])
+
+
 
     return (
         <div>
@@ -154,7 +238,9 @@ export default function Detail() {
                                     <p>Checkin</p>
                                     <p>Checkout</p>
                                 </div>
-                                <RangePicker size="large" value={[dayjs(getSreach.checkIn), dayjs(getSreach.checkOut)]} />
+                                <RangePicker size="large" disabledDate={disabledDate}
+                                    value={[dayjs(checkin), dayjs(checkout)]}
+                                    onChange={handleChangeRangePicker} />
                             </div>
                             <div className="flex ml-2 items-center justify-between">
                                 <span className="text-center">Aduts</span>
@@ -169,15 +255,16 @@ export default function Detail() {
                                 <div className="flex w-[150px] h-10 justify-around mt-3 items-center border-[1px] rounded-lg border-[#d9d9d9] hover:border-[#4096ff]">
                                     <MinusCircleIcon onClick={() => setNumberChilren((prev: number) => (numberChilren === 0 ? prev : prev - 1))} className="h-6 w-6 text-gray-500" />
                                     <p>{numberChilren}</p>
-                                    <PlusCircleIcon onClick={() => setNumberChilren((prev: number) => prev + 1)} className="h-6 w-6 text-gray-500" />
+                                    <PlusCircleIcon onClick={() => setNumberChilren((prev: number) => prev + 1)
+                                    } className="h-6 w-6 text-gray-500" />
                                 </div>
                             </div>
                             <div className="flex  ml-2 items-center justify-between">
                                 <span className="text-center">Room</span>
                                 <div className="flex w-[150px] h-10 justify-around mt-3 items-center border-[1px] rounded-lg border-[#d9d9d9] hover:border-[#4096ff]">
-                                    <MinusCircleIcon onClick={() => setNumberRooms(prev => (numberRooms === 0 ? prev : prev - 1))} className="h-6 w-6 text-gray-500" />
+                                    <MinusCircleIcon onClick={() => setNumberRooms((prev: number) => (numberRooms === 0 ? prev : prev - 1))} className="h-6 w-6 text-gray-500" />
                                     <p>{numberRooms}</p>
-                                    <PlusCircleIcon onClick={() => setNumberRooms(prev => prev + 1)} className="h-6 w-6 text-gray-500" />
+                                    <PlusCircleIcon onClick={() => setNumberRooms((prev: number) => prev + 1)} className="h-6 w-6 text-gray-500" />
                                 </div>
                             </div>
                             <div className="w-[200px] py-2 mt-4 mx-auto cursor-pointer bg-teal-600 group flex justify-center rounded-md hover:bg-white hover:border-[2px]
@@ -219,13 +306,13 @@ export default function Detail() {
                                                     <h1 className="text-[#333] text-[14px]">Phòng</h1>
                                                     <Select
                                                         defaultValue="0"
-                                                        style={{ width: 80 }}
+                                                        style={{ width: 90 }}
                                                         onChange={(value) => handleChange(item.Price, value, key)}
                                                         options={
                                                             item.EqualRoom.map((item1, key) => (
                                                                 {
                                                                     value: item1,
-                                                                    label: `${item1} ${item1 * Number(item.Price)}`,
+                                                                    label: `${item1} ${item1 * Number(item.Price)}$`,
                                                                 }
                                                             ))
 
@@ -246,10 +333,16 @@ export default function Detail() {
                                     <h1 className="2lg:mr-2">Total:</h1>
                                     <p>${Total}</p>
                                 </div>
-                                <div className="w-[150px] py-2 mt-4 m-auto cursor-pointer bg-teal-600 group flex justify-center rounded-md hover:bg-white hover:border-[2px]
+                                <Link href={{
+                                    pathname: '/Checkout',
+
+
+                                }}>
+                                    <div className="w-[150px] py-2 mt-4 m-auto cursor-pointer bg-teal-600 group flex justify-center rounded-md hover:bg-white hover:border-[2px]
                      hover:border-teal-600 duration-700 border-[2px] lg:w-[100px]">
-                                    <p className="text-white group-hover:text-teal-600 lg:text-[13px] ">Go to Check</p>
-                                </div>
+                                        <p className="text-white group-hover:text-teal-600 lg:text-[13px] ">Go to Check</p>
+                                    </div>
+                                </Link>
 
                             </div>
                         </div>

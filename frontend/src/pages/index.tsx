@@ -38,6 +38,8 @@ const Home: React.FC = () => {
         },
     ]
 
+    const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY'];
+
     const [currentIndex, setCurrentIndex] = useState(0)
 
     const prevSlide = () => {
@@ -85,12 +87,12 @@ const Home: React.FC = () => {
     }
 
     const onChange = (
-        dateString: DatePickerProps["value"] | RangePickerProps["value"],
-        value: [string, string]
+        value: DatePickerProps["value"] | RangePickerProps["value"],
+        dateString: [string, string]
     ) => {
-        setCheckIn(value[0])
-        setCheckOut(value[1])
-        console.log("Formatted Selected Time: ", value);
+        setCheckIn(dateString[0])
+        setCheckOut(dateString[1])
+
     };
 
     const handleSelectCity = (value: string) => {
@@ -172,7 +174,7 @@ const Home: React.FC = () => {
                             </div>
                             <RangePicker disabledDate={disabledDate} size="large"
                                 onChange={onChange}
-
+                                format="DD-MM-YYYY"
                             />
                         </div>
                         <div className="flex flex-col ml-2 ">

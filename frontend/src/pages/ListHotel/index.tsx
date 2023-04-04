@@ -242,8 +242,9 @@ const Rooms: React.FC = () => {
                                 <p>Checkout</p>
                             </div>
                             <RangePicker disabledDate={disabledDate} size="large"
-                                value={[dayjs(checkin), dayjs(checkout)]}
+                                value={[dayjs(checkin, 'DD-MM-YYYY'), dayjs(checkout, 'DD-MM-YYYY')]}
                                 onChange={handleChangeRangePicker}
+                                format="DD-MM-YYYY"
                             />
                         </div>
                         <div className="flex flex-col ml-2 2md:items-baseline md:flex-row md:justify-around">

@@ -12,12 +12,21 @@ import {
     Input,
     Select,
 } from 'antd';
+import { useRouter } from "next/router";
 
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 export default function Checkout() {
+
+
+    const router = useRouter();
+    const data = router.query;
+    const { numberAduts, numberChilren, checkout,
+        checkin, Total, totalRoom } = data
+
+    // console.log(Number(checkout) - Number(checkin))
 
     const prefixSelector = (
         <Form.Item name="prefix" noStyle>
@@ -199,15 +208,15 @@ export default function Checkout() {
                             <div>
                                 <div className="flex justify-between py-2 mb-1 ">
                                     <p className="text-[#667085]">Checking in</p>
-                                    <p className="font-medium">03 Jun 2023</p>
+                                    <p className="font-medium">{checkin}</p>
                                 </div>
                                 <div className="flex justify-between py-2 mb-1 ">
                                     <p className="text-[#667085]">Checking out</p>
-                                    <p className="font-medium">03 Jun 2023</p>
+                                    <p className="font-medium">{checkout}</p>
                                 </div>
                                 <div className="flex justify-between py-2 mb-1 ">
                                     <p className="text-[#667085]">Number of Rooms</p>
-                                    <p className="font-medium">03</p>
+                                    <p className="font-medium">{totalRoom}</p>
                                 </div>
                                 <div className="flex justify-between py-2 mb-1 ">
                                     <p className="text-[#667085]">Total Stay</p>
@@ -215,11 +224,11 @@ export default function Checkout() {
                                 </div>
                                 <div className="flex justify-between py-2 mb-1 ">
                                     <p className="text-[#667085]">Number of Person</p>
-                                    <p className="font-medium">5 Person</p>
+                                    <p className="font-medium">{numberAduts} Person</p>
                                 </div>
                                 <div className="flex justify-between py-2 mb-1">
                                     <p className="text-[#667085]">Number of Children</p>
-                                    <p className="font-medium">2 Children</p>
+                                    <p className="font-medium">{numberChilren} Children</p>
                                 </div>
                             </div>
                         </div>
@@ -228,20 +237,20 @@ export default function Checkout() {
                             <div>
                                 <div className="flex justify-between">
                                     <p className="text-[#667085] py-2 mb-1">Charge</p>
-                                    <p className="font-medium">$230.00</p>
+                                    <p className="font-medium">${Total}</p>
                                 </div>
                                 <div className="flex justify-between">
                                     <p className="text-[#667085] py-2 mb-1">Discount</p>
-                                    <p className="font-medium">-$8</p>
+                                    <p className="font-medium"></p>
                                 </div>
                                 <div className="flex justify-between">
                                     <p className="text-[#667085] py-2 mb-1">Vat</p>
-                                    <p className="font-medium">(+13%)$20.08</p>
+                                    <p className="font-medium"></p>
                                 </div>
                             </div>
                             <div className="flex border-t-[1px] py-2 mb-1 justify-between text-[20px]">
                                 <p className="text-[#667085]  ">Total</p>
-                                <p className="text-teal-600 font-medium  ">$250.08</p>
+                                <p className="text-teal-600 font-medium  ">${Total}</p>
                             </div>
                         </div>
                     </div>

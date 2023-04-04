@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import Header from "@/component/Header"
 import Footer from "@/component/Footer"
@@ -43,10 +43,6 @@ export default function Detail() {
     const [item, setItem] = useState<Price[]>([])
     const [totalRoom, setTotalRoom] = useState(0)
 
-    const [Total, setTotal] = useState(0);
-
-    const [data, setData] = useState({})
-
     const [sreach, setSreach] = useState<item>({
         Adutls: 0,
         Children: 0,
@@ -55,16 +51,7 @@ export default function Detail() {
         checkOut: '',
         rooms: 0
     })
-    useEffect(() => {
-        setData({
-            numberAduts,
-            numberChilren,
-            numberRooms,
-            Total,
-            totalRoom
-        })
-        console.log(data)
-    }, [numberAduts])
+
 
 
     const disabledDate: RangePickerProps['disabledDate'] = (current) => {
@@ -98,10 +85,9 @@ export default function Detail() {
         value: [string, string]) => {
         setCheckin(value[0])
         setCheckout(value[1])
-
+        console.log(value)
+        console.log(dateString)
     }
-
-
 
 
     useEffect(() => {
@@ -112,9 +98,8 @@ export default function Detail() {
         setCity(localStore.City)
         setCheckout(localStore.checkOut)
         setNumberRooms(localStore.rooms)
-
-
     }, [])
+
     useEffect(() => {
         sreach.Children = numberChilren
         sreach.Adutls = numberAduts
@@ -122,20 +107,18 @@ export default function Detail() {
         sreach.checkIn = checkin
         sreach.checkOut = checkout
         sreach.rooms = numberRooms
-
         localStorage.setItem("Search", JSON.stringify(sreach));
-    }, [numberChilren, numberAduts, checkin, checkout, numberRooms])
+    }, [numberChilren, numberAduts, city, checkin, checkout, numberRooms])
 
 
-
-    useEffect(() => {
+    const Total = useMemo(() => {
         const newTotal = item.reduce((a, b) => {
             return a + b.price
         }, 0)
-        setTotal(newTotal)
+
+        return newTotal
 
     }, [item])
-
     useEffect(() => {
         const TotalRoom = item.reduce((a, b) => {
             return a + b.value
@@ -143,6 +126,18 @@ export default function Detail() {
         setTotalRoom(TotalRoom)
 
     }, [item])
+
+    const data = useMemo(() => {
+        const newData = {
+            numberAduts,
+            numberChilren,
+            checkout,
+            checkin,
+            Total,
+            totalRoom
+        }
+        return newData
+    }, [numberAduts, numberChilren, numberRooms, totalRoom])
 
 
 
@@ -239,7 +234,8 @@ export default function Detail() {
                                     <p>Checkout</p>
                                 </div>
                                 <RangePicker size="large" disabledDate={disabledDate}
-                                    value={[dayjs(checkin), dayjs(checkout)]}
+                                    format="DD-MM-YYYY"
+                                    value={[dayjs(checkin, 'DD-MM-YYYY'), dayjs(checkout, 'DD-MM-YYYY')]}
                                     onChange={handleChangeRangePicker} />
                             </div>
                             <div className="flex ml-2 items-center justify-between">
@@ -339,7 +335,7 @@ export default function Detail() {
 
                                 }}>
                                     <div className="w-[150px] py-2 mt-4 m-auto cursor-pointer bg-teal-600 group flex justify-center rounded-md hover:bg-white hover:border-[2px]
-                     hover:border-teal-600 duration-700 border-[2px] lg:w-[100px]">
+                     hover:border-teal-600 duration-700 border-[2px] lg:w-[100px]" >
                                         <p className="text-white group-hover:text-teal-600 lg:text-[13px] ">Go to Check</p>
                                     </div>
                                 </Link>
@@ -351,10 +347,15 @@ export default function Detail() {
                                 <h1>Total:</h1>
                                 <p>${Total}</p>
                             </div>
-                            <div className="w-[150px] py-2 mt-4 m-auto cursor-pointer bg-teal-600 group flex justify-center rounded-md hover:bg-white hover:border-[2px]
-                     hover:border-teal-600 duration-700 border-[2px]">
-                                <p className="text-white group-hover:text-teal-600">Go to Check</p>
-                            </div>
+                            <Link href={{
+                                pathname: '/Checkout',
+                                query: data
+                            }}>
+                                <div className="w-[150px] py-2 mt-4 m-auto cursor-pointer bg-teal-600 group flex justify-center rounded-md hover:bg-white hover:border-[2px]
+                     hover:border-teal-600 duration-700 border-[2px] " >
+                                    <p className="text-white group-hover:text-teal-600">Go to Check</p>
+                                </div>
+                            </Link>
 
                         </div>
                     </div>

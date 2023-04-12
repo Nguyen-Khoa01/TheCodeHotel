@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { UserIcon, Bars3Icon, EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import { use, useEffect } from "react";
 const mainNav = [
   {
     display: 'Home',
@@ -19,7 +20,38 @@ const mainNav = [
   },
 ]
 
-export default function Header() {
+export default function Header(props: any) {
+
+
+  const handleout = () => {
+    localStorage.removeItem('TOKEN')
+  }
+
+  let menu
+  if (props.auth) {
+    menu = (
+      <div >
+        <p className="text-gray-700">{props.user.fullname}</p>
+        <Link href="/Login" onClick={handleout}>
+          <span>Logout</span>
+        </Link>
+      </div>
+    )
+  } else {
+    menu = (
+      <div>
+        <Link href="/Login">
+          <span>Login</span>
+        </Link>
+        <Link href="/Register">
+          <span>/Register</span>
+        </Link>
+      </div>
+    )
+  }
+
+  // console.log(menu)
+
   return (
 
     <div className="grid grid-cols-6 xl:grid-cols-1 2xl:my-[20px]">
@@ -50,19 +82,15 @@ export default function Header() {
         <div className="flex items-center uppercase text-sm justify-end 2md:hidden">
 
           <UserIcon className="h-5 w-5 mr-1 text-gray-500 lg:h-4 lg:w-4" />
-          <Link href="/Login">
-            <span>Login</span>
-          </Link>
-          <Link href="/Register">
-            <span>/Register</span>
-          </Link>
+          {menu}
 
-          <div className=" bg-teal-600 h-12 w-32 text-center rounded-md ml-4 text-white lg:w-20 lg:h-8">
+          {/* <div className=" bg-teal-600 h-12 w-32 text-center rounded-md ml-4 text-white lg:w-20 lg:h-8">
             <Link href="/Checkout">
               <span className="leading-8 text-[13px]">BOOK NOW</span>
             </Link>
-          </div>
+          </div> */}
         </div>
+
         <div className="2md:flex hidden justify-end">
           <EllipsisVerticalIcon className="h-7 w-7 text-gray-500" />
         </div>

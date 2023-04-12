@@ -11,12 +11,58 @@ import {
     Select,
 } from 'antd';
 import Link from "next/link";
+import { useRouter } from 'next/router'
 
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
+interface signup {
+    fullname: string
+    username: string
+    phonenumber: string
+    email: string
+    password: string
+}
+
 export default function Register() {
+    const router = useRouter()
+
+    async function handleSubmit(value: signup) {
+        const { fullname,
+            username,
+            phonenumber,
+            email,
+            password,
+        } = value
+
+        try {
+            const res = await fetch('http://localhost:3001/auth/signup', {
+                method: "POST",
+                body: JSON.stringify({
+                    fullname,
+                    username,
+                    phonenumber,
+                    email,
+                    password,
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+
+            })
+            console.log(res)
+            if (res.ok) {
+                alert("user registered success")
+                await router.push('/Login')
+            } else {
+                alert("user registered unsuccess")
+            }
+        } catch (error) {
+
+        }
+    }
+
     const prefixSelector = (
         <Form.Item name="prefix" noStyle>
             <Select style={{ width: 80 }}>
@@ -35,25 +81,16 @@ export default function Register() {
             <div className="p-[30px] col-span-5 ">
                 <Form size='large' layout="vertical" className="w-full col-span-8 2xl:col-span-7 2md:col-span-12 "
                     initialValues={{ prefix: '84' }} style={{ maxWidth: 600 }}
-
+                    onFinish={handleSubmit}
                 >
 
                     <h1 className="text-[24px] font-semibold mb-2">Welcome</h1>
                     <div className="grid grid-cols-2 gap-x-2">
-                        <Form.Item label="FirstName">
-                            <Form.Item
-                                name="FirstName"
 
-                                rules={[{ required: true, message: 'Please input your FirstName!', whitespace: true }]}
-                                className="text-[16px]"
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Form.Item>
 
-                        <Form.Item label="LastName">
+                        <Form.Item label="FullName" className="col-span-2">
                             <Form.Item
-                                name="LastName"
+                                name="fullname"
                                 rules={[{ required: true, message: 'Please input your LastName!', whitespace: true }]}
                                 className=""
                             >
@@ -64,7 +101,7 @@ export default function Register() {
                         <Form.Item label="UserName " className="col-span-2">
 
                             <Form.Item
-                                name="UserName"
+                                name="username"
                                 rules={[{ required: true, message: 'Please input your Username!', whitespace: true }]}
                             >
                                 <Input />
@@ -91,7 +128,7 @@ export default function Register() {
 
                         <Form.Item label="Phone Number" className="col-span-2">
                             <Form.Item
-                                name="phone"
+                                name="phonenumber"
                                 rules={[{ required: true, message: 'Please input your phone number!' }]}
                             >
                                 <Input addonBefore={prefixSelector} style={{ width: '100%' }} />

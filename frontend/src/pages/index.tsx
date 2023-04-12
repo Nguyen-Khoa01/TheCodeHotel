@@ -20,6 +20,11 @@ const { RangePicker } = DatePicker;
 
 const Home: React.FC = () => {
 
+
+
+
+
+
     const slider = [
         {
             url: 'https://cdnimg.vietnamplus.vn/uploaded/fsmsr/2020_10_07/exterior_3.jpg'
@@ -38,6 +43,9 @@ const Home: React.FC = () => {
         },
     ]
 
+    const [auth, setAuth] = useState(false)
+    const [user, setUser] = useState('')
+
     const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY'];
 
     const [currentIndex, setCurrentIndex] = useState(0)
@@ -50,10 +58,34 @@ const Home: React.FC = () => {
         setCurrentIndex((currentIndex) => currentIndex === slider.length - 1 ? 0 : currentIndex + 1)
     }
 
+
+
     useEffect(() => {
-        const slideInterval = setInterval(nextSlide, 5000)
-        return () => clearInterval(slideInterval)
+        (
+            async () => {
+                const getToken = JSON.parse(window.localStorage.getItem('TOKEN') || "")
+
+                try {
+                    const res = await fetch('http://localhost:3001/auth/profile', {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${getToken.token} `
+                        }
+                    })
+                    setUser(await res.json())
+                    setAuth(true)
+                } catch (error) {
+                    console.log(error)
+                    setAuth(false)
+                }
+            }
+        )();
     }, [])
+
+    // useEffect(() => {
+    //     const slideInterval = setInterval(nextSlide, 5000)
+    //     return () => clearInterval(slideInterval)
+    // }, [])
 
     //search
 
@@ -97,13 +129,15 @@ const Home: React.FC = () => {
 
     const handleSelectCity = (value: string) => {
         setSelectCity(value)
+
     }
 
+    console.log('123')
 
     return (
         <div className="overflow-hidden">
             <div className="border-left select-none mb-28 ">
-                <Header />
+                <Header auth={auth} user={user} />
                 <div className="h-[906px] relative" >
                     <div className="absolute top-1/2 left-10 -translate-y-1/2 bg-teal-600 rounded-full z-10 cursor-pointer items-center" onClick={prevSlide}>
                         <ChevronLeftIcon className="h-12 w-12 text-white " />

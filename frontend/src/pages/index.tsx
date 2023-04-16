@@ -44,8 +44,6 @@ const Home: React.FC = () => {
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState("");
 
-  const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY", "DD-MM-YYYY", "DD-MM-YY"];
-
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const prevSlide = () => {

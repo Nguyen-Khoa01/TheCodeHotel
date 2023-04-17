@@ -42,6 +42,7 @@ import { useTranslation } from "react-i18next";
 import { Header, Title, OffLayoutArea } from "components";
 import { BikeWhiteIcon, PizzaIcon } from "components/icons";
 import { ConfigProvider } from "context";
+import { HotelLists } from "pages/hotels";
 
 import "@refinedev/antd/dist/reset.css";
 
@@ -96,9 +97,16 @@ const App: React.FC = () => {
                   icon: <UsergroupAddOutlined />,
                 },
               },
+              // {
+              //   name: "products",
+              //   list: "/products",
+              //   meta: {
+              //     icon: <PizzaIcon />,
+              //   },
+              // },
               {
                 name: "products",
-                list: "/products",
+                list: "/hotels",
                 meta: {
                   icon: <PizzaIcon />,
                 },
@@ -126,6 +134,7 @@ const App: React.FC = () => {
                   icon: <BikeWhiteIcon />,
                 },
               },
+
               {
                 name: "reviews",
                 list: "/reviews",
@@ -161,7 +170,9 @@ const App: React.FC = () => {
                   <Route path="show/:id" element={<UserShow />} />
                 </Route>
 
-                <Route path="/products" element={<ProductList />} />
+                {/* <Route path="/products" element={<ProductList />} /> */}
+
+                <Route path="/hotels" element={<HotelLists />} />
 
                 <Route path="/stores">
                   <Route index element={<StoreList />} />
@@ -195,8 +206,8 @@ const App: React.FC = () => {
                       type="login"
                       formProps={{
                         initialValues: {
-                          email: "demo@refine.dev",
-                          password: "demodemo",
+                          email: "",
+                          password: "",
                         },
                       }}
                     />

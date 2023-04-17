@@ -25,6 +25,8 @@ const mainNav = [
 ];
 
 export default function Header(props: any) {
+
+
   let menu;
   if (props.auth) {
     menu = (
@@ -48,7 +50,7 @@ export default function Header(props: any) {
     );
   }
 
-  // console.log(menu)
+
 
   return (
     <div className="grid grid-cols-6 xl:grid-cols-1 2xl:my-[20px]">

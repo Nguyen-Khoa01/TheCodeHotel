@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 const authWrapperProps = {
   style: {
     background:
-      "radial-gradient(50% 50% at 50% 50%,rgba(255, 255, 255, 0) 0%,rgba(0, 0, 0, 0.5) 100%),url('images/login-bg.png')",
-    backgroundSize: "cover",
+      "radial-gradient(50% 50% at 50% 50%,rgba(255, 255, 255, 0) 0%,rgba(0, 0, 0, 0.5) 100%),url('https://de-java-hotel-bandung.booked.net/data/Photos/OriginalPhoto/8926/892625/892625758/De-Java-Hotel-Bandung-Exterior.JPEG')",
+    backgroundRepeat: 'no-repeat',
+
   },
 };
 
@@ -20,7 +21,7 @@ const renderAuthContent = (content: React.ReactNode) => {
       <Link to="/">
         <img
           style={{ marginBottom: 26 }}
-          src="/images/fine-foods-login.svg"
+          src="https://htmldesigntemplates.com/html/travelin/images/logo.png"
           alt="Logo"
           width="100%"
         />

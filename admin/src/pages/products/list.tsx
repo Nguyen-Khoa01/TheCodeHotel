@@ -49,7 +49,6 @@ export const ProductList: React.FC<IResourceComponentsProps> = () => {
             return productFilters;
         },
     });
-
     const {
         drawerProps: createDrawerProps,
         formProps: createFormProps,

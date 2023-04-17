@@ -130,8 +130,6 @@ const Home: React.FC = () => {
 
     }
 
-    console.log('123')
-
     return (
         <div className="overflow-hidden">
             <div className="border-left select-none mb-28 ">

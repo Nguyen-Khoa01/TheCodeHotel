@@ -1,6 +1,6 @@
 import { AuthBindings } from "@refinedev/core";
 import { notification } from "antd";
-
+import routerProvider from "@refinedev/react-router-v6";
 export const TOKEN_KEY = "refine-auth";
 
 export const authProvider: AuthBindings = {
@@ -16,11 +16,19 @@ export const authProvider: AuthBindings = {
       },
     });
     const token = await res.json();
-    console.log(token);
-    localStorage.setItem(TOKEN_KEY, `token`);
+    if (res.ok) {
+      localStorage.setItem(TOKEN_KEY, JSON.stringify(token));
+      return {
+        success: true,
+        redirectTo: "/",
+      };
+    }
     return {
-      success: true,
-      redirectTo: "/",
+      success: false,
+      error: {
+        message: "Login failed",
+        name: `${token.message}`,
+      },
     };
   },
   register: async ({ email, password }) => {
@@ -70,12 +78,13 @@ export const authProvider: AuthBindings = {
   },
   check: async () => {
     const token = localStorage.getItem(TOKEN_KEY);
+    console.log(token)
     if (token) {
+      console.log('1', token)
       return {
         authenticated: true,
       };
     }
-
     return {
       authenticated: false,
       error: {
@@ -88,15 +97,23 @@ export const authProvider: AuthBindings = {
   },
   getPermissions: async () => null,
   getIdentity: async () => {
-    const token = localStorage.getItem(TOKEN_KEY);
-    if (!token) {
+    const getToken = JSON.parse(localStorage.getItem(TOKEN_KEY) || "");
+    const res = await fetch('http://localhost:3001/auth/profile', {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${getToken.token} `
+      }
+    })
+
+    const admin = await res.json()
+    if (!getToken) {
       return null;
     }
 
     return {
-      id: 1,
-      name: "James Sullivan",
-      avatar: "https://i.pravatar.cc/150",
+      id: `${admin.id}`,
+      name: `${admin.username}`,
+      avatar: `${admin.avatar}`,
     };
   },
 };

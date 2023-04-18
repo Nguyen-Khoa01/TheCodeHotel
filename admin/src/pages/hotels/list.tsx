@@ -14,81 +14,49 @@ import { Row, List as AntdList, Col, Form, Input, Typography } from "antd";
 const { Text } = Typography;
 
 import {
-    ProductItem,
-    ProductCategoryFilter,
-    CreateProduct,
-    EditProduct,
-} from "components/product";
+    HotelItem,
+    CreateHotel,
+    EditHotel,
+} from "components/hotel";
 
-import { IProduct } from "interfaces";
+import { IHotel } from "interfaces";
 
 export const HotelLists: React.FC<IResourceComponentsProps> = () => {
     const t = useTranslate();
 
-    const { listProps, searchFormProps, filters } = useSimpleList<
-        IProduct,
+    const { listProps } = useSimpleList<
+        IHotel,
         HttpError,
-        { name: string; categories: string[] }
+        { name: string }
     >({
-        pagination: { pageSize: 12, current: 1 },
-        onSearch: ({ name, categories }) => {
-            const productFilters: CrudFilters = [];
-
-            productFilters.push({
-                field: "category.id",
-                operator: "in",
-                value: categories?.length > 0 ? categories : undefined,
-            });
-
-            productFilters.push({
-                field: "name",
-                operator: "contains",
-                value: name ? name : undefined,
-            });
-
-            return productFilters;
-        },
     });
-
     const {
         drawerProps: createDrawerProps,
         formProps: createFormProps,
         saveButtonProps: createSaveButtonProps,
         show: createShow,
-    } = useDrawerForm<IProduct>({
+    } = useDrawerForm<IHotel>({
         action: "create",
-        resource: "products",
+        resource: "hotels",
         redirect: false,
     });
-
     const {
         drawerProps: editDrawerProps,
         formProps: editFormProps,
         saveButtonProps: editSaveButtonProps,
         show: editShow,
         id: editId,
-    } = useDrawerForm<IProduct>({
+    } = useDrawerForm<IHotel>({
         action: "edit",
-        resource: "products",
+        resource: "hotels",
         redirect: false,
     });
-
-    console.log(listProps)
-
     return (
         <div>
             <Form
-                {...searchFormProps}
-                onValuesChange={() => {
-                    searchFormProps.form?.submit();
-                }}
-                initialValues={{
-                    name: getDefaultFilter("name", filters, "contains"),
-                    categories: getDefaultFilter("category.id", filters, "in"),
-                }}
             >
                 <Row gutter={[16, 16]}>
-                    <Col xs={24} sm={18}>
+                    <Col xs={24} sm={24}>
                         <div
                             style={{
                                 display: "flex",
@@ -112,7 +80,7 @@ export const HotelLists: React.FC<IResourceComponentsProps> = () => {
                                 />
                             </Form.Item>
                             <CreateButton onClick={() => createShow()}>
-                                {t("stores.buttons.addProduct")}
+                                {t("stores.buttons.addHotel")}
                             </CreateButton>
                         </div>
                         <AntdList
@@ -132,35 +100,19 @@ export const HotelLists: React.FC<IResourceComponentsProps> = () => {
                             }}
                             {...listProps}
                             renderItem={(item) => (
-                                <ProductItem item={item} editShow={editShow} />
+                                <HotelItem item={item} editShow={editShow} />
                             )}
                         />
                     </Col>
-                    <Col xs={0} sm={6}>
-                        <div
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                height: "40px",
-                                marginBottom: "16px",
-                            }}
-                        >
-                            <Text style={{ fontWeight: 500 }}>
-                                {t("stores.tagFilterDescription")}
-                            </Text>
-                        </div>
-                        <Form.Item name="categories">
-                            <ProductCategoryFilter />
-                        </Form.Item>
-                    </Col>
+
                 </Row>
             </Form>
-            <CreateProduct
+            <CreateHotel
                 drawerProps={createDrawerProps}
                 formProps={createFormProps}
                 saveButtonProps={createSaveButtonProps}
             />
-            <EditProduct
+            <EditHotel
                 drawerProps={editDrawerProps}
                 formProps={editFormProps}
                 saveButtonProps={editSaveButtonProps}

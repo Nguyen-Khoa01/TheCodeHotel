@@ -101,6 +101,19 @@ export interface IOrder {
     orderNumber: number;
     amount: number;
 }
+export interface IHotel {
+    id: number;
+    name: string;
+    desreption: string;
+    city: string;
+    starRating: number;
+    phonenumber: string
+    avatar: string;
+    price: number;
+    category: string;
+    rooms: number;
+    stock: number;
+}
 
 export interface IProduct {
     id: number;

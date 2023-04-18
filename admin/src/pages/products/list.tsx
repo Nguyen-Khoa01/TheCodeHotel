@@ -25,6 +25,7 @@ import { IProduct } from "interfaces";
 export const ProductList: React.FC<IResourceComponentsProps> = () => {
     const t = useTranslate();
 
+
     const { listProps, searchFormProps, filters } = useSimpleList<
         IProduct,
         HttpError,
@@ -71,7 +72,7 @@ export const ProductList: React.FC<IResourceComponentsProps> = () => {
         resource: "products",
         redirect: false,
     });
-
+    console.log(listProps)
     return (
         <div>
             <Form

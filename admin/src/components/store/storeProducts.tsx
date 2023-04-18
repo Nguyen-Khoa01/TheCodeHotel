@@ -21,14 +21,17 @@ import {
 
 const { Text } = Typography;
 
-import { IStore, IProduct } from "interfaces";
+import { IStore, IHotel } from "interfaces";
 import {
     CreateProduct,
     EditProduct,
     ProductItem,
     ProductCategoryFilter,
 } from "components/product";
+
+import { CreateHotel } from "components/hotel";
 import { StyledStoreProducts } from "./styled";
+import { HotelItem } from "components/hotel";
 
 type StoreProductsProps = {
     record: IStore;
@@ -42,11 +45,11 @@ export const StoreProducts: React.FC<StoreProductsProps> = ({
     const t = useTranslate();
 
     const { listProps, searchFormProps, queryResult } = useSimpleList<
-        IProduct,
+        IHotel,
         HttpError,
         { name: string; categories: string[] }
     >({
-        resource: "products",
+        resource: "hotels",
         pagination: { pageSize: 9 },
         syncWithLocation: false,
         onSearch: ({ name, categories }) => {
@@ -83,7 +86,7 @@ export const StoreProducts: React.FC<StoreProductsProps> = ({
 
     const { mutate } = useUpdate<IStore>();
 
-    const updateStock = (changedValue: number, clickedProduct: IProduct) => {
+    const updateStock = (changedValue: number, clickedProduct: IHotel) => {
         const shopProduct = record.products.find(
             (p) => p.id === clickedProduct.id,
         );
@@ -108,7 +111,7 @@ export const StoreProducts: React.FC<StoreProductsProps> = ({
         formProps: createFormProps,
         saveButtonProps: createSaveButtonProps,
         show: createShow,
-    } = useDrawerForm<IProduct>({
+    } = useDrawerForm<IHotel>({
         action: "create",
         resource: "products",
         redirect: false,
@@ -119,7 +122,7 @@ export const StoreProducts: React.FC<StoreProductsProps> = ({
         formProps: editFormProps,
         saveButtonProps: editSaveButtonProps,
         show: editShow,
-    } = useDrawerForm<IProduct>({
+    } = useDrawerForm<IHotel>({
         action: "edit",
         resource: "products",
         redirect: false,
@@ -171,9 +174,9 @@ export const StoreProducts: React.FC<StoreProductsProps> = ({
                                     paddingRight: "4px",
                                 }}
                                 {...listProps}
-                                dataSource={mergedData as IProduct[]}
+                                dataSource={mergedData as unknown as IHotel[]}
                                 renderItem={(item) => (
-                                    <ProductItem
+                                    <HotelItem
                                         item={item}
                                         updateStock={updateStock}
                                         editShow={editShow}
@@ -201,7 +204,7 @@ export const StoreProducts: React.FC<StoreProductsProps> = ({
                     </Row>
                 </Form>
             </Modal>
-            <CreateProduct
+            <CreateHotel
                 drawerProps={createDrawerProps}
                 formProps={createFormProps}
                 saveButtonProps={createSaveButtonProps}

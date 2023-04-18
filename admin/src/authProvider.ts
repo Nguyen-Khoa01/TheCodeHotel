@@ -80,7 +80,7 @@ export const authProvider: AuthBindings = {
     const token = localStorage.getItem(TOKEN_KEY);
     console.log(token)
     if (token) {
-      console.log('1', token)
+
       return {
         authenticated: true,
       };

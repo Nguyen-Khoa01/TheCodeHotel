@@ -47,7 +47,7 @@ import { HotelLists } from "pages/hotels";
 import "@refinedev/antd/dist/reset.css";
 
 const App: React.FC = () => {
-  const API_URL = "https://api.finefoods.refine.dev";
+  const API_URL = "http://localhost:3001";
   const dataProvider = jsonServerDataProvider(API_URL);
 
   const { t, i18n } = useTranslation();
@@ -73,22 +73,22 @@ const App: React.FC = () => {
             }}
             notificationProvider={notificationProvider}
             resources={[
-              {
-                name: "dashboard",
-                list: "/",
-                meta: {
-                  label: "Dashboard",
-                  icon: <DashboardOutlined />,
-                },
-              },
-              {
-                name: "orders",
-                list: "/orders",
-                show: "/orders/show/:id",
-                meta: {
-                  icon: <ShoppingOutlined />,
-                },
-              },
+              // {
+              //   name: "dashboard",
+              //   list: "/",
+              //   meta: {
+              //     label: "Dashboard",
+              //     icon: <DashboardOutlined />,
+              //   },
+              // },
+              // {
+              //   name: "orders",
+              //   list: "/orders",
+              //   show: "/orders/show/:id",
+              //   meta: {
+              //     icon: <ShoppingOutlined />,
+              //   },
+              // },
               {
                 name: "users",
                 list: "/users",
@@ -105,43 +105,43 @@ const App: React.FC = () => {
               //   },
               // },
               {
-                name: "products",
+                name: "hotels",
                 list: "/hotels",
                 meta: {
                   icon: <PizzaIcon />,
                 },
               },
-              {
-                name: "stores",
-                list: "/stores",
-                create: "/stores/create",
-                edit: "/stores/edit/:id",
-                meta: {
-                  icon: <ShopOutlined />,
-                },
-              },
-              {
-                name: "categories",
-                list: "/categories",
-              },
-              {
-                name: "couriers",
-                list: "/couriers",
-                create: "/couriers/create",
-                edit: "/couriers/edit/:id",
-                show: "/couriers/show/:id",
-                meta: {
-                  icon: <BikeWhiteIcon />,
-                },
-              },
+              // {
+              //   name: "stores",
+              //   list: "/stores",
+              //   create: "/stores/create",
+              //   edit: "/stores/edit/:id",
+              //   meta: {
+              //     icon: <ShopOutlined />,
+              //   },
+              // },
+              // {
+              //   name: "categories",
+              //   list: "/categories",
+              // },
+              // {
+              //   name: "couriers",
+              //   list: "/couriers",
+              //   create: "/couriers/create",
+              //   edit: "/couriers/edit/:id",
+              //   show: "/couriers/show/:id",
+              //   meta: {
+              //     icon: <BikeWhiteIcon />,
+              //   },
+              // },
 
-              {
-                name: "reviews",
-                list: "/reviews",
-                meta: {
-                  icon: <StarOutlined />,
-                },
-              },
+              // {
+              //   name: "reviews",
+              //   list: "/reviews",
+              //   meta: {
+              //     icon: <StarOutlined />,
+              //   },
+              // },
             ]}
           >
             <Routes>
@@ -158,36 +158,36 @@ const App: React.FC = () => {
                   </Authenticated>
                 }
               >
-                <Route index element={<DashboardPage />} />
+                {/* <Route index element={<DashboardPage />} />
 
                 <Route path="/orders">
                   <Route index element={<OrderList />} />
                   <Route path="show/:id" element={<OrderShow />} />
-                </Route>
+                </Route> */}
 
                 <Route path="/users">
                   <Route index element={<UserList />} />
                   <Route path="show/:id" element={<UserShow />} />
                 </Route>
 
-                {/* <Route path="/products" element={<ProductList />} /> */}
+                <Route path="/products" element={<ProductList />} />
 
                 <Route path="/hotels" element={<HotelLists />} />
 
-                <Route path="/stores">
+                {/* <Route path="/stores">
                   <Route index element={<StoreList />} />
                   <Route path="create" element={<StoreCreate />} />
                   <Route path="edit/:id" element={<StoreEdit />} />
-                </Route>
+                </Route> */}
 
-                <Route path="/categories" element={<CategoryList />} />
+                {/* <Route path="/categories" element={<CategoryList />} /> */}
 
-                <Route path="/couriers">
+                {/* <Route path="/couriers">
                   <Route index element={<CourierList />} />
                   <Route path="create" element={<CourierCreate />} />
                   <Route path="edit/:id" element={<CourierEdit />} />
                   <Route path="show/:id" element={<CourierShow />} />
-                </Route>
+                </Route> */}
 
                 <Route path="/reviews" element={<ReviewsList />} />
               </Route>

@@ -45,6 +45,7 @@ import { ConfigProvider } from "context";
 import { HotelLists } from "pages/hotels";
 
 import "@refinedev/antd/dist/reset.css";
+import { BookingList } from "pages/booking";
 
 const App: React.FC = () => {
   const API_URL = "http://localhost:3001";
@@ -89,6 +90,14 @@ const App: React.FC = () => {
               //     icon: <ShoppingOutlined />,
               //   },
               // },
+              {
+                name: "booking",
+                list: "/booking",
+                show: "/booking/show/:id",
+                meta: {
+                  icon: <ShoppingOutlined />,
+                },
+              },
               {
                 name: "users",
                 list: "/users",
@@ -158,12 +167,17 @@ const App: React.FC = () => {
                   </Authenticated>
                 }
               >
-                {/* <Route index element={<DashboardPage />} />
+                {/* <Route index element={<DashboardPage />} /> */}
 
-                <Route path="/orders">
+                {/* <Route path="/orders">
                   <Route index element={<OrderList />} />
                   <Route path="show/:id" element={<OrderShow />} />
                 </Route> */}
+
+                <Route path="/booking">
+                  <Route index element={<BookingList />} />
+                  <Route path="show/:id" element={<OrderShow />} />
+                </Route>
 
                 <Route path="/users">
                   <Route index element={<UserList />} />

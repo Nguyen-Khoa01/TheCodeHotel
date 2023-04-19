@@ -17,7 +17,9 @@ import {
     Typography,
     Upload,
     Grid,
+    Button,
 } from "antd";
+import { useEffect, useState } from "react";
 
 const { Text } = Typography;
 
@@ -28,6 +30,9 @@ type CreateProductProps = {
     saveButtonProps: ButtonProps;
 };
 
+interface Image {
+    preview: string;
+}
 
 export const CreateHotel: React.FC<CreateProductProps> = ({
     drawerProps,
@@ -39,6 +44,20 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
     const breakpoint = Grid.useBreakpoint();
 
 
+    const [image, setImage] = useState('')
+
+
+
+    async function handleImage(e: any) {
+        const file = e.target.files[0]
+        console.log(await URL.createObjectURL(file))
+        setImage(image)
+
+    }
+    const onFinish = (values: any) => {
+        values.avatar = image
+
+    };
 
     return (
         <Drawer
@@ -65,54 +84,22 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
                     initialValues={{
                         isActive: true,
                     }}
+                    onFinish={onFinish}
                 >
-                    <Form.Item label={t("hotels.fields.avatar")}>
-                        <Form.Item
-                            name="avatar"
-                            valuePropName="fileList"
-                            getValueFromEvent={getValueFromEvent}
-                            noStyle
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Upload.Dragger
-                                name="file"
-                                action={`${apiUrl}/media/upload`}
-                                listType="picture"
-                                maxCount={1}
-                                accept=".png"
-                            >
-                                <Space direction="vertical" size={2}>
-                                    <Avatar
-                                        style={{
-                                            width: "100%",
-                                            height: "100%",
-                                            maxWidth: "256px",
-                                        }}
-                                        src="/images/product-default-img.png"
-                                        alt="Store Location"
-                                    />
-                                    <Text
-                                        style={{
-                                            fontWeight: 800,
-                                            fontSize: "16px",
-                                            marginTop: "8px",
-                                        }}
-                                    >
-                                        {t(
-                                            "products.fields.images.description",
-                                        )}
-                                    </Text>
-                                    <Text style={{ fontSize: "12px" }}>
-                                        {t("products.fields.images.validation")}
-                                    </Text>
-                                </Space>
-                            </Upload.Dragger>
-                        </Form.Item>
+
+                    <Form.Item
+                        label={t("products.fields.images.label")}
+                        name="avatar"
+
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Input type="file" defaultValue='blob:http://localhost:3000/cd807819-9022-49b5-b140-0a3c6a75ca25' accept="image/png,image/jpeg" />
                     </Form.Item>
+
                     <Form.Item
                         label={t("products.fields.name")}
                         name="name"
@@ -177,7 +164,9 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
                             },
                         ]}
                     >
-                        <Input />
+                        <InputNumber
+                            style={{ width: "150px" }}
+                        />
                     </Form.Item>
                     <Form.Item
                         label={t("products.fields.price")}
@@ -218,6 +207,11 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
                         <InputNumber
                             style={{ width: "150px" }}
                         />
+                    </Form.Item>
+                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                        <Button type="primary" htmlType="submit">
+                            Submit
+                        </Button>
                     </Form.Item>
                 </Form>
             </Create>

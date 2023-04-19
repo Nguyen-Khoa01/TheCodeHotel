@@ -65,8 +65,8 @@ export const EditHotel: React.FC<EditProductProps> = ({
                 <Form {...formProps} layout="vertical">
                     <Form.Item label={t("products.fields.images.label")}>
                         <Form.Item
-                            name="images"
-                            valuePropName="fileList"
+                            name="avatar"
+                            valuePropName="avatar"
                             getValueFromEvent={getValueFromEvent}
                             noStyle
                             rules={[
@@ -122,6 +122,17 @@ export const EditHotel: React.FC<EditProductProps> = ({
                         <Input />
                     </Form.Item>
                     <Form.Item
+                        label={t("products.fields.address")}
+                        name="address"
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
                         label={t("products.fields.description")}
                         name="desreption"
                         rules={[
@@ -131,6 +142,39 @@ export const EditHotel: React.FC<EditProductProps> = ({
                         ]}
                     >
                         <Input.TextArea rows={6} />
+                    </Form.Item>
+                    <Form.Item
+                        label={t("products.fields.city")}
+                        name="city"
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label={t("products.fields.phonenumber")}
+                        name="phonenumber"
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label={t("products.fields.starRating")}
+                        name="starRating"
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Input />
                     </Form.Item>
                     <Form.Item
                         label={t("products.fields.price")}
@@ -148,7 +192,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
                     </Form.Item>
                     <Form.Item
                         label={t("products.fields.category")}
-                        name={["category", "id"]}
+                        name="category"
                         rules={[
                             {
                                 required: true,
@@ -158,13 +202,18 @@ export const EditHotel: React.FC<EditProductProps> = ({
                         <Select {...categorySelectProps} />
                     </Form.Item>
                     <Form.Item
-                        label={t("products.fields.isActive")}
-                        name="isActive"
+                        label={t("products.fields.room")}
+                        name="rooms"
+                        rules={[
+                            {
+                                required: true,
+                                type: "number",
+                            },
+                        ]}
                     >
-                        <Radio.Group>
-                            <Radio value={true}>{t("status.enable")}</Radio>
-                            <Radio value={false}>{t("status.disable")}</Radio>
-                        </Radio.Group>
+                        <InputNumber
+                            style={{ width: "150px" }}
+                        />
                     </Form.Item>
                 </Form>
             </Edit>

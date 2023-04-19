@@ -1,6 +1,6 @@
 import { useTranslate, BaseKey } from "@refinedev/core";
 
-import { NumberField } from "@refinedev/antd";
+import { DeleteButton, NumberField } from "@refinedev/antd";
 
 import {
     CloseCircleOutlined,
@@ -81,6 +81,13 @@ export const HotelItem: React.FC<ProductItemProps> = ({
                             >
                                 {t("stores.buttons.edit")}
                             </Menu.Item>
+
+                            <DeleteButton
+                                hideText
+                                size="small"
+                                recordItemId={item.id}
+                            />
+
                         </Menu>
                     }
                     trigger={["click"]}
@@ -91,7 +98,7 @@ export const HotelItem: React.FC<ProductItemProps> = ({
                         }}
                     />
                 </Dropdown>
-            </div>
+            </div >
             <div
                 style={{
                     display: "flex",
@@ -143,6 +150,6 @@ export const HotelItem: React.FC<ProductItemProps> = ({
                     value={Number(item.price) / 100}
                 />
             </div>
-        </Card>
+        </Card >
     );
 };

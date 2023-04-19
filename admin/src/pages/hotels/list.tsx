@@ -68,7 +68,7 @@ export const HotelLists: React.FC<IResourceComponentsProps> = () => {
                             }}
                         >
                             <Text style={{ fontSize: "24px" }} strong>
-                                {t("products.products")}
+                                Hotel
                             </Text>
                             <Form.Item name="name" noStyle>
                                 <Input

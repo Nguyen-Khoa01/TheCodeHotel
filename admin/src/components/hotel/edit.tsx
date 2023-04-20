@@ -59,9 +59,8 @@ export const EditHotel: React.FC<EditProductProps> = ({
         <Form {...formProps} layout="vertical">
           <Form.Item label={t("products.fields.images.label")}>
             <Form.Item
-              name="images"
-              valuePropName="fileList"
-              getValueFromEvent={getValueFromEvent}
+              name="avatar"
+              getValueFromEvent={(data) => { console.log(data?.fileList?.[0]?.response?.url); return data?.fileList?.[0]?.response?.url }}
               noStyle
               rules={[
                 {
@@ -71,7 +70,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
             >
               <Upload.Dragger
                 name="file"
-                action={`${apiUrl}/media/upload`}
+                action={`${apiUrl}/hotels/upload`}
                 listType="picture"
                 maxCount={1}
                 accept=".png"

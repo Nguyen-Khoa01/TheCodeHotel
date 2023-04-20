@@ -5,6 +5,7 @@ import App from "./App";
 
 import dayjs from "dayjs";
 import "i18n";
+import './style/globals.css'
 
 import WeekDay from "dayjs/plugin/weekday";
 import LocaleData from "dayjs/plugin/localeData";

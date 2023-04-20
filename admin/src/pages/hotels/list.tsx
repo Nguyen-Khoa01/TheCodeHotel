@@ -30,6 +30,7 @@ export const HotelLists: React.FC<IResourceComponentsProps> = () => {
         { name: string }
     >({
     });
+
     const {
         drawerProps: createDrawerProps,
         formProps: createFormProps,
@@ -51,6 +52,7 @@ export const HotelLists: React.FC<IResourceComponentsProps> = () => {
         resource: "hotels",
         redirect: false,
     });
+    console.log(createFormProps)
     return (
         <div>
             <Form
@@ -79,7 +81,7 @@ export const HotelLists: React.FC<IResourceComponentsProps> = () => {
                                     suffix={<SearchOutlined />}
                                 />
                             </Form.Item>
-                            <CreateButton onClick={() => createShow()}>
+                            <CreateButton onClick={() => createShow()} className="bg-[#1677ff]">
                                 {t("stores.buttons.addHotel")}
                             </CreateButton>
                         </div>
@@ -98,6 +100,7 @@ export const HotelLists: React.FC<IResourceComponentsProps> = () => {
                                 overflow: "auto",
                                 paddingRight: "4px",
                             }}
+                            className="overflow-clip"
                             {...listProps}
                             renderItem={(item) => (
                                 <HotelItem item={item} editShow={editShow} />

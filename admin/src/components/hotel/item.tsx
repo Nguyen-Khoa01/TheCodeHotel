@@ -39,8 +39,10 @@ export const HotelItem: React.FC<ProductItemProps> = ({
       style={{
         margin: "8px",
         opacity: item.rooms <= 0 ? 0.5 : 1,
+        overflow: 'hidden'
       }}
-      bodyStyle={{ height: "500px" }}
+      bodyStyle={{ height: "450px", padding: '0' }}
+      className="px-1"
     >
       <div style={{ position: "absolute", top: "10px", right: "5px" }}>
         <Dropdown
@@ -94,56 +96,29 @@ export const HotelItem: React.FC<ProductItemProps> = ({
           />
         </Dropdown>
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          height: "100%",
-        }}
-      >
-        <div style={{ textAlign: "center" }}>
-          <img src={item.avatar} width={"100%"} />
+      <div style={{ textAlign: "center" }}>
+        <img src={item.avatar} width={"100%"} className="h-60 object-cover " />
+      </div>
+      <div className="flex flex-col h-full px-2">
+
+        <div className="mt-4 flex justify-between">
+          <p className="text-[18px] font-extrabold">{item.name}</p>
+          <p className="text-[18px] ml-1 text-yellow-500">{item.starRating} sao</p>
         </div>
-        <Divider />
-        <Paragraph
-          ellipsis={{ rows: 2, tooltip: true }}
-          style={{
-            fontSize: "18px",
-            fontWeight: 800,
-            marginBottom: "8px",
-          }}
-        >
-          {item.name}
-        </Paragraph>
-        <Paragraph
-          ellipsis={{ rows: 3, tooltip: true }}
-          style={{ marginBottom: "8px" }}
-        >
-          {item.desreption}
-        </Paragraph>
-        <Text
-          className="item-id"
-          style={{
-            fontSize: "18px",
-            fontWeight: 700,
-            color: "#999999",
-          }}
-        >
-          #{item.id}
-        </Text>
-        <NumberField
-          style={{
-            fontSize: "24px",
-            fontWeight: 500,
-            marginBottom: "8px",
-          }}
-          options={{
-            currency: "USD",
-            style: "currency",
-          }}
-          value={Number(item.price) / 100}
-        />
+        <div className="flex">
+          <p>{item.address}</p>
+          <p className="ml-1">{item.city}</p>
+        </div>
+        <div className="mb-2 ">
+          <p className="w-[370px] whitespace-nowrap text-[17px] overflow-hidden text-ellipsis">{item.desreption}</p>
+        </div>
+        <div>
+          <p>{item.category}</p>
+        </div>
+        <div className="flex justify-between items-center">
+          <p className="text-[22px] font-medium">${item.price}</p>
+          <p className="text-[22px] ">slug:{item.rooms}</p>
+        </div>
       </div>
     </Card>
   );

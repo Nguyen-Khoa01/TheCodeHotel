@@ -4,7 +4,7 @@ import {
   Bars3Icon,
   EllipsisVerticalIcon,
 } from "@heroicons/react/24/outline";
-import { use, useEffect } from "react";
+import { use, useEffect, useState } from "react";
 const mainNav = [
   {
     display: "Home",
@@ -24,14 +24,35 @@ const mainNav = [
   },
 ];
 
-export default function Header(props: any) {
+export default function Header() {
+  const [auth, setAuth] = useState(false);
+  const [user, setUser] = useState({
+    fullname: "",
+  });
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const getToken = JSON.parse(window.localStorage.getItem("TOKEN") || "");
+        const res = await fetch("http://localhost:3001/auth/profile", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${getToken.token} `,
+          },
+        });
+        setUser(await res.json());
+        setAuth(true);
+      } catch (error) {
+        setAuth(false);
+      }
+    })();
+  }, []);
 
   let menu;
-  if (props.auth) {
+  if (auth) {
     menu = (
       <div>
-        <p className="text-gray-700">{props.user.fullname}</p>
+        <p className="text-gray-700">{user.fullname}</p>
         <Link href="/Login">
           <span>Logout</span>
         </Link>
@@ -49,8 +70,6 @@ export default function Header(props: any) {
       </div>
     );
   }
-
-
 
   return (
     <div className="grid grid-cols-6 xl:grid-cols-1 2xl:my-[20px]">

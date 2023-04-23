@@ -176,7 +176,7 @@ const App: React.FC = () => {
 
                 <Route path="/booking">
                   <Route index element={<BookingList />} />
-                  <Route path="show/:id" element={<OrderShow />} />
+                  {/* <Route path="show/:id" element={<OrderShow />} /> */}
                 </Route>
 
                 <Route path="/users">

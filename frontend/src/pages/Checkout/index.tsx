@@ -13,6 +13,7 @@ import {
     Select,
 } from 'antd';
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 
 const { Option } = Select;
@@ -23,10 +24,14 @@ export default function Checkout() {
 
     const router = useRouter();
     const data = router.query;
-    const { numberAduts, numberChilren, checkout,
-        checkin, Total, totalRoom } = data
 
-    // console.log(Number(checkout) - Number(checkin))
+    const { numberAduts, numberChilren, checkout,
+        checkin, Total, totalRoom, namehotel } = data
+
+    console.log(data)
+
+
+    const [isRadio, setIsRadio] = useState(false)
 
     const prefixSelector = (
         <Form.Item name="prefix" noStyle>
@@ -36,30 +41,77 @@ export default function Checkout() {
             </Select>
         </Form.Item>
     );
+    let radio
+    if (isRadio) {
+        radio = ''
+    } else {
+        radio = (
+            <div >
+                <Form.Item
+                    name="CardNumber"
+                    label="CardNumber"
+                    rules={[{ required: true, message: 'Please input your CardNumber!', whitespace: true }]}
+
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item label="Expire Date">
+                    <DatePicker />
+                </Form.Item>
+            </div>
+        )
+    }
+
+    const handleRadio = (e: any) => {
+        e.target.value === 'chua thanh toan' ? setIsRadio(true) : setIsRadio(false)
+    }
+
+    async function handleCheckout(value: any) {
+        const { nameuser, status } = value
+        console.log(value)
+        try {
+            const res = await fetch('http://localhost:3001/booking', {
+                method: 'POST',
+                body: JSON.stringify({
+                    nameuser, status,
+                    totalprice: Total,
+                    checkindate: checkin,
+                    checkoutdate: checkout,
+                    room: totalRoom,
+                    namehotel
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            if (res.ok) {
+                await router.push('/')
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     return (
         <div>
             <Header />
             <Title />
             <div className="bg-[#F2F4F7]">
                 <div className="max-w-[1300px] mx-auto grid grid-cols-12 gap-x-6 2xl:mx-[30px] 2xl:gap-x-3 lg:max-w-[720px] md:max-w-[540px] ">
-                    <Form size='large' layout="vertical" className="w-full col-span-8 2xl:col-span-7 2md:col-span-12">
+                    <Form size='large' layout="vertical" className="w-full col-span-8 2xl:col-span-7 2md:col-span-12"
+                        onFinish={handleCheckout}
+                    >
                         <div className="bg-white shadow-xl px-[20px] pt-[20px] rounded-xl my-8">
                             <h1 className="text-[20px] font-semibold mb-2">Booking Information</h1>
                             <div className="grid grid-cols-2 gap-x-2">
-                                <Form.Item
-                                    name="FirstName"
-                                    label="FirstName"
-                                    rules={[{ required: true, message: 'Please input your FirstName!', whitespace: true }]}
-                                    className=""
-                                >
-                                    <Input />
-                                </Form.Item>
 
                                 <Form.Item
-                                    name="LastName"
-                                    label="LastName"
+                                    name="nameuser"
+                                    label="Name User"
                                     rules={[{ required: true, message: 'Please input your LastName!', whitespace: true }]}
-                                    className=""
+                                    className="col-span-2"
                                 >
                                     <Input />
                                 </Form.Item>
@@ -154,37 +206,19 @@ export default function Checkout() {
                         <div className="bg-white shadow-xl px-[20px] pt-[20px] my-8 rounded-xl">
                             <h1 className="text-[20px] font-semibold mb-2">Payment</h1>
                             <div className="grid grid-cols-2 gap-x-2">
-                                <Form.Item className="col-span-2">
-                                    <Radio.Group>
-                                        <Radio value="apple">
+                                <Form.Item name='status' className="col-span-2" >
+                                    <Radio.Group onChange={handleRadio}>
+                                        <Radio value="chua thanh toan">
                                             <CreditCardIcon className="h-6 w-6 text-gray-500" />
-                                            <p>Credit/Dabit Card</p>
+                                            <p>Tien mat</p>
                                         </Radio>
-                                        <Radio value="pear">
+                                        <Radio value="da thanh toan">
                                             <BsPaypal />
                                             <p>Paypal</p>
                                         </Radio>
                                     </Radio.Group>
                                 </Form.Item>
-                                <Form.Item
-                                    name="CardNumber"
-                                    label="CardNumber"
-                                    rules={[{ required: true, message: 'Please input your CardNumber!', whitespace: true }]}
-                                    className="col-span-2"
-                                >
-                                    <Input />
-                                </Form.Item>
-                                <Form.Item label="Expire Date">
-                                    <DatePicker />
-                                </Form.Item>
-                                <Form.Item
-                                    name="CVV/CVC"
-                                    label="CVV/CVC"
-                                    rules={[{ required: true, message: 'Please input your CVV/CVC!', whitespace: true }]}
-                                    className=""
-                                >
-                                    <Input />
-                                </Form.Item>
+                                {radio}
                                 <Form.Item
                                     className="col-span-2"
                                 >

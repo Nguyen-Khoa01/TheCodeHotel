@@ -209,7 +209,7 @@ const Rooms: React.FC = () => {
       temp = temp.filter((e) => filter.star.includes(e.star));
     }
     setHotels(temp);
-    console.log(1);
+
   }, [filter, HotelList, minPrice, maxPrice]);
 
   useEffect(() => {

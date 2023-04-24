@@ -9,6 +9,7 @@ import {
     Form,
     Input,
     Select,
+    Radio,
 } from 'antd';
 import Link from "next/link";
 import { useRouter } from 'next/router'
@@ -80,6 +81,7 @@ export default function Register() {
         }
 
     }
+
 
     const prefixSelector = (
         <Form.Item name="prefix" noStyle>

@@ -97,13 +97,13 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
           <Table
             {...tableProps}
             rowKey="id"
-            // onRow={(record) => {
-            //   return {
-            //     onClick: () => {
-            //       show("booking", record.id);
-            //     },
-            //   };
-            // }}
+          // onRow={(record) => {
+          //   return {
+          //     onClick: () => {
+          //       show("booking", record.id);
+          //     },
+          //   };
+          // }}
           >
             <Table.Column
               key="id"
@@ -121,12 +121,12 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
               defaultSortOrder={getDefaultSortOrder("status.text", sorter)}
               sorter
             />
-            {/* <Table.Column
+            <Table.Column
               align="right"
-              key="amount"
-              dataIndex="amount"
-              title={t("orders.fields.amount")}
-              defaultSortOrder={getDefaultSortOrder("amount", sorter)}
+              key="totalprice"
+              dataIndex="totalprice"
+              title={'price'}
+
               sorter
               render={(value) => {
                 return (
@@ -135,7 +135,7 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
                   />
                 );
               }}
-            /> */}
+            />
             <Table.Column
               key="store.id"
               dataIndex="namehotel"
@@ -156,21 +156,21 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
               key="bookingdate"
               dataIndex="bookingdate"
               title="bookingdate"
-              render={(value) => <DateField value={value} format="LLL" />}
+              render={(value) => <DateField value={value} format="DD/MM/YYYY" />}
               sorter
             />
             <Table.Column
               key="checkoutdate"
               dataIndex="checkoutdate"
               title="checkoutdate"
-              render={(value) => <DateField value={value} format="L" />}
+              render={(value) => <TextField value={value} />}
               sorter
             />
             <Table.Column
               key="checkindate"
               dataIndex="checkindate"
               title="checkindate"
-              render={(value) => <DateField value={value} format="L" />}
+              render={(value) => <TextField value={value} />}
               sorter
             />
 
@@ -180,7 +180,7 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
               dataIndex="actions"
               key="actions"
               align="center"
-              // render={(_value, record) => <OrderActions record={record} />}
+            // render={(_value, record) => <OrderActions record={record} />}
             />
           </Table>
         </List>

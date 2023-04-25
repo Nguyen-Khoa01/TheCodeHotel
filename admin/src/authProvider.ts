@@ -1,6 +1,6 @@
 import { AuthBindings } from "@refinedev/core";
 import { notification } from "antd";
-import routerProvider from "@refinedev/react-router-v6";
+
 export const TOKEN_KEY = "refine-auth";
 
 export const authProvider: AuthBindings = {
@@ -80,7 +80,7 @@ export const authProvider: AuthBindings = {
     const token = localStorage.getItem(TOKEN_KEY);
     console.log(token)
     if (token) {
-
+      console.log('1', token)
       return {
         authenticated: true,
       };

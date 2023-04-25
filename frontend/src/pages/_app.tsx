@@ -3,7 +3,8 @@ import Head from 'next/head'
 import '../style/globals.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 export default function App({ Component, pageProps }: AppProps) {
 
   return (
@@ -23,7 +24,10 @@ export default function App({ Component, pageProps }: AppProps) {
           crossOrigin="anonymous"
         />
       </Head>
+
       <Component {...pageProps} />
+
+
     </>
   )
 }

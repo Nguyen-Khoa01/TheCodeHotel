@@ -165,27 +165,27 @@ const Home: React.FC = () => {
                 }
                 options={[
                   {
-                    value: "1",
+                    value: "Vũng Tàu",
                     label: "Vũng Tàu",
                   },
                   {
-                    value: "2",
+                    value: "Hà Nội",
                     label: "Hà Nội",
                   },
                   {
-                    value: "3",
+                    value: "Hồ Chí Minh",
                     label: "Hồ Chí Minh",
                   },
                   {
-                    value: "4",
+                    value: "Đà Nẵng",
                     label: "Đà Nẵng",
                   },
                   {
-                    value: "5",
+                    value: "Hải Phòng",
                     label: "Hải Phòng",
                   },
                   {
-                    value: "6",
+                    value: "Đà lạt",
                     label: "Đà lạt",
                   },
                 ]}

@@ -4,6 +4,7 @@ import {
   Bars3Icon,
   EllipsisVerticalIcon,
 } from "@heroicons/react/24/outline";
+import { ShoppingCartIcon } from "@heroicons/react/24/solid";
 import { use, useEffect, useState } from "react";
 const mainNav = [
   {
@@ -24,7 +25,7 @@ const mainNav = [
   },
 ];
 
-export default function Header() {
+export default function Header(props: any) {
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState({
     fullname: "",
@@ -72,7 +73,7 @@ export default function Header() {
   }
 
   return (
-    <div className="grid grid-cols-6 xl:grid-cols-1 2xl:my-[20px]">
+    <div className="grid grid-cols-6 xl:grid-cols-1 2xl:my-[20px] fixed h-[96px] bg-slate-300 z-40 top-0 left-0 w-full">
       <div
         className="flex col-start-2 col-span-4 justify-between items-center font-sans 
         font-light text-gray-700 h-24 xl:col-start-1 2xl:py-[15px] xl:grid  
@@ -90,7 +91,7 @@ export default function Header() {
             />
           </Link>
         </div>
-        <div className="flex  justify-evenly w-3/6 2xl:w-full 2md:hidden">
+        <div className="flex justify-evenly w-3/6 2xl:w-full 2md:hidden">
           {mainNav.map((item, index) => (
             <div key={index}>
               <Link href={item.path}>
@@ -102,12 +103,12 @@ export default function Header() {
         <div className="flex items-center uppercase text-sm justify-end 2md:hidden">
           <UserIcon className="h-5 w-5 mr-1 text-gray-500 lg:h-4 lg:w-4" />
           {menu}
-
-          {/* <div className=" bg-teal-600 h-12 w-32 text-center rounded-md ml-4 text-white lg:w-20 lg:h-8">
-            <Link href="/Checkout">
-              <span className="leading-8 text-[13px]">BOOK NOW</span>
-            </Link>
-          </div> */}
+          <div className="relative rounded-full border-solid border-[1px] border-indigo-600 p-[5px]">
+            <ShoppingCartIcon className="h-6 w-6 text-gray-500 text-teal-600" />
+            <p className="absolute top-4 left-7 text-[18px] z-10 text-white rounded-full p-[4px] bg-red-500 font-bold">
+              {props.AppProps}
+            </p>
+          </div>
         </div>
 
         <div className="2md:flex hidden justify-end">

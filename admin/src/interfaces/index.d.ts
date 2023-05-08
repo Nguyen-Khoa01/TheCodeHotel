@@ -28,8 +28,6 @@ export interface IOrderStatus {
 
 export interface IUser {
   id: number;
-  firstName: string;
-  lastName: string;
   fullName: string;
   gender: string;
   gsm: string;
@@ -37,6 +35,15 @@ export interface IUser {
   isActive: boolean;
   avatar: IFile[];
   addresses: IAddress[];
+}
+
+export interface IUser {
+  id: number;
+  fullname: string;
+  phonenumber: string;
+  username: string;
+  role: string;
+  email: string;
 }
 
 export interface IIdentity {
@@ -105,7 +112,7 @@ export interface IBooking {
   id: number;
   nameuser: string;
   room: string;
-  namehotel: string;
+  namehotel: IHotel;
   bookingdate: string;
   checkindate: string;
   checkoutdate: string;

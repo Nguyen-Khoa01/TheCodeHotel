@@ -26,7 +26,7 @@ import { Pagination } from "antd";
 import dayjs from "dayjs";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
-
+import { ChevronRightIcon } from "@heroicons/react/24/solid";
 const { RangePicker } = DatePicker;
 
 interface item {
@@ -50,30 +50,31 @@ interface listhotel {
 }
 const Location = [
   {
-    value: "1",
+    value: "Vũng Tàu",
     label: "Vũng Tàu",
   },
   {
-    value: "2",
+    value: "Hà Nội",
     label: "Hà Nội",
   },
   {
-    value: "3",
+    value: "Hồ Chí Minh",
     label: "Hồ Chí Minh",
   },
   {
-    value: "4",
+    value: "Đà Nẵng",
     label: "Đà Nẵng",
   },
   {
-    value: "5",
+    value: "Hải Phòng",
     label: "Hải Phòng",
   },
   {
-    value: "6",
+    value: "Đà lạt",
     label: "Đà lạt",
   },
 ];
+
 const Rooms: React.FC = () => {
   const [sreach, setSreach] = useState<item>({
     Adutls: 0,
@@ -85,7 +86,7 @@ const Rooms: React.FC = () => {
   });
 
   const { Search } = Input;
-  const [minPrice, setMinPrice] = useState(2);
+  const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(50);
 
   const [numberChilren, setNumberChilren] = useState(0);
@@ -159,9 +160,7 @@ const Rooms: React.FC = () => {
     star: [],
   };
 
-  const HotelList = HotelData.getAllHotels();
-
-  const [Hotels, setHotels] = useState(HotelList);
+  const [Hotels, setHotels] = useState(ListHotel);
 
   const [filter, setFilter] = useState(initFiler);
 
@@ -194,23 +193,31 @@ const Rooms: React.FC = () => {
     }
   };
 
+  const hanleSearch = () => {
+    let temp = ListHotel;
+
+    temp = temp.filter((e) => e.city === sreach.City);
+
+    setHotels(temp);
+    console.log(temp);
+  };
+
   const updateHotel = useCallback(() => {
-    let temp = HotelList;
-    if (filter.amenities.length > 0) {
-      temp = temp.filter((e) => {
-        const check = e.Amenities.find((e) => filter.amenities.includes(e));
-        return check !== undefined;
-      });
-    }
+    let temp = ListHotel;
+    // if (filter.amenities.length > 0) {
+    //   temp = temp.filter((e) => {
+    //     const check = e.Amenities.find((e) => filter.amenities.includes(e));
+    //     return check !== undefined;
+    //   });
+    // }
     if (minPrice > 0 && maxPrice < 1000) {
       temp = temp.filter((e) => e.price >= minPrice && e.price <= maxPrice);
     }
     if (filter.star.length > 0) {
-      temp = temp.filter((e) => filter.star.includes(e.star));
+      temp = temp.filter((e) => filter.star.includes(e.starRating));
     }
     setHotels(temp);
-
-  }, [filter, HotelList, minPrice, maxPrice]);
+  }, [filter, ListHotel, minPrice, maxPrice]);
 
   useEffect(() => {
     updateHotel();
@@ -251,7 +258,20 @@ const Rooms: React.FC = () => {
   return (
     <div className="">
       <Header />
-      <Title />
+      <div className=" bg-[#EAECF0] py-[30px] grid grid-cols-6 xl:grid-cols-1 mt-[96px]">
+        <div
+          className="col-start-2 col-span-4 flex justify-between px-5 
+                pt-5 pb-[25px] bg-white rounded-lg xl:col-start-1 2xl:mx-[35px] 
+                lg:max-w-[720px] 2md:w-full 2md:mx-auto md:max-w-[540px]"
+        >
+          <h1 className="text-[24px] leading-[32px] font-light"></h1>
+          <div className="flex text-gray-400 items-center md:text-[15px]">
+            <p>Home</p>
+            <ChevronRightIcon className="h-4 w-4 text-gray-400" />
+            <p>ListHotel</p>
+          </div>
+        </div>
+      </div>
       <div className="bg-[#F2F4F7] grid grid-cols-6 xl:grid-cols-1 ">
         <div className="col-start-2 col-span-4 xl:col-span-1 2xl:mx-[35px] 2md:mx-auto 2md:w-full lg:max-w-[720px] md:max-w-[540px]">
           <div
@@ -333,7 +353,10 @@ const Rooms: React.FC = () => {
                 />
               </div>
             </div>
-            <div className="w-14 h-14 bg-teal-600 rounded-xl flex justify-center items-center hover:bg-[#4096ff] transition-all duration-150">
+            <div
+              className="w-14 h-14 bg-teal-600 rounded-xl flex justify-center items-center hover:bg-[#4096ff] transition-all duration-150"
+              onClick={hanleSearch}
+            >
               <MagnifyingGlassIcon className="h-6 w-6 text-white" />
             </div>
           </div>
@@ -354,16 +377,13 @@ const Rooms: React.FC = () => {
                     className="my-5 mr-3"
                     onChange={onChange}
                     step={0.01}
+                    max={100}
                   />
                   <div className="flex text-[18px] pl-2">
                     <p className="text-[#a1a1a1] mr-5">Price:</p>
-                    <p className="text-teal-600">
-                      ${Math.floor(minPrice * 10)}
-                    </p>
+                    <p className="text-teal-600">${Math.floor(minPrice)}</p>
                     <p>-</p>
-                    <p className="text-teal-600">
-                      ${Math.floor(maxPrice * 10)}
-                    </p>
+                    <p className="text-teal-600">${Math.floor(maxPrice)}</p>
                   </div>
                 </div>
               </div>
@@ -438,7 +458,7 @@ const Rooms: React.FC = () => {
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-6 md:grid-cols-1">
-                {ListHotel.map((item, key) => (
+                {Hotels.map((item, key) => (
                   <div
                     key={key}
                     className="rounded-[26px] overflow-hidden shadow-lg"
@@ -472,7 +492,7 @@ const Rooms: React.FC = () => {
                       <div className="flex px-[20px] pt-[15px] pb-[25px] justify-between 2lg:flex-col md:flex-row">
                         <div>
                           <h1 className="text-[22px] font-medium text-teal-600">
-                            ${Math.floor(item.price * 10)}{" "}
+                            ${Math.floor(item.price)}{" "}
                             <span className="text-[16px] font-normal text-teal-600">
                               /Night
                             </span>

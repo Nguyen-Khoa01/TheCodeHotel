@@ -39,15 +39,64 @@ import dayjs from "dayjs";
 
 import { OrderStatus, OrderActions } from "components";
 
-import { IBooking } from "interfaces";
+import { IBooking, IOrderFilterVariables } from "interfaces";
 import { useMemo } from "react";
 
 export const BookingList: React.FC<IResourceComponentsProps> = () => {
   const { tableProps, sorter, searchFormProps, filters } = useTable<
     IBooking,
-    HttpError
-  >();
+    HttpError,
+    IOrderFilterVariables
+  >({
+    onSearch: (params) => {
+      const filters: CrudFilters = [];
+      const { q, store, user, createdAt, status } = params;
 
+      filters.push({
+        field: "q",
+        operator: "eq",
+        value: q,
+      });
+
+      filters.push({
+        field: "store.id",
+        operator: "eq",
+        value: store,
+      });
+
+      filters.push({
+        field: "user.id",
+        operator: "eq",
+        value: user,
+      });
+
+      filters.push({
+        field: "status.text",
+        operator: "in",
+        value: status,
+      });
+
+      filters.push(
+        {
+          field: "createdAt",
+          operator: "gte",
+          value: createdAt
+            ? createdAt[0].startOf("day").toISOString()
+            : undefined,
+        },
+        {
+          field: "createdAt",
+          operator: "lte",
+          value: createdAt
+            ? createdAt[1].endOf("day").toISOString()
+            : undefined,
+        }
+      );
+
+      return filters;
+    },
+  });
+  console.log(tableProps);
   const t = useTranslate();
   const { show } = useNavigation();
 
@@ -58,7 +107,6 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
     maxItemCount: 50,
     mapData: (item) => {
       return {
-        id: item.id,
         nameuser: item.nameuser,
         room: item.room,
         status: item.status,
@@ -97,13 +145,13 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
           <Table
             {...tableProps}
             rowKey="id"
-          // onRow={(record) => {
-          //   return {
-          //     onClick: () => {
-          //       show("booking", record.id);
-          //     },
-          //   };
-          // }}
+            // onRow={(record) => {
+            //   return {
+            //     onClick: () => {
+            //       show("booking", record.id);
+            //     },
+            //   };
+            // }}
           >
             <Table.Column
               key="id"
@@ -125,19 +173,14 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
               align="right"
               key="totalprice"
               dataIndex="totalprice"
-              title={'price'}
-
+              title={"price"}
               sorter
               render={(value) => {
-                return (
-                  <NumberField
-                    value={value}
-                  />
-                );
+                return <NumberField value={value} />;
               }}
             />
             <Table.Column
-              key="store.id"
+              key="namehotel"
               dataIndex="namehotel"
               title="namehotel"
             />
@@ -156,7 +199,9 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
               key="bookingdate"
               dataIndex="bookingdate"
               title="bookingdate"
-              render={(value) => <DateField value={value} format="DD/MM/YYYY" />}
+              render={(value) => (
+                <DateField value={value} format="DD/MM/YYYY" />
+              )}
               sorter
             />
             <Table.Column
@@ -180,7 +225,7 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
               dataIndex="actions"
               key="actions"
               align="center"
-            // render={(_value, record) => <OrderActions record={record} />}
+              // render={(_value, record) => <OrderActions record={record} />}
             />
           </Table>
         </List>
@@ -197,7 +242,7 @@ const Filter: React.FC<{ formProps: FormProps; filters: CrudFilters }> = (
   const { formProps, filters } = props;
   const { selectProps: storeSelectProps } = useSelect<IBooking>({
     resource: "booking",
-    defaultValue: getDefaultFilter("store.id", filters),
+    defaultValue: getDefaultFilter("id", filters),
   });
 
   // const { selectProps: orderSelectProps } = useSelect<IOrderStatus>({
@@ -249,25 +294,7 @@ const Filter: React.FC<{ formProps: FormProps; filters: CrudFilters }> = (
             />
           </Form.Item>
         </Col>
-        <Col xl={4} md={8} sm={12} xs={24}>
-          <Form.Item label={t("orders.filter.status.label")} name="status">
-            <Select
-              // {...orderSelectProps}
-              allowClear
-              mode="multiple"
-              placeholder={t("orders.filter.status.placeholder")}
-            />
-          </Form.Item>
-        </Col>
-        <Col xl={4} md={8} sm={12} xs={24}>
-          <Form.Item label={t("orders.filter.store.label")} name="store">
-            <Select
-              {...storeSelectProps}
-              allowClear
-              placeholder={t("orders.filter.store.placeholder")}
-            />
-          </Form.Item>
-        </Col>
+
         <Col xl={4} md={8} sm={12} xs={24}>
           <Form.Item label={t("orders.filter.user.label")} name="user">
             <Select
@@ -287,7 +314,13 @@ const Filter: React.FC<{ formProps: FormProps; filters: CrudFilters }> = (
         </Col>
         <Col xl={4} md={8} sm={12} xs={24}>
           <Form.Item>
-            <Button htmlType="submit" type="primary" size="large" block>
+            <Button
+              htmlType="submit"
+              type="primary"
+              size="large"
+              block
+              className="bg-[#4096ff]"
+            >
               {t("orders.filter.submit")}
             </Button>
           </Form.Item>

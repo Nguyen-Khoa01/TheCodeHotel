@@ -20,7 +20,7 @@ export const authProvider: AuthBindings = {
       localStorage.setItem(TOKEN_KEY, JSON.stringify(token));
       return {
         success: true,
-        redirectTo: "/",
+        redirectTo: "/booking",
       };
     }
     return {
@@ -78,9 +78,9 @@ export const authProvider: AuthBindings = {
   },
   check: async () => {
     const token = localStorage.getItem(TOKEN_KEY);
-    console.log(token)
+    console.log(token);
     if (token) {
-      console.log('1', token)
+      console.log("1", token);
       return {
         authenticated: true,
       };
@@ -98,14 +98,14 @@ export const authProvider: AuthBindings = {
   getPermissions: async () => null,
   getIdentity: async () => {
     const getToken = JSON.parse(localStorage.getItem(TOKEN_KEY) || "");
-    const res = await fetch('http://localhost:3001/auth/profile', {
+    const res = await fetch("http://localhost:3001/auth/profile", {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${getToken.token} `
-      }
-    })
+        Authorization: `Bearer ${getToken.token} `,
+      },
+    });
 
-    const admin = await res.json()
+    const admin = await res.json();
     if (!getToken) {
       return null;
     }

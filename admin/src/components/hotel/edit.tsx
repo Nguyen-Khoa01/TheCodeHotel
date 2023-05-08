@@ -50,6 +50,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
         contentProps={{
           style: {
             boxShadow: "none",
+            backgroundColor: "#4096ff",
           },
           bodyStyle: {
             padding: 0,
@@ -60,7 +61,10 @@ export const EditHotel: React.FC<EditProductProps> = ({
           <Form.Item label={t("products.fields.images.label")}>
             <Form.Item
               name="avatar"
-              getValueFromEvent={(data) => { console.log(data?.fileList?.[0]?.response?.url); return data?.fileList?.[0]?.response?.url }}
+              getValueFromEvent={(data) => {
+                console.log(data?.fileList?.[0]?.response?.url);
+                return data?.fileList?.[0]?.response?.url;
+              }}
               noStyle
               rules={[
                 {
@@ -102,8 +106,8 @@ export const EditHotel: React.FC<EditProductProps> = ({
             </Form.Item>
           </Form.Item>
           <Form.Item
-            label={t("products.fields.name")}
-            name="name"
+            label="NameHotel"
+            name="NameHotel"
             rules={[
               {
                 required: true,
@@ -113,7 +117,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
             <Input />
           </Form.Item>
           <Form.Item
-            label={t("products.fields.address")}
+            label="address"
             name="address"
             rules={[
               {
@@ -124,7 +128,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
             <Input />
           </Form.Item>
           <Form.Item
-            label={t("products.fields.description")}
+            label="Desreption"
             name="desreption"
             rules={[
               {
@@ -135,7 +139,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
             <Input.TextArea rows={6} />
           </Form.Item>
           <Form.Item
-            label={t("products.fields.city")}
+            label="City"
             name="city"
             rules={[
               {
@@ -146,7 +150,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
             <Input />
           </Form.Item>
           <Form.Item
-            label={t("products.fields.phonenumber")}
+            label="phonenumber"
             name="phonenumber"
             rules={[
               {
@@ -157,7 +161,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
             <Input />
           </Form.Item>
           <Form.Item
-            label={t("products.fields.starRating")}
+            label="starRating"
             name="starRating"
             rules={[
               {
@@ -168,7 +172,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
             <Input />
           </Form.Item>
           <Form.Item
-            label={t("products.fields.price")}
+            label="price"
             name="price"
             rules={[
               {
@@ -179,7 +183,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
             <InputNumber style={{ width: "150px" }} />
           </Form.Item>
           <Form.Item
-            label={t("products.fields.category")}
+            label="category"
             name="category"
             rules={[
               {
@@ -190,7 +194,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
             <Input></Input>
           </Form.Item>
           <Form.Item
-            label={t("products.fields.room")}
+            label="rooms"
             name="rooms"
             rules={[
               {

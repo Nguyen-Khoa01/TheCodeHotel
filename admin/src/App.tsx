@@ -24,20 +24,9 @@ import { authProvider } from "authProvider";
 
 import "dayjs/locale/de";
 
-import { DashboardPage } from "./pages/dashboard";
-import { OrderList, OrderShow } from "./pages/orders";
 import { AuthPage } from "./pages/auth";
 import { UserList, UserShow } from "./pages/users";
-import {
-  CourierList,
-  CourierShow,
-  CourierCreate,
-  CourierEdit,
-} from "./pages/couriers";
-import { ProductList } from "./pages/products";
-import { StoreCreate, StoreEdit, StoreList } from "./pages/stores";
-import { CategoryList } from "./pages/categories";
-import { ReviewsList } from "./pages/reviews";
+
 import { useTranslation } from "react-i18next";
 import { Header, Title, OffLayoutArea } from "components";
 import { BikeWhiteIcon, PizzaIcon } from "components/icons";
@@ -82,14 +71,7 @@ const App: React.FC = () => {
               //     icon: <DashboardOutlined />,
               //   },
               // },
-              // {
-              //   name: "orders",
-              //   list: "/orders",
-              //   show: "/orders/show/:id",
-              //   meta: {
-              //     icon: <ShoppingOutlined />,
-              //   },
-              // },
+
               {
                 name: "booking",
                 list: "/booking",
@@ -169,11 +151,6 @@ const App: React.FC = () => {
               >
                 {/* <Route index element={<DashboardPage />} /> */}
 
-                {/* <Route path="/orders">
-                  <Route index element={<OrderList />} />
-                  <Route path="show/:id" element={<OrderShow />} />
-                </Route> */}
-
                 <Route path="/booking">
                   <Route index element={<BookingList />} />
                   {/* <Route path="show/:id" element={<OrderShow />} /> */}
@@ -184,15 +161,7 @@ const App: React.FC = () => {
                   <Route path="show/:id" element={<UserShow />} />
                 </Route>
 
-                <Route path="/products" element={<ProductList />} />
-
                 <Route path="/hotels" element={<HotelLists />} />
-
-                {/* <Route path="/stores">
-                  <Route index element={<StoreList />} />
-                  <Route path="create" element={<StoreCreate />} />
-                  <Route path="edit/:id" element={<StoreEdit />} />
-                </Route> */}
 
                 {/* <Route path="/categories" element={<CategoryList />} /> */}
 
@@ -202,14 +171,12 @@ const App: React.FC = () => {
                   <Route path="edit/:id" element={<CourierEdit />} />
                   <Route path="show/:id" element={<CourierShow />} />
                 </Route> */}
-
-                <Route path="/reviews" element={<ReviewsList />} />
               </Route>
 
               <Route
                 element={
                   <Authenticated fallback={<Outlet />}>
-                    <NavigateToResource resource="dashboard" />
+                    <NavigateToResource resource="" />
                   </Authenticated>
                 }
               >

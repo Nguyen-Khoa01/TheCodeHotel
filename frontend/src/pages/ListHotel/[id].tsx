@@ -38,6 +38,14 @@ interface item {
 type AppProps = {
   totalRoom: string;
 };
+interface room {
+  nameRoom: string;
+  numberRoom: number[];
+  price: number;
+}
+interface category {
+  title: string;
+}
 export default function Detail() {
   const [numberAduts, setNumberAduts] = useState(0);
   const [numberChilren, setNumberChilren] = useState(0);
@@ -54,8 +62,8 @@ export default function Detail() {
     address: "",
     avatar: "",
     city: "",
-    category: "",
-    rooms: 0,
+    categories: [],
+    rooms: [],
     desreption: "",
     price: 0,
     starRating: 0,
@@ -93,7 +101,7 @@ export default function Detail() {
     return current && current < dayjs().endOf("day");
   };
 
-  const handleChange = (price: string, value: string, key: number) => {
+  const handleChange = (price: number, value: string, key: number) => {
     const newItem = item.map((item) => item.key);
 
     setItem((prev) => [
@@ -175,6 +183,8 @@ export default function Detail() {
     return newData;
   }, [numberAduts, numberChilren, numberRooms, totalRoom]);
 
+  console.log(hotel.rooms);
+
   return (
     <div>
       <Header AppProps={totalRoom} />
@@ -225,30 +235,11 @@ export default function Detail() {
                 </div>
               </div>
               <div className=" flex px-[20px] text-[#444] items-center py-[10px]  justify-between max-w-[600px]">
-                <div className="flex items-center text-[15px]">
-                  <RiParkingBoxLine className="mr-1" />
-                  <p>Parking</p>
-                </div>
-                <div className="flex items-center text-[15px] ">
-                  <BsWifi className="mr-1" />
-                  <p>Wifi</p>
-                </div>
-                <div className="flex items-center text-[15px]">
-                  <BsCup className="mr-1" />
-                  <p>Breakfast</p>
-                </div>
-                <div className="flex items-center text-[15px]">
-                  <MdSmokeFree className="mr-1" />
-                  <p>Don't somke</p>
-                </div>
-                <div className="flex items-center text-[15px]">
-                  <BiSwim className="mr-1" />
-                  <p>Pool</p>
-                </div>
-                <div className="flex items-center text-[15px]">
-                  <BsFlower1 className="mr-1" />
-                  <p>Garden</p>
-                </div>
+                {hotel.categories.map((item: category, key) => (
+                  <div key={key} className="flex items-center text-[15px]">
+                    <p>{item.title}</p>
+                  </div>
+                ))}
               </div>
               <div className="flex px-[20px] pt-[15px] border-t-[1px] border-gray-300 pb-[25px] justify-between 2lg:flex-col md:flex-row">
                 <div>
@@ -260,10 +251,10 @@ export default function Detail() {
                   </h1>
 
                   <div className="flex text-[#333] ">
-                    {/* <p>2 Bed,</p>
-                                        <p className="mx-2">2 Adult,</p>
-                                        <p>2 Children</p> */}
-                    <p>{hotel.rooms}:Room</p>
+                    <p>2 Bed,</p>
+                    <p className="mx-2">2 Adult,</p>
+                    <p>2 Children</p>
+                    {/* <p>{hotel.rooms}:Room</p> */}
                   </div>
                 </div>
                 <div
@@ -378,22 +369,14 @@ export default function Detail() {
             </div>
             <div className="my-4 2lg:flex justify-between 2lg:items-center">
               <div className="w-full h-full 2lg:mr-4">
-                {Rooms.map((item, key) => (
+                {hotel.rooms.map((item: room, key) => (
                   <div
                     key={key}
                     className="col-span-2 bg-white shadow-xl px-[20px] pt-[20px] pb-[10px] rounded-xl 2lg:w-full border-b-[1px] border-[#f1f1f1] "
                   >
                     <div className="flex  justify-between items-center">
                       <div>
-                        <p className="w-[120px] mb-1">{item.Name}</p>
-                        <div className="text-[#444444] text-[13px] 2xl:text-[15px] ">
-                          {item.Des.map((item, key) => (
-                            <div key={key} className="flex items-center">
-                              <TbAirConditioning />
-                              <p>{item}</p>
-                            </div>
-                          ))}
-                        </div>
+                        <p className="w-[120px] mb-1">{item.nameRoom}</p>
                       </div>
 
                       <div className="flex flex-wrap w-[32px]">
@@ -401,7 +384,7 @@ export default function Detail() {
                         <UserIcon className="h-4 w-4 text-gray-500" />
                       </div>
                       <p className="text-teal-600 text-[20px]">
-                        {item.Price}
+                        {item.price}$
                         <span className="text-teal-400 text-[16px]">
                           /Night
                         </span>
@@ -412,11 +395,11 @@ export default function Detail() {
                           defaultValue="0"
                           style={{ width: 90 }}
                           onChange={(value) =>
-                            handleChange(item.Price, value, key)
+                            handleChange(item.price, value, key)
                           }
-                          options={item.EqualRoom.map((item1, key) => ({
+                          options={item.numberRoom.map((item1, key) => ({
                             value: item1,
-                            label: `${item1} ${item1 * Number(item.Price)}$`,
+                            label: `${item1} ${item1 * Number(item.price)}$`,
                           }))}
                         />
                       </div>

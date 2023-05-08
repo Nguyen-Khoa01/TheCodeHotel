@@ -48,6 +48,9 @@ interface listhotel {
   price: number;
   starRating: number;
 }
+interface category {
+  title: string;
+}
 const Location = [
   {
     value: "Vũng Tàu",
@@ -103,8 +106,8 @@ const Rooms: React.FC = () => {
       address: "",
       avatar: "",
       city: "",
-      category: "",
-      rooms: 0,
+      categories: [],
+      rooms: [],
       desreption: "",
       price: 0,
       starRating: 0,
@@ -486,7 +489,11 @@ const Rooms: React.FC = () => {
                         className="flex px-[20px] text-[#444] items-center text-[18px] py-[10px] border-b-[1px] 
                                                           border-gray-300 flex-wrap"
                       >
-                        <p className="text-[14px] mr-2">{item.category}</p>
+                        {item.categories.map((category: category, key) => (
+                          <p key={key} className="text-[14px] mr-2">
+                            {category.title}
+                          </p>
+                        ))}
                       </div>
 
                       <div className="flex px-[20px] pt-[15px] pb-[25px] justify-between 2lg:flex-col md:flex-row">

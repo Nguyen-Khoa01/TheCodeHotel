@@ -92,7 +92,7 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
             : undefined,
         }
       );
-
+      console.log(tableProps.dataSource)
       return filters;
     },
   });
@@ -145,13 +145,13 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
           <Table
             {...tableProps}
             rowKey="id"
-            // onRow={(record) => {
-            //   return {
-            //     onClick: () => {
-            //       show("booking", record.id);
-            //     },
-            //   };
-            // }}
+          // onRow={(record) => {
+          //   return {
+          //     onClick: () => {
+          //       show("booking", record.id);
+          //     },
+          //   };
+          // }}
           >
             <Table.Column
               key="id"
@@ -186,7 +186,7 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
             />
             <Table.Column
               key="user.fullName"
-              dataIndex="nameuser"
+              dataIndex={["user", "fullName"]}
               title="nameuser"
             />
             <Table.Column<IBooking>
@@ -225,7 +225,7 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
               dataIndex="actions"
               key="actions"
               align="center"
-              // render={(_value, record) => <OrderActions record={record} />}
+            // render={(_value, record) => <OrderActions record={record} />}
             />
           </Table>
         </List>
@@ -289,7 +289,7 @@ const Filter: React.FC<{ formProps: FormProps; filters: CrudFilters }> = (
         <Col xl={4} md={8} sm={12} xs={24}>
           <Form.Item label={t("orders.filter.search.label")} name="q">
             <Input
-              placeholder={t("orders.filter.search.placeholder")}
+              placeholder='namehotel'
               prefix={<SearchOutlined />}
             />
           </Form.Item>

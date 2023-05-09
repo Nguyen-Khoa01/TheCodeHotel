@@ -35,6 +35,7 @@ import { HotelLists } from "pages/hotels";
 
 import "@refinedev/antd/dist/reset.css";
 import { BookingList } from "pages/booking";
+import { OrderList, OrderShow } from "pages/orders";
 
 const App: React.FC = () => {
   const API_URL = "http://localhost:3001";
@@ -81,9 +82,9 @@ const App: React.FC = () => {
                 },
               },
               {
-                name: "users",
-                list: "/users",
-                show: "/users/show/:id",
+                name: "user",
+                list: "/user",
+
                 meta: {
                   icon: <UsergroupAddOutlined />,
                 },
@@ -102,6 +103,15 @@ const App: React.FC = () => {
                   icon: <PizzaIcon />,
                 },
               },
+              {
+                name: "orders",
+                list: "/orders",
+                show: "/orders/show/:id",
+                meta: {
+                  icon: <ShoppingOutlined />,
+                },
+              },
+
               // {
               //   name: "stores",
               //   list: "/stores",
@@ -125,6 +135,7 @@ const App: React.FC = () => {
               //     icon: <BikeWhiteIcon />,
               //   },
               // },
+
 
               // {
               //   name: "reviews",
@@ -155,8 +166,14 @@ const App: React.FC = () => {
                   <Route index element={<BookingList />} />
                   {/* <Route path="show/:id" element={<OrderShow />} /> */}
                 </Route>
-
-                <Route path="/users">
+                <Route path="/orders">
+                  <Route index element={<OrderList />} />
+                  <Route
+                    path="show/:id"
+                    element={<OrderShow />}
+                  />
+                </Route>
+                <Route path="/user">
                   <Route index element={<UserList />} />
                   <Route path="show/:id" element={<UserShow />} />
                 </Route>

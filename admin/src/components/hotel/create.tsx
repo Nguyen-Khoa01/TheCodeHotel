@@ -20,8 +20,10 @@ import {
   Button,
   UploadFile,
   UploadProps,
+  SelectProps,
 } from "antd";
 import { useEffect, useState } from "react";
+import { ICategory, ICity, IRoom } from "interfaces";
 
 const { Text } = Typography;
 
@@ -39,6 +41,22 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
   const t = useTranslate();
   const apiUrl = useApiUrl();
   const breakpoint = Grid.useBreakpoint();
+
+  const { selectProps: categorySelectProps } = useSelect<ICategory>({
+    resource: "category",
+    optionLabel: "title",
+
+  })
+  const { selectProps: roomSelectProps } = useSelect<IRoom>({
+    resource: 'rooms',
+    optionLabel: 'nameRoom',
+  })
+
+  const { selectProps: citySelectProps } = useSelect<ICity>({
+    resource: 'city',
+    optionLabel: 'city',
+    optionValue: 'id'
+  })
 
   return (
     <Drawer
@@ -65,6 +83,7 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
           initialValues={{
             isActive: true,
           }}
+          onFinish={(value) => console.log(value)}
         >
           <Form.Item label={t("products.fields.images.label")}>
             <Form.Item
@@ -156,7 +175,7 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
               },
             ]}
           >
-            <Input />
+            <Select {...citySelectProps} />
           </Form.Item>
           <Form.Item
             label="Phonenumber"
@@ -178,7 +197,7 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
               },
             ]}
           >
-            <InputNumber style={{ width: "150px" }} />
+            <InputNumber size="large" min={1} max={5} style={{ width: "150px" }} />
           </Form.Item>
           <Form.Item
             label="Price"
@@ -191,32 +210,41 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
             ]}
           >
             <InputNumber
+              size="large"
+              min={0}
               formatter={(value) => `$ ${value}`}
               style={{ width: "150px" }}
             />
           </Form.Item>
           <Form.Item
             label="Category"
-            name="category"
+            getValueFromEvent={(data) => {
+              console.log(data)
+              return data;
+            }}
+            name="categories"
             rules={[
               {
                 required: true,
               },
             ]}
+
           >
-            <Input />
+            <Select {...categorySelectProps} mode="multiple"
+            >
+
+            </Select>
           </Form.Item>
           <Form.Item
             label="rooms"
-            name="rooms"
+            name={["rooms"]}
             rules={[
               {
                 required: true,
-                type: "number",
               },
             ]}
           >
-            <InputNumber style={{ width: "150px" }} />
+            <Select  {...roomSelectProps} mode="multiple" />
           </Form.Item>
         </Form>
       </Create>

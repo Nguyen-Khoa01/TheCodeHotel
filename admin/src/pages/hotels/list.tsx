@@ -43,7 +43,6 @@ export const HotelLists: React.FC<IResourceComponentsProps> = () => {
     resource: "hotels",
     redirect: false,
   });
-  console.log(createFormProps);
   return (
     <div>
       <Form>

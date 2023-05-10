@@ -38,7 +38,7 @@ export const HotelItem: React.FC<ProductItemProps> = ({
     <Card
       style={{
         margin: "8px",
-        opacity: item.rooms <= 0 ? 0.5 : 1,
+        // opacity: item.rooms <= 0 ? 0.5 : 1,
         overflow: 'hidden'
       }}
       bodyStyle={{ height: "450px", padding: '0' }}
@@ -107,17 +107,21 @@ export const HotelItem: React.FC<ProductItemProps> = ({
         </div>
         <div className="flex">
           <p>{item.address}</p>
-          <p className="ml-1">{item.city}</p>
+          {/* <p className="ml-1">{item.city.id}</p> */}
         </div>
         <div className="mb-2 ">
           <p className="w-[370px] whitespace-nowrap text-[17px] overflow-hidden text-ellipsis">{item.desreption}</p>
         </div>
-        <div>
-          <p>{item.category}</p>
+        <div className="flex justify-around">
+          {item.categories.map((cate: any, key: number) => (
+            <p key={key}>{cate.title}</p>
+          ))}
         </div>
         <div className="flex justify-between items-center">
           <p className="text-[22px] font-medium">${item.price}</p>
-          <p className="text-[22px] ">slug:{item.rooms}</p>
+          {item.rooms.map((room: any, key: any) => (
+            <p key={key}>{room.nameRoom}</p>
+          ))}
         </div>
       </div>
     </Card>

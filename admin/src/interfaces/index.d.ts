@@ -3,11 +3,11 @@ import { Dayjs } from "dayjs";
 export interface IOrderChart {
   count: number;
   status:
-    | "waiting"
-    | "ready"
-    | "on the way"
-    | "delivered"
-    | "could not be delivered";
+  | "waiting"
+  | "ready"
+  | "on the way"
+  | "delivered"
+  | "could not be delivered";
 }
 
 export interface IOrderTotalCount {
@@ -123,16 +123,22 @@ export interface IHotel {
   name: string;
   desreption: string;
   address: string;
-  city: string;
+  city: ICity;
   starRating: number;
   phonenumber: string;
   avatar: string;
   price: number;
-  category: string;
-  rooms: number;
+  categories: ICategory[];
+  rooms: IRoom[];
   stock: number;
 }
 
+export interface IRoom {
+  id: number;
+  nameRoom: string;
+  numberRoom: string[];
+  price: number
+}
 export interface IProduct {
   id: number;
   name: string;
@@ -148,7 +154,10 @@ export interface IProduct {
 export interface ICategory {
   id: number;
   title: string;
-  isActive: boolean;
+}
+export interface ICity {
+  id: number;
+  city: string;
 }
 
 export interface IOrderFilterVariables {

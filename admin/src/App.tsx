@@ -31,11 +31,12 @@ import { useTranslation } from "react-i18next";
 import { Header, Title, OffLayoutArea } from "components";
 import { BikeWhiteIcon, PizzaIcon } from "components/icons";
 import { ConfigProvider } from "context";
-import { HotelLists } from "pages/hotels";
+import { HotelLists, HotelShow } from "pages/hotels";
 
 import "@refinedev/antd/dist/reset.css";
 import { BookingList } from "pages/booking";
 import { OrderList, OrderShow } from "pages/orders";
+
 
 const App: React.FC = () => {
   const API_URL = "http://localhost:3001";
@@ -99,6 +100,7 @@ const App: React.FC = () => {
               {
                 name: "hotels",
                 list: "/hotels",
+                show: "/hotels/show/:id",
                 meta: {
                   icon: <PizzaIcon />,
                 },
@@ -178,7 +180,10 @@ const App: React.FC = () => {
                   <Route path="show/:id" element={<UserShow />} />
                 </Route>
 
-                <Route path="/hotels" element={<HotelLists />} />
+                <Route path="/hotels" >
+                  <Route index element={<HotelLists />} />
+                  <Route path="show/:id" element={<HotelShow />} />
+                </Route>
 
                 {/* <Route path="/categories" element={<CategoryList />} /> */}
 

@@ -18,6 +18,7 @@ import {
   Upload,
   Grid,
 } from "antd";
+import { ICategory, ICity, IRoom } from "interfaces";
 
 const { Text } = Typography;
 
@@ -37,6 +38,24 @@ export const EditHotel: React.FC<EditProductProps> = ({
   const apiUrl = useApiUrl();
   const breakpoint = Grid.useBreakpoint();
 
+  const { selectProps: categorySelectProps } = useSelect<ICategory>({
+    resource: "category",
+    optionLabel: "title",
+
+  })
+  const { selectProps: roomSelectProps } = useSelect<IRoom>({
+    resource: 'rooms',
+    optionLabel: 'nameRoom',
+  })
+
+  const { selectProps: citySelectProps } = useSelect<ICity>({
+    resource: 'city',
+    optionLabel: 'city',
+    optionValue: 'id'
+  })
+
+  console.log(formProps.initialValues?.city)
+
   return (
     <Drawer
       {...drawerProps}
@@ -50,7 +69,6 @@ export const EditHotel: React.FC<EditProductProps> = ({
         contentProps={{
           style: {
             boxShadow: "none",
-            backgroundColor: "#4096ff",
           },
           bodyStyle: {
             padding: 0,
@@ -60,7 +78,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
         <Form {...formProps} layout="vertical">
           <Form.Item label={t("products.fields.images.label")}>
             <Form.Item
-              name="avatar"
+              name='avatar'
               getValueFromEvent={(data) => {
                 console.log(data?.fileList?.[0]?.response?.url);
                 return data?.fileList?.[0]?.response?.url;
@@ -77,7 +95,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
                 action={`${apiUrl}/hotels/upload`}
                 listType="picture"
                 maxCount={1}
-                accept=".png"
+                accept=".jpg, .jpeg, .png"
               >
                 <Space direction="vertical" size={2}>
                   <Avatar
@@ -107,7 +125,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
           </Form.Item>
           <Form.Item
             label="NameHotel"
-            name="NameHotel"
+            name="name"
             rules={[
               {
                 required: true,
@@ -140,14 +158,14 @@ export const EditHotel: React.FC<EditProductProps> = ({
           </Form.Item>
           <Form.Item
             label="City"
-            name="city"
+            name={["city", 'id']}
             rules={[
               {
                 required: true,
               },
             ]}
           >
-            <Input />
+            <Select {...citySelectProps} />
           </Form.Item>
           <Form.Item
             label="phonenumber"
@@ -169,7 +187,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
               },
             ]}
           >
-            <Input />
+            <Input size="large" min={1} max={5} style={{ width: "150px" }} />
           </Form.Item>
           <Form.Item
             label="price"
@@ -180,18 +198,23 @@ export const EditHotel: React.FC<EditProductProps> = ({
               },
             ]}
           >
-            <InputNumber style={{ width: "150px" }} />
+            <InputNumber min={0} style={{ width: "150px" }} formatter={(value) => `$ ${value}`}
+            />
           </Form.Item>
           <Form.Item
             label="category"
-            name="category"
+            name={['categories']}
+
+            normalize={(data) =>
+              console.log(data)
+            }
             rules={[
               {
                 required: true,
               },
             ]}
           >
-            <Input></Input>
+            <Select {...categorySelectProps} mode="multiple" />
           </Form.Item>
           <Form.Item
             label="rooms"
@@ -203,7 +226,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
               },
             ]}
           >
-            <InputNumber style={{ width: "150px" }} />
+            <Select  {...roomSelectProps} mode="multiple" />
           </Form.Item>
         </Form>
       </Edit>

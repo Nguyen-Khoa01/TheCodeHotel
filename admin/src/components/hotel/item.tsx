@@ -1,5 +1,5 @@
-import { useTranslate, BaseKey } from "@refinedev/core";
-
+import { useTranslate, BaseKey, useNavigation } from "@refinedev/core";
+import { MapPinIcon } from "@heroicons/react/24/outline";
 import { DeleteButton, NumberField } from "@refinedev/antd";
 
 import {
@@ -33,7 +33,7 @@ export const HotelItem: React.FC<ProductItemProps> = ({
   editShow,
 }) => {
   const t = useTranslate();
-
+  const { show } = useNavigation();
   return (
     <Card
       style={{
@@ -41,32 +41,15 @@ export const HotelItem: React.FC<ProductItemProps> = ({
         // opacity: item.rooms <= 0 ? 0.5 : 1,
         overflow: 'hidden'
       }}
-      bodyStyle={{ height: "450px", padding: '0' }}
+      bodyStyle={{ padding: '0' }}
       className="px-1"
+    // onClick={() => show("hotels", item.id)}
     >
-      <div style={{ position: "absolute", top: "10px", right: "5px" }}>
+      <div style={{ position: "absolute", top: "10px", right: "-4px" }} className="z-50">
         <Dropdown
           overlay={
             <Menu mode="vertical">
-              {updateStock && (
-                <Menu.Item
-                  key="1"
-                  disabled={item.stock <= 0}
-                  style={{
-                    fontWeight: 500,
-                  }}
-                  icon={
-                    <CloseCircleOutlined
-                      style={{
-                        color: "red",
-                      }}
-                    />
-                  }
-                  onClick={() => updateStock(0, item)}
-                >
-                  {t("stores.buttons.outOfStock")}
-                </Menu.Item>
-              )}
+
               <Menu.Item
                 key="2"
                 style={{
@@ -84,7 +67,9 @@ export const HotelItem: React.FC<ProductItemProps> = ({
                 {t("stores.buttons.edit")}
               </Menu.Item>
 
-              <DeleteButton hideText size="small" recordItemId={item.id} />
+              <Menu.Item>
+                <DeleteButton hideText size="middle" recordItemId={item.id} />
+              </Menu.Item>
             </Menu>
           }
           trigger={["click"]}
@@ -96,32 +81,27 @@ export const HotelItem: React.FC<ProductItemProps> = ({
           />
         </Dropdown>
       </div>
-      <div style={{ textAlign: "center" }}>
-        <img src={item.avatar} width={"100%"} className="h-60 object-cover " />
+      <div className="flex justify-center mt-4 ">
+        <img src={item.avatar} width={"370px"} className="h-60 object-cover rounded-lg" />
       </div>
-      <div className="flex flex-col h-full px-2">
+      <div className="flex flex-col  px-2">
 
-        <div className="mt-4 flex justify-between">
-          <p className="text-[18px] font-extrabold">{item.name}</p>
-          <p className="text-[18px] ml-1 text-yellow-500">{item.starRating} sao</p>
+        <div className="mt-4 flex justify-between items-center">
+          <p className="text-[22px] font-medium text-gray-700">{item.name}</p>
+          <p className="text-[18px] ml-1 text-yellow-400">{item.starRating} sao</p>
         </div>
-        <div className="flex">
-          <p>{item.address}</p>
-          {/* <p className="ml-1">{item.city.id}</p> */}
+        <div className="flex my-1">
+          <MapPinIcon className="h-6 w-6 text-gray-500" />
+          <p className="text-[18px]">{item.address}</p>
+          <p className="ml-1 text-[18px]">{item.city.city}</p>
         </div>
-        <div className="mb-2 ">
-          <p className="w-[370px] whitespace-nowrap text-[17px] overflow-hidden text-ellipsis">{item.desreption}</p>
-        </div>
-        <div className="flex justify-around">
+        <div className="flex items-center flex-wrap h-[54px] mb-1">
           {item.categories.map((cate: any, key: number) => (
-            <p key={key}>{cate.title}</p>
+            <p className="mr-1 text-[17px] text-gray-500" key={key}>{cate.title},</p>
           ))}
         </div>
-        <div className="flex justify-between items-center">
-          <p className="text-[22px] font-medium">${item.price}</p>
-          {item.rooms.map((room: any, key: any) => (
-            <p key={key}>{room.nameRoom}</p>
-          ))}
+        <div className="bg-[#1677ffeb] w-16 rounded-sm mb-2">
+          <p className="text-[22px] text-[#fff] text-center font-medium">${item.price}</p>
         </div>
       </div>
     </Card>

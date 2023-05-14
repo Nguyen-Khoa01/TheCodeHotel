@@ -39,17 +39,19 @@ export const HotelItem: React.FC<ProductItemProps> = ({
       style={{
         margin: "8px",
         // opacity: item.rooms <= 0 ? 0.5 : 1,
-        overflow: 'hidden'
+        overflow: "hidden",
       }}
-      bodyStyle={{ padding: '0' }}
+      bodyStyle={{ padding: "0" }}
       className="px-1"
-    // onClick={() => show("hotels", item.id)}
+      onClick={() => show("hotels", item.id)}
     >
-      <div style={{ position: "absolute", top: "10px", right: "-4px" }} className="z-50">
+      <div
+        style={{ position: "absolute", top: "10px", right: "-4px" }}
+        className="z-50"
+      >
         <Dropdown
           overlay={
             <Menu mode="vertical">
-
               <Menu.Item
                 key="2"
                 style={{
@@ -82,13 +84,18 @@ export const HotelItem: React.FC<ProductItemProps> = ({
         </Dropdown>
       </div>
       <div className="flex justify-center mt-4 ">
-        <img src={item.avatar} width={"370px"} className="h-60 object-cover rounded-lg" />
+        <img
+          src={item.avatar}
+          width={"370px"}
+          className="h-60 object-cover rounded-lg"
+        />
       </div>
       <div className="flex flex-col  px-2">
-
         <div className="mt-4 flex justify-between items-center">
           <p className="text-[22px] font-medium text-gray-700">{item.name}</p>
-          <p className="text-[18px] ml-1 text-yellow-400">{item.starRating} sao</p>
+          <p className="text-[18px] ml-1 text-yellow-400">
+            {item.starRating} sao
+          </p>
         </div>
         <div className="flex my-1">
           <MapPinIcon className="h-6 w-6 text-gray-500" />
@@ -97,11 +104,15 @@ export const HotelItem: React.FC<ProductItemProps> = ({
         </div>
         <div className="flex items-center flex-wrap h-[54px] mb-1">
           {item.categories.map((cate: any, key: number) => (
-            <p className="mr-1 text-[17px] text-gray-500" key={key}>{cate.title},</p>
+            <p className="mr-1 text-[17px] text-gray-500" key={key}>
+              {cate.title},
+            </p>
           ))}
         </div>
         <div className="bg-[#1677ffeb] w-16 rounded-sm mb-2">
-          <p className="text-[22px] text-[#fff] text-center font-medium">${item.price}</p>
+          <p className="text-[22px] text-[#fff] text-center font-medium">
+            ${item.price}
+          </p>
         </div>
       </div>
     </Card>

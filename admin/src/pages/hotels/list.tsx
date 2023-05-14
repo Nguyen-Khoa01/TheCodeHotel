@@ -20,7 +20,25 @@ import { IHotel } from "interfaces";
 export const HotelLists: React.FC<IResourceComponentsProps> = () => {
   const t = useTranslate();
 
-  const { listProps } = useSimpleList<IHotel, HttpError, { name: string }>({});
+  const { listProps, searchFormProps, filters } = useSimpleList<
+    IHotel,
+    HttpError,
+    { name: string }
+  >({
+    onSearch: ({ name }) => {
+      const productFilters: CrudFilters = [];
+
+      productFilters.push({
+        field: "name",
+        operator: "contains",
+        value: name ? name : undefined,
+      });
+
+      return productFilters;
+    },
+  });
+
+  console.log(searchFormProps.name);
 
   const {
     drawerProps: createDrawerProps,
@@ -45,7 +63,16 @@ export const HotelLists: React.FC<IResourceComponentsProps> = () => {
   });
   return (
     <div>
-      <Form>
+      <Form
+        {...searchFormProps}
+        onValuesChange={() => {
+          searchFormProps.form?.submit();
+          console.log(searchFormProps);
+        }}
+        initialValues={{
+          name: getDefaultFilter("name", filters, "contains"),
+        }}
+      >
         <Row gutter={[16, 16]}>
           <Col xs={24} sm={24}>
             <div
@@ -92,7 +119,6 @@ export const HotelLists: React.FC<IResourceComponentsProps> = () => {
                 overflow: "auto",
                 paddingRight: "4px",
               }}
-              className="overflow-clip"
               {...listProps}
               renderItem={(item) => (
                 <HotelItem item={item} editShow={editShow} />

@@ -25,17 +25,18 @@ import { authProvider } from "authProvider";
 import "dayjs/locale/de";
 
 import { AuthPage } from "./pages/auth";
-import { UserList, UserShow } from "./pages/users";
+import { UserList } from "./pages/users";
 
 import { useTranslation } from "react-i18next";
-import { Header, Title, OffLayoutArea } from "components";
+import { Header, Title } from "components";
 import { BikeWhiteIcon, PizzaIcon } from "components/icons";
 import { ConfigProvider } from "context";
 import { HotelLists, HotelShow } from "pages/hotels";
 
 import "@refinedev/antd/dist/reset.css";
 import { BookingList } from "pages/booking";
-import { OrderList, OrderShow } from "pages/orders";
+import { CategoryList } from "pages/categories";
+
 
 
 const App: React.FC = () => {
@@ -65,14 +66,7 @@ const App: React.FC = () => {
             }}
             notificationProvider={notificationProvider}
             resources={[
-              // {
-              //   name: "dashboard",
-              //   list: "/",
-              //   meta: {
-              //     label: "Dashboard",
-              //     icon: <DashboardOutlined />,
-              //   },
-              // },
+
 
               {
                 name: "booking",
@@ -90,13 +84,7 @@ const App: React.FC = () => {
                   icon: <UsergroupAddOutlined />,
                 },
               },
-              // {
-              //   name: "products",
-              //   list: "/products",
-              //   meta: {
-              //     icon: <PizzaIcon />,
-              //   },
-              // },
+
               {
                 name: "hotels",
                 list: "/hotels",
@@ -106,46 +94,13 @@ const App: React.FC = () => {
                 },
               },
               {
-                name: "orders",
-                list: "/orders",
-                show: "/orders/show/:id",
+                name: "categories",
+                list: "/categories",
+                show: "/categories/show/:id",
                 meta: {
-                  icon: <ShoppingOutlined />,
+                  icon: <PizzaIcon />,
                 },
               },
-
-              // {
-              //   name: "stores",
-              //   list: "/stores",
-              //   create: "/stores/create",
-              //   edit: "/stores/edit/:id",
-              //   meta: {
-              //     icon: <ShopOutlined />,
-              //   },
-              // },
-              // {
-              //   name: "categories",
-              //   list: "/categories",
-              // },
-              // {
-              //   name: "couriers",
-              //   list: "/couriers",
-              //   create: "/couriers/create",
-              //   edit: "/couriers/edit/:id",
-              //   show: "/couriers/show/:id",
-              //   meta: {
-              //     icon: <BikeWhiteIcon />,
-              //   },
-              // },
-
-
-              // {
-              //   name: "reviews",
-              //   list: "/reviews",
-              //   meta: {
-              //     icon: <StarOutlined />,
-              //   },
-              // },
             ]}
           >
             <Routes>
@@ -155,7 +110,7 @@ const App: React.FC = () => {
                     <ThemedLayout
                       Header={Header}
                       Title={Title}
-                      OffLayoutArea={OffLayoutArea}
+
                     >
                       <Outlet />
                     </ThemedLayout>
@@ -168,31 +123,20 @@ const App: React.FC = () => {
                   <Route index element={<BookingList />} />
                   {/* <Route path="show/:id" element={<OrderShow />} /> */}
                 </Route>
-                <Route path="/orders">
-                  <Route index element={<OrderList />} />
-                  <Route
-                    path="show/:id"
-                    element={<OrderShow />}
-                  />
-                </Route>
+
                 <Route path="/user">
                   <Route index element={<UserList />} />
-                  <Route path="show/:id" element={<UserShow />} />
+                  {/* <Route path="show/:id" element={<UserShow />} /> */}
                 </Route>
 
                 <Route path="/hotels" >
                   <Route index element={<HotelLists />} />
                   <Route path="show/:id" element={<HotelShow />} />
                 </Route>
-
-                {/* <Route path="/categories" element={<CategoryList />} /> */}
-
-                {/* <Route path="/couriers">
-                  <Route index element={<CourierList />} />
-                  <Route path="create" element={<CourierCreate />} />
-                  <Route path="edit/:id" element={<CourierEdit />} />
-                  <Route path="show/:id" element={<CourierShow />} />
-                </Route> */}
+                <Route path="/categories" >
+                  <Route index element={<CategoryList />} />
+                  {/* <Route path="show/:id" element={<HotelShow />} /> */}
+                </Route>
               </Route>
 
               <Route
@@ -246,7 +190,7 @@ const App: React.FC = () => {
                     <ThemedLayout
                       Header={Header}
                       Title={Title}
-                      OffLayoutArea={OffLayoutArea}
+
                     >
                       <Outlet />
                     </ThemedLayout>

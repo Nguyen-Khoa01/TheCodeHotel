@@ -37,7 +37,7 @@ import {
 
 import dayjs from "dayjs";
 
-import { OrderStatus, OrderActions } from "components";
+
 
 import { IBooking, IOrderFilterVariables } from "interfaces";
 import { useMemo } from "react";
@@ -240,22 +240,9 @@ const Filter: React.FC<{ formProps: FormProps; filters: CrudFilters }> = (
   const t = useTranslate();
 
   const { formProps, filters } = props;
-  const { selectProps: storeSelectProps } = useSelect<IBooking>({
-    resource: "booking",
-    defaultValue: getDefaultFilter("id", filters),
-  });
-
-  // const { selectProps: orderSelectProps } = useSelect<IOrderStatus>({
-  //   resource: "orderStatuses",
-  //   optionLabel: "text",
-  //   optionValue: "text",
-  //   defaultValue: getDefaultFilter("status.text", filters),
-  // });
-
-  // const { selectProps: userSelectProps } = useSelect<IUser>({
-  //   resource: "users",
-  //   optionLabel: "fullName",
-  //   defaultValue: getDefaultFilter("user.id", filters),
+  // const { selectProps: storeSelectProps } = useSelect<IBooking>({
+  //   resource: "booking",
+  //   defaultValue: getDefaultFilter("id", filters),
   // });
 
   const { RangePicker } = DatePicker;

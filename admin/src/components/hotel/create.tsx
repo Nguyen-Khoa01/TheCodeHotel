@@ -43,7 +43,7 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
   const breakpoint = Grid.useBreakpoint();
 
   const { selectProps: categorySelectProps } = useSelect<ICategory>({
-    resource: "category",
+    resource: "categories",
     optionLabel: "title",
 
   })

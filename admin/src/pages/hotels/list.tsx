@@ -20,11 +20,6 @@ import { IHotel } from "interfaces";
 export const HotelLists: React.FC<IResourceComponentsProps> = () => {
   const t = useTranslate();
 
-<<<<<<< HEAD
-  const { listProps, searchFormProps, filters } = useSimpleList<IHotel, HttpError, { name: string }>({
-    onSearch: ({ name }) => {
-      const productFilters: CrudFilters = [];
-=======
   const { listProps, searchFormProps, filters } = useSimpleList<
     IHotel,
     HttpError,
@@ -32,8 +27,6 @@ export const HotelLists: React.FC<IResourceComponentsProps> = () => {
   >({
     onSearch: ({ name }) => {
       const productFilters: CrudFilters = [];
-
->>>>>>> ebfdcbbace176c3f07350ec82c2890cf16eff4eb
       productFilters.push({
         field: "name",
         operator: "contains",
@@ -43,11 +36,6 @@ export const HotelLists: React.FC<IResourceComponentsProps> = () => {
       return productFilters;
     },
   });
-<<<<<<< HEAD
-=======
-
-  console.log(searchFormProps.name);
->>>>>>> ebfdcbbace176c3f07350ec82c2890cf16eff4eb
 
   const {
     drawerProps: createDrawerProps,
@@ -74,20 +62,11 @@ export const HotelLists: React.FC<IResourceComponentsProps> = () => {
     <div>
       <Form
         {...searchFormProps}
-<<<<<<< HEAD
         onChange={() => {
-          searchFormProps.form?.submit()
-        }}
-        initialValues={{
-          name: getDefaultFilter("name", filters, 'contains'),
-=======
-        onValuesChange={() => {
           searchFormProps.form?.submit();
-          console.log(searchFormProps);
         }}
         initialValues={{
           name: getDefaultFilter("name", filters, "contains"),
->>>>>>> ebfdcbbace176c3f07350ec82c2890cf16eff4eb
         }}
       >
         <Row gutter={[16, 16]}>

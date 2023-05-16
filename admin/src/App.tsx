@@ -25,7 +25,7 @@ import { authProvider } from "authProvider";
 import "dayjs/locale/de";
 
 import { AuthPage } from "./pages/auth";
-import { UserList } from "./pages/users";
+import { UserList, UserShow } from "./pages/users";
 
 import { useTranslation } from "react-i18next";
 import { Header, Title } from "components";
@@ -74,8 +74,8 @@ const App: React.FC = () => {
               },
               {
                 name: "users",
-                list: "/user",
-
+                list: "/users",
+                show: "/users/show/:id",
                 meta: {
                   icon: <UsergroupAddOutlined />,
                 },
@@ -116,9 +116,9 @@ const App: React.FC = () => {
                   {/* <Route path="show/:id" element={<OrderShow />} /> */}
                 </Route>
 
-                <Route path="/user">
+                <Route path="/users">
                   <Route index element={<UserList />} />
-                  {/* <Route path="show/:id" element={<UserShow />} /> */}
+                  <Route path="show/:id" element={<UserShow />} />
                 </Route>
 
                 <Route path="/hotels">

@@ -71,7 +71,7 @@ export default function Header(props: any) {
       </div>
     );
   }
-
+  console.log(user)
   return (
     <div className="grid grid-cols-6 xl:grid-cols-1 2xl:my-[20px] fixed h-[96px] bg-slate-300 z-40 top-0 left-0 w-full">
       <div

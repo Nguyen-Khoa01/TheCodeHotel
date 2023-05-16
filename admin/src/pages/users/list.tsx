@@ -138,6 +138,14 @@ export const UserList: React.FC<IResourceComponentsProps> = () => {
               sorter
             />
             <Table.Column key="role" dataIndex="role" title="Role" />
+            <Table.Column<IUser>
+              fixed="right"
+              title={t("table.actions")}
+              render={(_, record) => (
+                <ShowButton hideText recordItemId={record.id} />
+              )}
+            />
+
           </Table>
         </List>
       </Col>
@@ -167,18 +175,18 @@ const Filter: React.FC<{ formProps: FormProps }> = (props) => {
           </Form.Item>
         </Col>
         <Col xs={24} xl={24} md={8}>
-          <Form.Item label={t("users.filter.gender.label")} name="gender">
+          <Form.Item label={'Role'} name="gender">
             <Select
               allowClear
-              placeholder={t("users.filter.gender.placeholder")}
+              placeholder={'Role'}
               options={[
                 {
-                  label: t("users.filter.gender.male"),
-                  value: "Male",
+                  label: 'Admin',
+                  value: "admin",
                 },
                 {
-                  label: t("users.filter.gender.female"),
-                  value: "Female",
+                  label: 'Customer',
+                  value: "customer",
                 },
               ]}
             />

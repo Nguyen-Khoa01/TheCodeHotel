@@ -96,7 +96,6 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
       return filters;
     },
   });
-  console.log(tableProps);
   const t = useTranslate();
   const { show } = useNavigation();
 
@@ -159,8 +158,8 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
               title="bookingNumber"
               render={(value) => <TextField value={value} />}
             />
-            <Table.Column<IBooking>
-              key="status.text"
+            <Table.Column
+              key="status"
               dataIndex="status"
               title={"status"}
               render={(value) => {
@@ -180,14 +179,14 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
               }}
             />
             <Table.Column
-              key="namehotel"
-              dataIndex="namehotel"
-              title="namehotel"
+              key="hotel"
+              dataIndex={["hotel", "name"]}
+              title="hotel"
             />
             <Table.Column
-              key="user.fullName"
-              dataIndex={["user", "fullName"]}
-              title="nameuser"
+              key="user"
+              dataIndex={['user', 'fullname']}
+              title="user"
             />
             <Table.Column<IBooking>
               key="room"

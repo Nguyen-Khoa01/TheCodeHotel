@@ -26,16 +26,16 @@ export interface IOrderStatus {
   text: "Pending" | "Ready" | "On The Way" | "Delivered" | "Cancelled";
 }
 
-export interface IUser {
-  id: number;
-  fullName: string;
-  gender: string;
-  gsm: string;
-  createdAt: string;
-  isActive: boolean;
-  avatar: IFile[];
-  addresses: IAddress[];
-}
+// export interface IUser {
+//   id: number;
+//   fullName: string;
+//   gender: string;
+//   gsm: string;
+//   createAt: string;
+//   isActive: boolean;
+//   avatar: IFile[];
+//   addresses: IAddress[];
+// }
 
 export interface IUser {
   id: number;
@@ -44,6 +44,9 @@ export interface IUser {
   username: string;
   role: string;
   email: string;
+  addresses: IAddress[]
+  createAt: string;
+  avatar: string
 }
 
 export interface IIdentity {
@@ -110,6 +113,7 @@ export interface IOrder {
 }
 export interface IBooking {
   id: number;
+  user: IUser
   nameuser: string;
   room: string;
   namehotel: IHotel;

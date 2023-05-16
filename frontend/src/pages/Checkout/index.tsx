@@ -22,6 +22,29 @@ const PaymentComponent = () => {
   const router = useRouter();
   const data = router.query;
 
+  const [user, setUser] = useState({
+    id: 0,
+  });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const getToken = JSON.parse(window.localStorage.getItem("TOKEN") || "");
+        const res = await fetch("http://localhost:3001/auth/profile", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${getToken.token} `,
+          },
+        });
+
+        setUser(await res.json());
+
+      } catch (error) {
+
+      }
+    })();
+  }, []);
+
   const {
     numberAduts,
     numberChilren,
@@ -29,7 +52,7 @@ const PaymentComponent = () => {
     checkin,
     Total,
     totalRoom,
-    namehotel,
+    hotel,
   } = data;
 
   const [isRadio, setIsRadio] = useState(false);
@@ -64,13 +87,13 @@ const PaymentComponent = () => {
         const res = await fetch("http://localhost:3001/booking", {
           method: "POST",
           body: JSON.stringify({
-            nameuser,
+            user: user.id,
             status,
             totalprice: Total,
             checkindate: checkin,
             checkoutdate: checkout,
             room: totalRoom,
-            namehotel,
+            hotel,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -108,7 +131,7 @@ const PaymentComponent = () => {
             checkindate: checkin,
             checkoutdate: checkout,
             room: totalRoom,
-            namehotel,
+            hotel,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -122,7 +145,7 @@ const PaymentComponent = () => {
       }
     }
   }
-
+  console.log(user, '1')
   return (
     <div className="bg-[#F2F4F7]">
       <div className="max-w-[1300px] mx-auto grid grid-cols-12 gap-x-6 2xl:mx-[30px] 2xl:gap-x-3 lg:max-w-[720px] md:max-w-[540px] ">

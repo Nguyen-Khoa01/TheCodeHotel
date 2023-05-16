@@ -178,7 +178,7 @@ export default function Detail() {
       checkin,
       Total,
       totalRoom,
-      namehotel: hotel.name,
+      hotel: hotel.id,
     };
     return newData;
   }, [numberAduts, numberChilren, numberRooms, totalRoom]);
@@ -230,7 +230,7 @@ export default function Detail() {
                 <div className="flex  items-center">
                   <MapPinIcon className="h-6 w-6 text-gray-500" />
                   <p className="text-[18px] text-[#333] lg:text-[15px]">
-                    {hotel.address},{hotel.city}
+                    {hotel.address}
                   </p>
                 </div>
               </div>

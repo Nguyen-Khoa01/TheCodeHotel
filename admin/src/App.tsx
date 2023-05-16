@@ -37,8 +37,6 @@ import "@refinedev/antd/dist/reset.css";
 import { BookingList } from "pages/booking";
 import { CategoryList } from "pages/categories";
 
-
-
 const App: React.FC = () => {
   const API_URL = "http://localhost:3001";
   const dataProvider = jsonServerDataProvider(API_URL);
@@ -66,8 +64,6 @@ const App: React.FC = () => {
             }}
             notificationProvider={notificationProvider}
             resources={[
-
-
               {
                 name: "booking",
                 list: "/booking",
@@ -77,7 +73,7 @@ const App: React.FC = () => {
                 },
               },
               {
-                name: "user",
+                name: "users",
                 list: "/user",
 
                 meta: {
@@ -107,11 +103,7 @@ const App: React.FC = () => {
               <Route
                 element={
                   <Authenticated fallback={<CatchAllNavigate to="/login" />}>
-                    <ThemedLayout
-                      Header={Header}
-                      Title={Title}
-
-                    >
+                    <ThemedLayout Header={Header} Title={Title}>
                       <Outlet />
                     </ThemedLayout>
                   </Authenticated>
@@ -129,11 +121,11 @@ const App: React.FC = () => {
                   {/* <Route path="show/:id" element={<UserShow />} /> */}
                 </Route>
 
-                <Route path="/hotels" >
+                <Route path="/hotels">
                   <Route index element={<HotelLists />} />
                   <Route path="show/:id" element={<HotelShow />} />
                 </Route>
-                <Route path="/categories" >
+                <Route path="/categories">
                   <Route index element={<CategoryList />} />
                   {/* <Route path="show/:id" element={<HotelShow />} /> */}
                 </Route>
@@ -187,11 +179,7 @@ const App: React.FC = () => {
               <Route
                 element={
                   <Authenticated>
-                    <ThemedLayout
-                      Header={Header}
-                      Title={Title}
-
-                    >
+                    <ThemedLayout Header={Header} Title={Title}>
                       <Outlet />
                     </ThemedLayout>
                   </Authenticated>

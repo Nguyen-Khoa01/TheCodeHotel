@@ -39,22 +39,21 @@ export const EditHotel: React.FC<EditProductProps> = ({
   const breakpoint = Grid.useBreakpoint();
 
   const { selectProps: categorySelectProps } = useSelect<ICategory>({
-    resource: "category",
+    resource: "categories",
     optionLabel: "title",
-
-  })
+  });
   const { selectProps: roomSelectProps } = useSelect<IRoom>({
-    resource: 'rooms',
-    optionLabel: 'nameRoom',
-  })
+    resource: "rooms",
+    optionLabel: "nameRoom",
+  });
 
   const { selectProps: citySelectProps } = useSelect<ICity>({
-    resource: 'city',
-    optionLabel: 'city',
-    optionValue: 'id'
-  })
+    resource: "city",
+    optionLabel: "city",
+    optionValue: "id",
+  });
 
-  console.log(formProps.initialValues?.city)
+  console.log(formProps.initialValues?.city);
 
   return (
     <Drawer
@@ -78,7 +77,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
         <Form {...formProps} layout="vertical">
           <Form.Item label={t("products.fields.images.label")}>
             <Form.Item
-              name='avatar'
+              name="avatar"
               getValueFromEvent={(data) => {
                 console.log(data?.fileList?.[0]?.response?.url);
                 return data?.fileList?.[0]?.response?.url;
@@ -158,7 +157,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
           </Form.Item>
           <Form.Item
             label="City"
-            name={["city", 'id']}
+            name={["city", "id"]}
             rules={[
               {
                 required: true,
@@ -198,16 +197,16 @@ export const EditHotel: React.FC<EditProductProps> = ({
               },
             ]}
           >
-            <InputNumber min={0} style={{ width: "150px" }} formatter={(value) => `$ ${value}`}
+            <InputNumber
+              min={0}
+              style={{ width: "150px" }}
+              formatter={(value) => `$ ${value}`}
             />
           </Form.Item>
           <Form.Item
             label="category"
-            name={['categories']}
-
-            normalize={(data) =>
-              console.log(data)
-            }
+            name={["categories"]}
+            normalize={(data) => console.log(data)}
             rules={[
               {
                 required: true,
@@ -226,7 +225,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
               },
             ]}
           >
-            <Select  {...roomSelectProps} mode="multiple" />
+            <Select {...roomSelectProps} mode="multiple" />
           </Form.Item>
         </Form>
       </Edit>

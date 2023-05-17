@@ -4,9 +4,10 @@ import {
     useShow,
     useNavigation,
     HttpError,
+    getDefaultSortOrder,
 } from "@refinedev/core";
 
-import { List, useTable } from "@refinedev/antd";
+import { DateField, List, NumberField, TextField, useTable } from "@refinedev/antd";
 
 import {
     EnvironmentOutlined,
@@ -39,29 +40,27 @@ export const HotelShow: React.FC<IResourceComponentsProps> = () => {
     const { queryResult: courierQueryResult } = useShow<IHotel>();
     const courier = courierQueryResult.data?.data;
 
-    console.log(courier)
-
-    // const { tableProps } = useTable<IOrder, HttpError, IOrderFilterVariables>({
-    //     resource: "reviews",
-    //     initialSorter: [
-    //         {
-    //             field: "id",
-    //             order: "desc",
-    //         },
-    //     ],
-    //     permanentFilter: [
-    //         {
-    //             field: "order.courier.id",
-    //             operator: "eq",
-    //             value: courier?.id,
-    //         },
-    //     ],
-    //     initialPageSize: 4,
-    //     queryOptions: {
-    //         enabled: courier !== undefined,
-    //     },
-    //     syncWithLocation: false,
-    // });
+    const { tableProps, sorter } = useTable<IOrder, HttpError, IOrderFilterVariables>({
+        resource: "booking",
+        initialSorter: [
+            {
+                field: "id",
+                order: "desc",
+            },
+        ],
+        permanentFilter: [
+            {
+                field: "hotel_id",
+                operator: "eq",
+                value: courier?.id,
+            },
+        ],
+        initialPageSize: 4,
+        queryOptions: {
+            enabled: courier !== undefined,
+        },
+        syncWithLocation: false,
+    });
 
     const t = useTranslate();
     const { show } = useNavigation();
@@ -119,55 +118,50 @@ export const HotelShow: React.FC<IResourceComponentsProps> = () => {
                         extra: <></>,
                     }}
                 >
-                    <Table rowKey="id">
+                    <Table {...tableProps} rowKey="id">
                         <Table.Column
-                            dataIndex={["order", "id"]}
-                            title={t("reviews.fields.orderId")}
-                            render={(value) => (
-                                <Button
-                                    onClick={() => {
-                                        show("orders", value);
-                                    }}
-                                    type="text"
-                                >
-                                    #{value}
-                                </Button>
-                            )}
+                            key="orderNumber"
+                            dataIndex="id"
+                            title={t("orders.fields.orderNumber")}
+                            render={(value) => <TextField value={value} />}
                         />
                         <Table.Column
-                            width={250}
-                            dataIndex="comment"
-                            title={t("reviews.fields.review")}
+                            key="status"
+                            dataIndex="status"
+                            title={"status"}
+                            render={(value) => {
+                                return <TextField value={value} />;
+                            }}
+
                         />
                         <Table.Column
-                            dataIndex="star"
-                            title={t("reviews.fields.rating")}
-                            align="center"
+                            align="right"
+                            key="totalprice"
+                            dataIndex="totalprice"
+                            title={"price"}
+                            sorter
+                            render={(value) => {
+                                return <NumberField value={value} />;
+                            }}
+                        />
+                        <Table.Column
+                            key="hotel"
+                            dataIndex={["hotel", "name"]}
+                            title="hotel"
+                        />
+                        <Table.Column
+                            key="user"
+                            dataIndex={['user', 'fullname']}
+                            title="user"
+                        />
+                        <Table.Column
+                            key="bookingdate"
+                            dataIndex="bookingdate"
+                            title="bookingdate"
                             render={(value) => (
-                                <Space
-                                    direction="vertical"
-                                    style={{
-                                        rowGap: 0,
-                                    }}
-                                >
-                                    <Typography.Text
-                                        style={{
-                                            fontSize: 31,
-                                            fontWeight: 800,
-                                        }}
-                                    >
-                                        {value}
-                                    </Typography.Text>
-                                    <Rate
-                                        character={<StarOutlined />}
-                                        disabled
-                                        value={value}
-                                        style={{
-                                            color: "#FA8C16",
-                                        }}
-                                    />
-                                </Space>
+                                <DateField value={value} format="DD/MM/YYYY" />
                             )}
+                            sorter
                         />
                     </Table>
                 </List>

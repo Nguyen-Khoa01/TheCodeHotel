@@ -39,7 +39,7 @@ import dayjs from "dayjs";
 
 
 
-import { IBooking, IOrderFilterVariables } from "interfaces";
+import { IBooking, IOrderFilterVariables, IUser } from "interfaces";
 import { useMemo } from "react";
 
 export const BookingList: React.FC<IResourceComponentsProps> = () => {
@@ -65,7 +65,7 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
       });
 
       filters.push({
-        field: "user.id",
+        field: "user_id",
         operator: "eq",
         value: user,
       });
@@ -239,10 +239,11 @@ const Filter: React.FC<{ formProps: FormProps; filters: CrudFilters }> = (
   const t = useTranslate();
 
   const { formProps, filters } = props;
-  // const { selectProps: storeSelectProps } = useSelect<IBooking>({
-  //   resource: "booking",
-  //   defaultValue: getDefaultFilter("id", filters),
-  // });
+  const { selectProps: userSelectProps } = useSelect<IUser>({
+    resource: "users",
+    optionLabel: "fullname",
+    defaultValue: getDefaultFilter("user.id", filters),
+  });
 
   const { RangePicker } = DatePicker;
 
@@ -266,7 +267,7 @@ const Filter: React.FC<{ formProps: FormProps; filters: CrudFilters }> = (
       initialValues={{
         q: getDefaultFilter("q", filters),
         store: getDefaultFilter("store.id", filters),
-        user: getDefaultFilter("user.id", filters),
+        user: getDefaultFilter("user_id", filters),
         status: getDefaultFilter("status.text", filters, "in"),
         createdAt,
       }}
@@ -284,7 +285,7 @@ const Filter: React.FC<{ formProps: FormProps; filters: CrudFilters }> = (
         <Col xl={4} md={8} sm={12} xs={24}>
           <Form.Item label={t("orders.filter.user.label")} name="user">
             <Select
-              // {...userSelectProps}
+              {...userSelectProps}
               allowClear
               placeholder={t("orders.filter.user.placeholder")}
             />

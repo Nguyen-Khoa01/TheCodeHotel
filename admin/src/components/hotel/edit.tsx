@@ -18,7 +18,8 @@ import {
   Upload,
   Grid,
 } from "antd";
-import { ICategory, ICity, IRoom } from "interfaces";
+import { ICategory, ICity, IHotel, IRoom } from "interfaces";
+import { values } from "lodash";
 
 const { Text } = Typography;
 
@@ -53,7 +54,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
     optionValue: "id",
   });
 
-  console.log(formProps.initialValues?.city);
+
 
   return (
     <Drawer
@@ -205,16 +206,17 @@ export const EditHotel: React.FC<EditProductProps> = ({
           </Form.Item>
           <Form.Item
             label="category"
-            name={["categories"]}
-            normalize={(data) => console.log(data)}
+            name='categories'
             rules={[
               {
                 required: true,
               },
             ]}
+
           >
             <Select {...categorySelectProps} mode="multiple" />
           </Form.Item>
+
           <Form.Item
             label="rooms"
             name="rooms"
@@ -224,6 +226,7 @@ export const EditHotel: React.FC<EditProductProps> = ({
                 type: "number",
               },
             ]}
+
           >
             <Select {...roomSelectProps} mode="multiple" />
           </Form.Item>

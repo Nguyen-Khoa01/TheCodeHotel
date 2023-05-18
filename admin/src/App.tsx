@@ -36,6 +36,7 @@ import { HotelLists, HotelShow } from "pages/hotels";
 import "@refinedev/antd/dist/reset.css";
 import { BookingList } from "pages/booking";
 import { CategoryList } from "pages/categories";
+import { DashboardPage } from "pages/dashboard";
 
 const App: React.FC = () => {
   const API_URL = "http://localhost:3001";
@@ -64,6 +65,14 @@ const App: React.FC = () => {
             }}
             notificationProvider={notificationProvider}
             resources={[
+              {
+                name: "dashboard",
+                list: "/",
+                meta: {
+                  label: "Dashboard",
+                  icon: <DashboardOutlined />,
+                },
+              },
               {
                 name: "booking",
                 list: "/booking",
@@ -109,7 +118,7 @@ const App: React.FC = () => {
                   </Authenticated>
                 }
               >
-                {/* <Route index element={<DashboardPage />} /> */}
+                <Route index element={<DashboardPage />} />
 
                 <Route path="/booking">
                   <Route index element={<BookingList />} />
@@ -134,7 +143,7 @@ const App: React.FC = () => {
               <Route
                 element={
                   <Authenticated fallback={<Outlet />}>
-                    <NavigateToResource resource="" />
+                    <NavigateToResource resource="booking" />
                   </Authenticated>
                 }
               >

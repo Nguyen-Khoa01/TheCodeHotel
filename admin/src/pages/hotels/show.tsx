@@ -31,7 +31,9 @@ import {
     Avatar,
 } from "antd";
 
-import { ICourier, IHotel, IOrder, IOrderFilterVariables } from "interfaces";
+import { IBooking, ICourier, IHotel, IOrder, IOrderFilterVariables } from "interfaces";
+import { BookingStatus } from "components/BookingStatus";
+import { BookingActions } from "components/BookingActions";
 
 const { useBreakpoint } = Grid;
 
@@ -113,7 +115,7 @@ export const HotelShow: React.FC<IResourceComponentsProps> = () => {
             </Col>
             <Col xl={18} xs={24}>
                 <List
-                    title={t("reviews.reviews")}
+                    title={'Booking'}
                     headerProps={{
                         extra: <></>,
                     }}
@@ -126,11 +128,21 @@ export const HotelShow: React.FC<IResourceComponentsProps> = () => {
                             render={(value) => <TextField value={value} />}
                         />
                         <Table.Column
-                            key="status"
-                            dataIndex="status"
-                            title={"status"}
+                            key="payment"
+                            dataIndex="payment"
+                            title={"payment"}
                             render={(value) => {
                                 return <TextField value={value} />;
+                            }}
+
+                        />
+                        <Table.Column
+                            key="status"
+                            dataIndex={['status', 'title']}
+                            title={"status"}
+                            render={(value) => {
+
+                                return <BookingStatus status={value} />;
                             }}
 
                         />
@@ -144,11 +156,7 @@ export const HotelShow: React.FC<IResourceComponentsProps> = () => {
                                 return <NumberField value={value} />;
                             }}
                         />
-                        <Table.Column
-                            key="hotel"
-                            dataIndex={["hotel", "name"]}
-                            title="hotel"
-                        />
+
                         <Table.Column
                             key="user"
                             dataIndex={['user', 'fullname']}
@@ -162,6 +170,14 @@ export const HotelShow: React.FC<IResourceComponentsProps> = () => {
                                 <DateField value={value} format="DD/MM/YYYY" />
                             )}
                             sorter
+                        />
+                        <Table.Column<IBooking>
+                            fixed="right"
+                            title={t("table.actions")}
+                            dataIndex="actions"
+                            key="actions"
+                            align="center"
+                            render={(_value, record) => <BookingActions record={record} />}
                         />
                     </Table>
                 </List>

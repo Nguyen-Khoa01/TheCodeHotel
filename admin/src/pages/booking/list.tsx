@@ -41,6 +41,8 @@ import dayjs from "dayjs";
 
 import { IBooking, IOrderFilterVariables, IUser } from "interfaces";
 import { useMemo } from "react";
+import { BookingStatus } from "components/BookingStatus";
+import { BookingActions } from "components/BookingActions";
 
 export const BookingList: React.FC<IResourceComponentsProps> = () => {
   const { tableProps, sorter, searchFormProps, filters } = useTable<
@@ -92,10 +94,11 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
             : undefined,
         }
       );
-      console.log(tableProps.dataSource)
+
       return filters;
     },
   });
+  console.log(tableProps.dataSource)
   const t = useTranslate();
   const { show } = useNavigation();
 
@@ -108,7 +111,7 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
       return {
         nameuser: item.nameuser,
         room: item.room,
-        status: item.status,
+        payment: item.payment,
         namehotel: item.namehotel,
         bookingdate: item.bookingdate,
         checkoutdate: item.checkoutdate,
@@ -159,11 +162,21 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
               render={(value) => <TextField value={value} />}
             />
             <Table.Column
-              key="status"
-              dataIndex="status"
-              title={"status"}
+              key="payment"
+              dataIndex="payment"
+              title={"payment"}
               render={(value) => {
                 return <TextField value={value} />;
+              }}
+              defaultSortOrder={getDefaultSortOrder("status.text", sorter)}
+              sorter
+            />
+            <Table.Column
+              key="status"
+              dataIndex={['status', 'title']}
+              title={"status"}
+              render={(value) => {
+                return <BookingStatus status={value} />;
               }}
               defaultSortOrder={getDefaultSortOrder("status.text", sorter)}
               sorter
@@ -175,7 +188,10 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
               title={"price"}
               sorter
               render={(value) => {
-                return <NumberField value={value} />;
+                return <NumberField options={{
+                  currency: "USD",
+                  style: 'currency'
+                }} value={value} />;
               }}
             />
             <Table.Column
@@ -224,7 +240,7 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
               dataIndex="actions"
               key="actions"
               align="center"
-            // render={(_value, record) => <OrderActions record={record} />}
+              render={(_value, record) => <BookingActions record={record} />}
             />
           </Table>
         </List>

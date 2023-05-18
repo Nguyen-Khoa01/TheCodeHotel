@@ -80,15 +80,16 @@ const PaymentComponent = () => {
   const cardEl = elements?.getElement(CardElement);
   const [paymentStatus, setPaymentStatus] = useState("");
   async function handleCheckout(value: any) {
-    const { nameuser, status } = value;
+    const { nameuser, payment } = value;
 
-    if (status === "chua thanh toan") {
+    if (payment === "chua thanh toan") {
       try {
         const res = await fetch("http://localhost:3001/booking", {
           method: "POST",
           body: JSON.stringify({
             user: user.id,
-            status,
+            payment,
+            status: 3,
             totalprice: Total,
             checkindate: checkin,
             checkoutdate: checkout,
@@ -126,7 +127,8 @@ const PaymentComponent = () => {
           method: "POST",
           body: JSON.stringify({
             nameuser,
-            status,
+            payment,
+            status: 3,
             totalprice: Total,
             checkindate: checkin,
             checkoutdate: checkout,
@@ -292,7 +294,7 @@ const PaymentComponent = () => {
           <div className="bg-white shadow-xl px-[20px] pt-[20px] my-8 rounded-xl">
             <h1 className="text-[20px] font-semibold mb-2">Payment</h1>
             <div className="grid grid-cols-2 gap-x-2">
-              <Form.Item name="status" className="col-span-2">
+              <Form.Item name="payment" className="col-span-2">
                 <Radio.Group onChange={handleRadio}>
                   <Radio value="chua thanh toan">
                     <CreditCardIcon className="h-6 w-6 text-gray-500" />

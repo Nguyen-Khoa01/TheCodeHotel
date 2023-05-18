@@ -173,7 +173,7 @@ const CategoryProductsTable: React.FC<{ record: ICategory }> = ({ record }) => {
         resource: "hotels",
         permanentFilter: [
             {
-                field: "category.id",
+                field: "category_id",
                 operator: "eq",
                 value: record.id,
             },

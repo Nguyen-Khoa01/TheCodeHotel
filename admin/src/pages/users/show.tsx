@@ -34,6 +34,7 @@ import {
 
 
 import { IUser, IOrder, IOrderFilterVariables } from "interfaces";
+import { BookingStatus } from "components/BookingStatus";
 
 const { useBreakpoint } = Grid;
 
@@ -143,14 +144,23 @@ export const UserShow: React.FC<IResourceComponentsProps> = () => {
                                 render={(value) => <TextField value={value} />}
                             />
                             <Table.Column
-                                key="status"
-                                dataIndex="status"
-                                title={"status"}
+                                key="payment"
+                                dataIndex="payment"
+                                title={"payment"}
                                 render={(value) => {
                                     return <TextField value={value} />;
                                 }}
-                                defaultSortOrder={getDefaultSortOrder("status.text", sorter)}
-                                sorter
+
+                            />
+                            <Table.Column
+                                key="status"
+                                dataIndex={['status', 'title']}
+                                title={"status"}
+                                render={(value) => {
+
+                                    return <BookingStatus status={value} />;
+                                }}
+
                             />
                             <Table.Column
                                 align="right"

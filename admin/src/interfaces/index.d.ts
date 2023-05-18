@@ -21,11 +21,12 @@ export interface ISalesChart {
   value: number;
 }
 
-export interface IOrderStatus {
-  id: number;
-  text: "Pending" | "Ready" | "On The Way" | "Delivered" | "Cancelled";
-}
 
+
+export interface IBookingStatus {
+  id: number;
+  title: "Pending" | "Booking" | 'Cancel' | 'Done'
+}
 // export interface IUser {
 //   id: number;
 //   fullName: string;
@@ -120,7 +121,8 @@ export interface IBooking {
   bookingdate: string;
   checkindate: string;
   checkoutdate: string;
-  status: string;
+  payment: string;
+  status: IBookingStatus
 }
 export interface IHotel {
   id: number;

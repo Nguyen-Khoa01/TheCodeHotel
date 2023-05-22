@@ -1,30 +1,30 @@
 import { useList, useNavigation } from "@refinedev/core";
 
-import { Map } from "components/map";
+import { Map, MapMarker } from "components";
 
-import { IOrder } from "interfaces";
+import { IHotel } from "interfaces";
 
 export const BookingMap: React.FC = () => {
-    // const { data: orderData } = useList<IOrder>({
-    //     resource: "orders",
-    //     config: {
-    //         filters: [
-    //             {
-    //                 field: "status.text",
-    //                 operator: "eq",
-    //                 value: "On The Way",
-    //             },
-    //         ],
-    //         pagination: {
-    //             pageSize: 1000,
-    //         },
-    //     },
-    // });
+    const { data: orderData } = useList<IHotel>({
+        resource: "Hotels",
+        config: {
+            filters: [
+                {
+                    field: "status.text",
+                    operator: "eq",
+                    value: "On The Way",
+                },
+            ],
+            pagination: {
+                pageSize: 1000,
+            },
+        },
+    });
 
     const defaultProps = {
         center: {
-            lat: 40.73061,
-            lng: -73.935242,
+            lat: 16.050980,
+            lng: 108.225890,
         },
         zoom: 13,
     };
@@ -33,6 +33,21 @@ export const BookingMap: React.FC = () => {
 
     return (
         <Map {...defaultProps}>
+            {orderData?.data.map((order) => {
+                return (
+                    <MapMarker
+                        key={order.id}
+                        onClick={() => show("hotels", order.id)}
+                        icon={{
+                            url: "/images/marker-courier.svg",
+                        }}
+                        position={{
+                            lat: Number(16.0648213),
+                            lng: Number(108.2330777),
+                        }}
+                    />
+                );
+            })}
         </Map>
     );
 };

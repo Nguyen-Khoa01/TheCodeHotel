@@ -22,8 +22,11 @@ import {
   UploadProps,
   SelectProps,
 } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ICategory, ICity, IRoom } from "interfaces";
+import React from "react";
+import { StandaloneSearchBox, LoadScript } from '@react-google-maps/api';
+
 
 const { Text } = Typography;
 
@@ -32,6 +35,8 @@ type CreateProductProps = {
   formProps: FormProps;
   saveButtonProps: ButtonProps;
 };
+
+
 
 export const CreateHotel: React.FC<CreateProductProps> = ({
   drawerProps,
@@ -58,6 +63,18 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
     optionValue: 'id'
   })
 
+
+  const inputRef = useRef<any>();
+
+  const handlePlaceChanged = () => {
+
+    const [place] = inputRef.current.getPlaces()
+    if (place) {
+      console.log(place.formatted_address)
+      console.log(place.geometry.location.lat())
+      console.log(place.geometry.location.lng())
+    }
+  }
   return (
     <Drawer
       {...drawerProps}
@@ -153,7 +170,23 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
               },
             ]}
           >
-            <Input />
+
+
+            <LoadScript
+              googleMapsApiKey="AIzaSyBVatgG_Di0Y8-yNMFDvczuyAGzIMcN0RU"
+              libraries={['places']}
+            >
+              <StandaloneSearchBox
+                onLoad={ref => (inputRef.current = ref)}
+                onPlacesChanged={handlePlaceChanged}
+              >
+                <Input />
+              </StandaloneSearchBox>
+
+            </LoadScript>
+
+
+
           </Form.Item>
           <Form.Item
             label="Desreption"

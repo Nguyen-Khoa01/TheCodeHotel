@@ -43,7 +43,7 @@ export const HotelItem: React.FC<ProductItemProps> = ({
       }}
       bodyStyle={{ padding: "0" }}
       className="px-1"
-      onClick={() => show("hotels", item.id)}
+    // onClick={() => show("hotels", item.id)}
     >
       <div
         style={{ position: "absolute", top: "10px", right: "-4px" }}

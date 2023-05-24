@@ -26,6 +26,7 @@ import { useEffect, useRef, useState } from "react";
 import { ICategory, ICity, IRoom } from "interfaces";
 import React from "react";
 import { StandaloneSearchBox, LoadScript } from '@react-google-maps/api';
+import Address from "components/Address.tsx";
 
 
 const { Text } = Typography;
@@ -63,18 +64,21 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
     optionValue: 'id'
   })
 
+  const inputRef = useRef<any>()
+  const [nameCity, setNameCity] = useState('')
 
-  const inputRef = useRef<any>();
-
-  const handlePlaceChanged = () => {
-
+  const onPlacesChanged = () => {
     const [place] = inputRef.current.getPlaces()
+
     if (place) {
-      console.log(place.formatted_address)
-      console.log(place.geometry.location.lat())
-      console.log(place.geometry.location.lng())
+
+      setNameCity(place.formatted_address)
+
     }
-  }
+  };
+  const onSBLoad = (ref: any) => {
+    inputRef.current = ref
+  };
   return (
     <Drawer
       {...drawerProps}
@@ -158,6 +162,7 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
                 required: true,
               },
             ]}
+
           >
             <Input />
           </Form.Item>
@@ -169,24 +174,21 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
                 required: true,
               },
             ]}
+
           >
 
-
             <LoadScript
-              googleMapsApiKey="AIzaSyBVatgG_Di0Y8-yNMFDvczuyAGzIMcN0RU"
+              googleMapsApiKey={process.env.REACT_APP_MAP_ID}
               libraries={['places']}
             >
               <StandaloneSearchBox
-                onLoad={ref => (inputRef.current = ref)}
-                onPlacesChanged={handlePlaceChanged}
+                onPlacesChanged={onPlacesChanged}
+                onLoad={onSBLoad}
               >
-                <Input />
+                <Input value={nameCity} onChange={(e) => setNameCity(e.target.value)} />
               </StandaloneSearchBox>
 
             </LoadScript>
-
-
-
           </Form.Item>
           <Form.Item
             label="Desreption"
@@ -252,7 +254,7 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
           <Form.Item
             label="Category"
             getValueFromEvent={(data) => {
-              console.log(data)
+
               return data;
             }}
             name="categories"

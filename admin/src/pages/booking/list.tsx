@@ -98,7 +98,7 @@ export const BookingList: React.FC<IResourceComponentsProps> = () => {
       return filters;
     },
   });
-  console.log(tableProps.dataSource)
+
   const t = useTranslate();
   const { show } = useNavigation();
 

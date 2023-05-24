@@ -16,6 +16,9 @@ const { Text } = Typography;
 import { HotelItem, CreateHotel, EditHotel } from "components/hotel";
 
 import { IHotel } from "interfaces";
+import { LoadScript, StandaloneSearchBox } from "@react-google-maps/api";
+import Address from "components/Address.tsx";
+
 
 export const HotelLists: React.FC<IResourceComponentsProps> = () => {
   const t = useTranslate();
@@ -54,6 +57,8 @@ export const HotelLists: React.FC<IResourceComponentsProps> = () => {
     resource: "hotels",
     redirect: false,
   });
+
+
   return (
     <div>
       <Form
@@ -89,12 +94,15 @@ export const HotelLists: React.FC<IResourceComponentsProps> = () => {
                   suffix={<SearchOutlined />}
                 />
               </Form.Item>
+
               <CreateButton
                 onClick={() => createShow()}
                 className="bg-[#1677ff]"
               >
                 AddHotel
               </CreateButton>
+
+
             </div>
             <AntdList
               grid={{

@@ -34,6 +34,7 @@ import { ConfigProvider } from "context";
 import { HotelLists, HotelShow } from "pages/hotels";
 
 import "@refinedev/antd/dist/reset.css";
+import "./style/custom.css";
 import { BookingList } from "pages/booking";
 import { CategoryList } from "pages/categories";
 import { DashboardPage } from "pages/dashboard";

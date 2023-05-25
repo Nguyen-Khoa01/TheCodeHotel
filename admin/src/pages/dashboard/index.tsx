@@ -1,5 +1,5 @@
 import { Row, Col, Card, Typography } from "antd";
-import { BookingMap } from "components/dashboard";
+import { BookingMap, BookingTimeline } from "components/dashboard";
 import { useTranslation } from "react-i18next";
 
 
@@ -92,7 +92,7 @@ export const DashboardPage: React.FC = () => {
                         </Text>
                     }
                 >
-
+                    <BookingTimeline />
                 </Card>
             </Col>
             <Col xl={17} lg={16} md={24} sm={24} xs={24}>

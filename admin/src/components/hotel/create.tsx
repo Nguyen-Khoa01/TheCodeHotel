@@ -63,7 +63,7 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
     optionLabel: 'city',
     optionValue: 'id'
   })
-
+  const [form] = Form.useForm();
   const inputRef = useRef<any>()
   const [nameCity, setNameCity] = useState('')
 
@@ -79,6 +79,8 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
   const onSBLoad = (ref: any) => {
     inputRef.current = ref
   };
+
+  console.log(form)
   return (
     <Drawer
       {...drawerProps}
@@ -100,6 +102,7 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
       >
         <Form
           {...formProps}
+          form={form}
           layout="vertical"
           initialValues={{
             isActive: true,
@@ -166,15 +169,16 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
           >
             <Input />
           </Form.Item>
+
+
           <Form.Item
-            label="Address"
-            name="address"
+            label='Address'
+            name='address'
             rules={[
               {
                 required: true,
               },
             ]}
-
           >
 
             <LoadScript
@@ -190,6 +194,7 @@ export const CreateHotel: React.FC<CreateProductProps> = ({
 
             </LoadScript>
           </Form.Item>
+
           <Form.Item
             label="Desreption"
             name="desreption"
